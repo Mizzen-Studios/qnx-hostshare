@@ -1,0 +1,16 @@
+name: host-only
+on: [push, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  host:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Host-only reference tests (not QNX native)
+        run: PYTHONPATH=src python3 -m unittest discover -s tests -v
+      - name: Syntax and whitespace
+        run: |
+          python3 -m compileall -q src tests
+          git diff --check
