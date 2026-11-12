@@ -1,0 +1,15 @@
+{
+  "provenance": "synthetic in-process mock, not live server/QNX/QEMU capture",
+  "frames": [
+    {
+      "direction": "request",
+      "hex": "17000000740c0002000000000000000000000005000000",
+      "sha256": "4825ed343ce7a42c6cf10ea81d58566408c40a9490ed09f1b952cdcdd600e447"
+    },
+    {
+      "direction": "response",
+      "hex": "10000000750c000500000068656c6c6f",
+      "sha256": "5704badc4362369a75b0d5c899e7acaba40b601d0bd9a3d56ff96f990f8b59c3"
+    }
+  ]
+}

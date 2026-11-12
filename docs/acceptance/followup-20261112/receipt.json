@@ -1,0 +1,33 @@
+{
+  "schema": "hostshare-followup-1",
+  "baseline": "41e788524faa0442076443083bc3ebcdadf5e31f",
+  "diagnosis_sha": "67031400911ab96330edc7f85d6097ef5dcd922a",
+  "host_source_sha": "41d0ad71bddd4da1aa617cd44b42061b4c53e7cd",
+  "status": "HOST_ONLY_PASS_NATIVE_UNVERIFIED",
+  "sdk_diagnosis": "diagnosis.json",
+  "conditional_sdk_boot": "NOT_RUN_NO_JUSTIFIED_CHANGE",
+  "installed_mkqnximage_and_stock_inventory": "UNVERIFIED",
+  "F1": "HOST_REFERENCE_MODEL_ONLY_NO_NATIVE_DRIVER",
+  "F2": "HOST_CODEC_SUBSET_ONLY_NATIVE_NOT_RUN",
+  "tests": {
+    "command": "PYTHONPATH=src python3 -m unittest discover -s tests -v",
+    "rc": 0,
+    "count": 17,
+    "malformed_seeded_inputs": 1000,
+    "log": "host-tests-final.log"
+  },
+  "frames": {
+    "path": "mock-frames.json",
+    "provenance": "synthetic mock only; no live native capture"
+  },
+  "native_build": false,
+  "native_run": false,
+  "F3_plus": false,
+  "cleanup": {
+    "qemu_processes": 0,
+    "lease_free": true
+  },
+  "historical_f0_receipt": "UNCHANGED",
+  "kill_gate": "F1+F2 native PASS by2026-11-29 UK else stop; not scheduled",
+  "limitations": "../../HOST_F1_F2.md"
+}
