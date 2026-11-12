@@ -1,0 +1,4 @@
+Nov 12 21:08:05 open-claw-vnic systemd[1697]: Started run-rb57d14f9b8b54911b232f0aa821e30cc.scope - /usr/bin/nice -n 15 /usr/bin/python3 /home/ubuntu/qnx-host/guest/guestctl-capped.py run.
+Nov 12 21:09:53 open-claw-vnic systemd[1697]: run-rb57d14f9b8b54911b232f0aa821e30cc.scope: A process of this unit has been killed by the OOM killer.
+Nov 12 21:09:53 open-claw-vnic systemd[1697]: run-rb57d14f9b8b54911b232f0aa821e30cc.scope: Failed with result 'oom-kill'.
+Nov 12 21:09:53 open-claw-vnic systemd[1697]: run-rb57d14f9b8b54911b232f0aa821e30cc.scope: Consumed 1min 47.591s CPU time.

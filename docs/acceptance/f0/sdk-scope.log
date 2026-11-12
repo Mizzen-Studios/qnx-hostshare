@@ -1,0 +1,4 @@
+Result=oom-kill
+CPUQuotaPerSecUSec=1s
+MemoryMax=1073741824
+MemorySwapMax=0

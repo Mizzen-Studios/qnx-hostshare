@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/qnx-host/guest/guestctl-capped.py", line 51, in <module>
+    print(request('system_powerdown'))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/qnx-host/guest/guestctl-capped.py", line 8, in request
+    s.settimeout(10); s.connect(str(qmp)); f=s.makefile('rwb',buffering=0); f.readline()
+                      ^^^^^^^^^^^^^^^^^^^
+ConnectionRefusedError: [Errno 111] Connection refused

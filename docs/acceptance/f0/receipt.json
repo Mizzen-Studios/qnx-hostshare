@@ -1,0 +1,108 @@
+{
+  "schema": "qnx-hostshare-f0-1",
+  "status": "BLOCKED_INSTALLED_SDP_INVENTORY_OOM",
+  "stop": "WAIT_PARENT_REVIEW_NO_F1_PLUS",
+  "repository": "Mizzen-Studios/qnx-hostshare",
+  "visibility": "PRIVATE",
+  "license": "Apache-2.0",
+  "collector_source_sha": "889bd40a557d1257fd5f894c35251603f9cde738",
+  "commands": [
+    {
+      "command": "python3 tools/sdk-owner.py",
+      "rc": 1,
+      "result": "SDK_SCOPE_OOM_BEFORE_READY"
+    },
+    {
+      "command": "systemd-run --user --scope --quiet -p CPUQuota=100% -p MemoryMax=1G -p MemorySwapMax=0 nice -n 15 python3 tools/native-f0.py",
+      "rc": 0
+    }
+  ],
+  "sdk": {
+    "stop_rc": 1,
+    "owner_child_rc": -15,
+    "stopped_reaped": true
+  },
+  "native": {
+    "caps": {
+      "cpu.max": "100000 100000",
+      "memory.max": "1073741824",
+      "memory.swap.max": "0"
+    },
+    "nice": 15,
+    "command": [
+      "qemu-system-x86_64",
+      "-machine",
+      "pc,accel=tcg",
+      "-cpu",
+      "max",
+      "-smp",
+      "1",
+      "-m",
+      "512",
+      "-display",
+      "none",
+      "-serial",
+      "stdio",
+      "-monitor",
+      "none",
+      "-no-reboot",
+      "-kernel",
+      "/home/ubuntu/qnx-host/guest/shared/incident-20261108/incident.ifs",
+      "-drive",
+      "file=/home/ubuntu/qnx-host/guest/shared/qnx-native/disk-qemu,format=raw,if=ide,snapshot=on",
+      "-nic",
+      "user,model=virtio-net-pci",
+      "-fsdev",
+      "local,id=f0,path=/home/ubuntu/.openclaw/workspace/apps/qnx-hostshare/.local/f0-corpus,security_model=none,readonly=on",
+      "-device",
+      "virtio-9p-pci,fsdev=f0,mount_tag=f0test"
+    ],
+    "image": "/home/ubuntu/qnx-host/guest/shared/incident-20261108/incident.ifs",
+    "image_sha256": "764e7e9f3ffcb74e851dce896a513c85abe16589d918937f3ba5157891882a22",
+    "disk": "/home/ubuntu/qnx-host/guest/shared/qnx-native/disk-qemu",
+    "disk_sha256": "903598ddfcc0a3fc2f4a1907872676033f29e333cd02b5db4d5f460cd387f516",
+    "prebuilt_source_sha": "d913faffb3ebd83d11f65c44c50437154b3450ec",
+    "elf_sha256": {
+      "prereq_containment": "787039ffedf1e57879ee37516a19cb8a19548d5c1e0facdc26b9e02febb971bf",
+      "incident_recorder": "725eb876fc700f72a62d8ba0344a7b30f3c0182d2036dfd361ed5e596918d513",
+      "ability_lesson": "c527c865ab357387ae009b1d63cb4c2de92b72d303e74e70a7089ee9775b8739"
+    },
+    "native_enumeration": "CAPTURED_REVIEW_REQUIRED",
+    "status": "CAPTURED",
+    "qemu_pid": 475545,
+    "guest_command": "echo F0_NATIVE_BEGIN; uname -a; pidin ar; ls /proc/boot/*pci*; pci-tool -v; echo PCI_TOOL_RC=$?; pci -v; echo PCI_RC=$?; echo F0_NATIVE_DONE",
+    "exit_rc": 0,
+    "stopped_reaped": true
+  },
+  "installed_sdp_novelty": "UNVERIFIED_NOT_RUN",
+  "public_search_scope": "NOTES.md; raw search responses retained; bounded not global absence proof",
+  "native_9p_device_enumeration": "PASS_1af4_1009_PCI_TOOL_RC0",
+  "filesystem_driver": "NOT_IMPLEMENTED_NOT_TESTED",
+  "virtio_input_native": "NOT_RUN_9P_ENUMERATION_SUCCEEDED",
+  "failures_preserved": [
+    "SDK OOM before ready",
+    "SDK stop rc1 connection-refused after OOM",
+    "native startup Memory fault (core dumped)",
+    "native pci fallback rc126"
+  ],
+  "cleanup": {
+    "sdk_child_reaped": true,
+    "native_child_reaped": true,
+    "qemu_processes": 0,
+    "lease_free": true
+  },
+  "constraints": {
+    "sdk_retry": false,
+    "new_sdk": false,
+    "login": false,
+    "image_build": false,
+    "swap_added": false,
+    "cap_increase": false,
+    "CAN_EDU_mutation": false,
+    "media": false,
+    "public": false,
+    "spend": 0
+  },
+  "local_full_sdk_serial": ".local/sdk-serial-full.txt",
+  "evidence_hash_manifest": "SHA256SUMS"
+}

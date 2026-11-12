@@ -1,0 +1,52 @@
+{
+  "caps": {
+    "cpu.max": "100000 100000",
+    "memory.max": "1073741824",
+    "memory.swap.max": "0"
+  },
+  "nice": 15,
+  "command": [
+    "qemu-system-x86_64",
+    "-machine",
+    "pc,accel=tcg",
+    "-cpu",
+    "max",
+    "-smp",
+    "1",
+    "-m",
+    "512",
+    "-display",
+    "none",
+    "-serial",
+    "stdio",
+    "-monitor",
+    "none",
+    "-no-reboot",
+    "-kernel",
+    "/home/ubuntu/qnx-host/guest/shared/incident-20261108/incident.ifs",
+    "-drive",
+    "file=/home/ubuntu/qnx-host/guest/shared/qnx-native/disk-qemu,format=raw,if=ide,snapshot=on",
+    "-nic",
+    "user,model=virtio-net-pci",
+    "-fsdev",
+    "local,id=f0,path=/home/ubuntu/.openclaw/workspace/apps/qnx-hostshare/.local/f0-corpus,security_model=none,readonly=on",
+    "-device",
+    "virtio-9p-pci,fsdev=f0,mount_tag=f0test"
+  ],
+  "image": "/home/ubuntu/qnx-host/guest/shared/incident-20261108/incident.ifs",
+  "image_sha256": "764e7e9f3ffcb74e851dce896a513c85abe16589d918937f3ba5157891882a22",
+  "disk": "/home/ubuntu/qnx-host/guest/shared/qnx-native/disk-qemu",
+  "disk_sha256": "903598ddfcc0a3fc2f4a1907872676033f29e333cd02b5db4d5f460cd387f516",
+  "prebuilt_source_sha": "d913faffb3ebd83d11f65c44c50437154b3450ec",
+  "elf_sha256": {
+    "prereq_containment": "787039ffedf1e57879ee37516a19cb8a19548d5c1e0facdc26b9e02febb971bf",
+    "incident_recorder": "725eb876fc700f72a62d8ba0344a7b30f3c0182d2036dfd361ed5e596918d513",
+    "ability_lesson": "c527c865ab357387ae009b1d63cb4c2de92b72d303e74e70a7089ee9775b8739"
+  },
+  "native_enumeration": "CAPTURED_REVIEW_REQUIRED",
+  "status": "CAPTURED",
+  "qemu_pid": 475545,
+  "guest_command": "echo F0_NATIVE_BEGIN; uname -a; pidin ar; ls /proc/boot/*pci*; pci-tool -v; echo PCI_TOOL_RC=$?; pci -v; echo PCI_RC=$?; echo F0_NATIVE_DONE",
+  "exit_rc": 0,
+  "stopped_reaped": true
+}
