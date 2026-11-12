@@ -83,7 +83,7 @@ finally:
   report['peak_cgroup_bytes']=max(int(s['memory']['memory.peak']) for s in samples)
   report['last_events']=samples[-1]['memory']['memory.events']
  data=(guest/'serial.log').read_bytes();(out/'serial.txt').write_bytes(data[serial_offset:] if len(data)>=serial_offset else data)
- report['qemu_processes']=subprocess.run(['pgrep','-f','^qemu-system-'],stdout=open(out/'remaining-qemu.txt','w')).returncode
+ report['pgrep_exit_code']=subprocess.run(['pgrep','-f','^qemu-system-'],stdout=open(out/'remaining-qemu.txt','w')).returncode
  report['stopped_reaped']=child is not None and child.poll() is not None
  (out/'receipt.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report),flush=True)

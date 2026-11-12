@@ -1,0 +1,43 @@
+{
+  "source_sha": "2994dcf31bddbb9ed0d23034a75975a298c4a357",
+  "controller_sha256": "6a24ef6678f0eb28d7e313452acc2c50f399fe5e70619785c00e58c5b53146d6",
+  "boot_attempts": 1,
+  "reserve_bytes": 67108864,
+  "start_command": [
+    "python3",
+    "/home/ubuntu/qnx-host/guest/guestctl-capped.py",
+    "start"
+  ],
+  "inventory": "NOT_RUN",
+  "native": "NOT_RUN",
+  "status": "STOP_GROWTH_CAUSE_UNCLEAR",
+  "qemu_pid": 505515,
+  "cmdline": "qemu-system-x86_64 -machine q35,accel=tcg -cpu max -smp 1 -m 512 -display none -no-reboot -serial stdio -monitor none -qmp unix:/home/ubuntu/qnx-host/guest/qmp.sock,server=on,wait=off -drive file=/home/ubuntu/qnx-host/guest/guest.qcow2,format=qcow2,if=virtio -drive file=/home/ubuntu/qnx-host/guest/seed.iso,format=raw,media=cdrom,readonly=on -nic user,model=virtio-net-pci -virtfs local,path=/home/ubuntu/qnx-host/guest/shared,mount_tag=hostshare,security_model=mapped-xattr,id=shared ",
+  "nice": 15,
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1001.slice/user@1001.service/app.slice/run-r9699692623a341db83dad6946a8dd2cb.scope",
+  "effective_caps": {
+    "cpu.max": "100000 100000",
+    "memory.max": "2147483648",
+    "memory.swap.max": "0"
+  },
+  "boot_ready": true,
+  "growth_diagnosis": {
+    "ram_mapping_candidates": 1,
+    "ram_resident_bytes": 421236736,
+    "other_anonymous_bytes": 1205944320,
+    "interpretation": "Smaps separates candidate guest RAM from other anonymous allocations; allocator/TCG ownership of other anonymous mappings is not proven."
+  },
+  "stop_command": [
+    "python3",
+    "/home/ubuntu/qnx-host/guest/guestctl-capped.py",
+    "stop"
+  ],
+  "stop_rc": 0,
+  "owner_child_rc": 0,
+  "samples": 153,
+  "peak_sample_current_bytes": 1748148224,
+  "peak_cgroup_bytes": 1748148224,
+  "last_events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\n",
+  "qemu_processes": 1,
+  "stopped_reaped": true
+}
