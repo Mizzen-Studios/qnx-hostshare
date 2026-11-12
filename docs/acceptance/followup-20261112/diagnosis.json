@@ -1,0 +1,60 @@
+{
+  "status": "NO_BOOT_JUSTIFICATION",
+  "baseline": "41e788524faa0442076443083bc3ebcdadf5e31f",
+  "failure": {
+    "time": "2026-11-12T21:09:53Z",
+    "scope": "run-rb57d14f9b8b54911b232f0aa821e30cc.scope",
+    "usage_kib": 1048576,
+    "limit_kib": 1048576,
+    "swap_kib": 0,
+    "anon_bytes": 1070555136,
+    "file_bytes": 0,
+    "kernel_bytes": 3186688,
+    "anon_thp_bytes": 908066816,
+    "tasks": [
+      {
+        "pid": 473380,
+        "name": "python3",
+        "rss_pages": 3160
+      },
+      {
+        "pid": 473381,
+        "name": "qemu-system-x86",
+        "rss_pages": 265033,
+        "anon_rss_kib": 1038960
+      }
+    ],
+    "command": "guest/launch.json -m512 -smp1 q35 TCG max",
+    "services": "pre-ready serial starts multipathd and journal flush; no guest process census"
+  },
+  "comparison": {
+    "nov10": "canopy-qnx/docs/acceptance/query-retry-20261110",
+    "cpu_max": "100000 100000",
+    "memory_max": 1073741824,
+    "guest_mib": 512,
+    "nice": 15,
+    "boot": "reached SDK and compile; subsequent mkifs guest OOM; not full workload success",
+    "before_mkifs_available_kib": 327000,
+    "min_available_kib": 21948,
+    "max_linker_rss_kib": 319384,
+    "guest_swap_kib": 0,
+    "host_scope_peak_and_tasks": "UNVERIFIED; no equivalent retained pre-ready census"
+  },
+  "current_host": {
+    "available_bytes": 18694148096,
+    "free_bytes": 876027904,
+    "global_swap_used_bytes": 245760,
+    "source": "free -b at followup; host availability does not expand per-scope allowance"
+  },
+  "interpretation": "Scope exhausted by anonymous memory; only Python controller and QEMU in task census. Not extra sibling tools or reclaimable file cache. Exact cause of higher QEMU resident memory than Nov10 UNKNOWN; no identified reversible difference justifies clean boot.",
+  "conditional_boot": "NOT_RUN",
+  "installed_inventory": "UNVERIFIED",
+  "readonly_disk": {
+    "tools": "7z QCOW unsupported; debugfs exists but requires raw ext filesystem; guestfish absent; qemu-nbd present but no root/kernel mount authorized",
+    "decision": "No boot, conversion, root mount, install, or repair. Installed mkqnximage help/options and stock paths UNVERIFIED."
+  },
+  "cleanup": {
+    "qemu_processes": 0,
+    "lease_free": true
+  }
+}

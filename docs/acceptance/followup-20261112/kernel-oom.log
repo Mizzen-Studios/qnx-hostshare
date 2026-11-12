@@ -1,0 +1,100 @@
+Nov 12 21:09:53 open-claw-vnic kernel:  dump_stack_lvl+0x80/0x140
+Nov 12 21:09:53 open-claw-vnic kernel:  dump_stack+0x1c/0x38
+Nov 12 21:09:53 open-claw-vnic kernel:  dump_header+0x48/0x2b0
+Nov 12 21:09:53 open-claw-vnic kernel:  oom_kill_process+0x108/0x380
+Nov 12 21:09:53 open-claw-vnic kernel:  out_of_memory+0xe8/0x3c8
+Nov 12 21:09:53 open-claw-vnic kernel:  mem_cgroup_out_of_memory+0x100/0x148
+Nov 12 21:09:53 open-claw-vnic kernel:  try_charge_memcg+0x3cc/0x578
+Nov 12 21:09:53 open-claw-vnic kernel:  charge_memcg+0x50/0xa0
+Nov 12 21:09:53 open-claw-vnic kernel:  __mem_cgroup_charge+0x44/0xb8
+Nov 12 21:09:53 open-claw-vnic kernel:  alloc_anon_folio+0x1c8/0x560
+Nov 12 21:09:53 open-claw-vnic kernel:  do_anonymous_page+0xe4/0x4f8
+Nov 12 21:09:53 open-claw-vnic kernel:  handle_pte_fault+0x29c/0x2b8
+Nov 12 21:09:53 open-claw-vnic kernel:  __handle_mm_fault+0x228/0x530
+Nov 12 21:09:53 open-claw-vnic kernel:  handle_mm_fault+0x120/0x298
+Nov 12 21:09:53 open-claw-vnic kernel:  do_page_fault+0x118/0x828
+Nov 12 21:09:53 open-claw-vnic kernel:  do_translation_fault+0x74/0xd0
+Nov 12 21:09:53 open-claw-vnic kernel:  do_mem_abort+0x50/0xd0
+Nov 12 21:09:53 open-claw-vnic kernel:  el0_da+0x54/0x1e8
+Nov 12 21:09:53 open-claw-vnic kernel:  el0t_64_sync_handler+0xf0/0x108
+Nov 12 21:09:53 open-claw-vnic kernel:  el0t_64_sync+0x1b8/0x1c0
+Nov 12 21:09:53 open-claw-vnic kernel: memory: usage 1048576kB, limit 1048576kB, failcnt 24
+Nov 12 21:09:53 open-claw-vnic kernel: swap: usage 0kB, limit 0kB, failcnt 0
+Nov 12 21:09:53 open-claw-vnic kernel: Memory cgroup stats for /user.slice/user-1001.slice/user@1001.service/app.slice/run-rb57d14f9b8b54911b232f0aa821e30cc.scope:
+Nov 12 21:09:53 open-claw-vnic kernel: anon 1070555136
+Nov 12 21:09:53 open-claw-vnic kernel: file 0
+Nov 12 21:09:53 open-claw-vnic kernel: kernel 3186688
+Nov 12 21:09:53 open-claw-vnic kernel: kernel_stack 131072
+Nov 12 21:09:53 open-claw-vnic kernel: pagetables 2764800
+Nov 12 21:09:53 open-claw-vnic kernel: sec_pagetables 0
+Nov 12 21:09:53 open-claw-vnic kernel: percpu 192
+Nov 12 21:09:53 open-claw-vnic kernel: sock 0
+Nov 12 21:09:53 open-claw-vnic kernel: vmalloc 0
+Nov 12 21:09:53 open-claw-vnic kernel: shmem 0
+Nov 12 21:09:53 open-claw-vnic kernel: zswap 0
+Nov 12 21:09:53 open-claw-vnic kernel: zswapped 0
+Nov 12 21:09:53 open-claw-vnic kernel: file_mapped 0
+Nov 12 21:09:53 open-claw-vnic kernel: file_dirty 0
+Nov 12 21:09:53 open-claw-vnic kernel: file_writeback 0
+Nov 12 21:09:53 open-claw-vnic kernel: swapcached 0
+Nov 12 21:09:53 open-claw-vnic kernel: anon_thp 908066816
+Nov 12 21:09:53 open-claw-vnic kernel: file_thp 0
+Nov 12 21:09:53 open-claw-vnic kernel: shmem_thp 0
+Nov 12 21:09:53 open-claw-vnic kernel: inactive_anon 221184
+Nov 12 21:09:53 open-claw-vnic kernel: active_anon 1070333952
+Nov 12 21:09:53 open-claw-vnic kernel: inactive_file 0
+Nov 12 21:09:53 open-claw-vnic kernel: active_file 0
+Nov 12 21:09:53 open-claw-vnic kernel: unevictable 0
+Nov 12 21:09:53 open-claw-vnic kernel: slab_reclaimable 6368
+Nov 12 21:09:53 open-claw-vnic kernel: slab_unreclaimable 278968
+Nov 12 21:09:53 open-claw-vnic kernel: slab 285336
+Nov 12 21:09:53 open-claw-vnic kernel: workingset_refault_anon 0
+Nov 12 21:09:53 open-claw-vnic kernel: workingset_refault_file 15
+Nov 12 21:09:53 open-claw-vnic kernel: workingset_activate_anon 0
+Nov 12 21:09:53 open-claw-vnic kernel: workingset_activate_file 0
+Nov 12 21:09:53 open-claw-vnic kernel: workingset_restore_anon 0
+Nov 12 21:09:53 open-claw-vnic kernel: workingset_restore_file 0
+Nov 12 21:09:53 open-claw-vnic kernel: workingset_nodereclaim 0
+Nov 12 21:09:53 open-claw-vnic kernel: pgdemote_kswapd 0
+Nov 12 21:09:53 open-claw-vnic kernel: pgdemote_direct 0
+Nov 12 21:09:53 open-claw-vnic kernel: pgdemote_khugepaged 0
+Nov 12 21:09:53 open-claw-vnic kernel: pgdemote_proactive 0
+Nov 12 21:09:53 open-claw-vnic kernel: pgpromote_success 0
+Nov 12 21:09:53 open-claw-vnic kernel: pgscan 604
+Nov 12 21:09:53 open-claw-vnic kernel: pgsteal 604
+Nov 12 21:09:53 open-claw-vnic kernel: pswpin 0
+Nov 12 21:09:53 open-claw-vnic kernel: pswpout 0
+Nov 12 21:09:53 open-claw-vnic kernel: pgscan_kswapd 0
+Nov 12 21:09:53 open-claw-vnic kernel: pgscan_direct 604
+Nov 12 21:09:53 open-claw-vnic kernel: pgscan_khugepaged 0
+Nov 12 21:09:53 open-claw-vnic kernel: pgscan_proactive 0
+Nov 12 21:09:53 open-claw-vnic kernel: pgsteal_kswapd 0
+Nov 12 21:09:53 open-claw-vnic kernel: pgsteal_direct 604
+Nov 12 21:09:53 open-claw-vnic kernel: pgsteal_khugepaged 0
+Nov 12 21:09:53 open-claw-vnic kernel: pgsteal_proactive 0
+Nov 12 21:09:53 open-claw-vnic kernel: pgfault 53456
+Nov 12 21:09:53 open-claw-vnic kernel: pgmajfault 0
+Nov 12 21:09:53 open-claw-vnic kernel: pgrefill 20
+Nov 12 21:09:53 open-claw-vnic kernel: pgactivate 0
+Nov 12 21:09:53 open-claw-vnic kernel: pgdeactivate 0
+Nov 12 21:09:53 open-claw-vnic kernel: pglazyfree 0
+Nov 12 21:09:53 open-claw-vnic kernel: pglazyfreed 0
+Nov 12 21:09:53 open-claw-vnic kernel: swpin_zero 0
+Nov 12 21:09:53 open-claw-vnic kernel: swpout_zero 0
+Nov 12 21:09:53 open-claw-vnic kernel: zswpin 0
+Nov 12 21:09:53 open-claw-vnic kernel: zswpout 0
+Nov 12 21:09:53 open-claw-vnic kernel: zswpwb 0
+Nov 12 21:09:53 open-claw-vnic kernel: thp_fault_alloc 433
+Nov 12 21:09:53 open-claw-vnic kernel: thp_collapse_alloc 0
+Nov 12 21:09:53 open-claw-vnic kernel: thp_swpout 0
+Nov 12 21:09:53 open-claw-vnic kernel: thp_swpout_fallback 0
+Nov 12 21:09:53 open-claw-vnic kernel: numa_pages_migrated 0
+Nov 12 21:09:53 open-claw-vnic kernel: numa_pte_updates 0
+Nov 12 21:09:53 open-claw-vnic kernel: numa_hint_faults 0
+Nov 12 21:09:53 open-claw-vnic kernel: Memory cgroup min protection 0kB -- low protection 0kB
+Nov 12 21:09:53 open-claw-vnic kernel: Tasks state (memory values in pages):
+Nov 12 21:09:53 open-claw-vnic kernel: [  pid  ]   uid  tgid total_vm      rss rss_anon rss_file rss_shmem pgtables_bytes swapents oom_score_adj name
+Nov 12 21:09:53 open-claw-vnic kernel: [ 473380]  1001 473380     5290     3160     1626     1534         0    81920        0          1000 python3
+Nov 12 21:09:53 open-claw-vnic kernel: [ 473381]  1001 473381   613004   265033   259740     5293         0  2674688        0          1000 qemu-system-x86
+Nov 12 21:09:53 open-claw-vnic kernel: oom-kill:constraint=CONSTRAINT_MEMCG,nodemask=(null),cpuset=user.slice,mems_allowed=0,oom_memcg=/user.slice/user-1001.slice/user@1001.service/app.slice/run-rb57d14f9b8b54911b232f0aa821e30cc.scope,task_memcg=/user.slice/user-1001.slice/user@1001.service/app.slice/run-rb57d14f9b8b54911b232f0aa821e30cc.scope,task=qemu-system-x86,pid=473381,uid=1001
+Nov 12 21:09:53 open-claw-vnic kernel: Memory cgroup out of memory: Killed process 473381 (qemu-system-x86) total-vm:2452016kB, anon-rss:1038960kB, file-rss:21172kB, shmem-rss:0kB, UID:1001 pgtables:2612kB oom_score_adj:1000
