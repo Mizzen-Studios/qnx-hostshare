@@ -3,3 +3,6 @@
 *.elf
 *.iso
 *.img
+
+.local/
+__pycache__/
