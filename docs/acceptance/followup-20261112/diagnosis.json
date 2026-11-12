@@ -56,5 +56,7 @@
   "cleanup": {
     "qemu_processes": 0,
     "lease_free": true
-  }
+  },
+  "historical_host_free_at_launch": "UNVERIFIED; current_host values are followup only, not Nov10/Nov12 launch measurements",
+  "guest_service_delta": "UNVERIFIED; startup serial names services but no comparable census/service delta proves cause"
 }

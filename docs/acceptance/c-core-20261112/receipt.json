@@ -1,0 +1,52 @@
+{
+  "schema": "hostshare-c-core-1",
+  "baseline": "ff6d0e2a411dcc8a407f97af664aa8723be287fd",
+  "source_sha": "b9bd286d5737bb78910bc56184cf2d461de41c50",
+  "status": "HOST_C_CORE_PASS_NATIVE_NOT_RUN",
+  "source": [
+    "core/hostshare.h",
+    "core/transport.c",
+    "core/protocol.c"
+  ],
+  "build": "cc -std=c11 -Wall -Wextra -Werror -pedantic -Icore core/transport.c core/protocol.c tests/test_core.c -o .local/test-core",
+  "build_rc": 0,
+  "test_rc": 0,
+  "sanitizers": {
+    "flags": "-fsanitize=undefined,address -fno-omit-frame-pointer",
+    "rc": 0,
+    "log": "sanitizers.log"
+  },
+  "c_tests": {
+    "groups": [
+      "transport",
+      "protocol"
+    ],
+    "supported_message_kinds": 17,
+    "malformed_zero_frames": 512,
+    "provenance": "Synthetic manually authored PCI/body fixtures and mock callbacks; no live QEMU/server/native frames"
+  },
+  "python_tests": {
+    "count": 17,
+    "rc": 0,
+    "log": "python-tests.log"
+  },
+  "ci_source": {
+    "run": 43321307259,
+    "conclusion": "success",
+    "sha": "b9bd286d5737bb78910bc56184cf2d461de41c50"
+  },
+  "native_adapter": "NOT_IMPLEMENTED",
+  "native_build": "NOT_RUN",
+  "native_test": "NOT_RUN",
+  "sdk_inventory": "UNVERIFIED",
+  "conditional_boot": "NOT_RUN_NO_JUSTIFIED_CHANGE",
+  "historical_host_free_at_launch": "UNVERIFIED",
+  "service_delta_cause": "UNVERIFIED",
+  "remaining": "../../C_CORE.md",
+  "cleanup": {
+    "qemu_processes": 0,
+    "lease_free": true
+  },
+  "stop": "HOST_ONLY_SCOPE_CLOSED_PARENT_REVIEW",
+  "kill_gate": "F1+F2 native PASS by29Nov2026 UK unchanged"
+}

@@ -16,3 +16,8 @@ Run: PYTHONPATH=src python3 -m unittest discover -s tests -v
 No MMIO/DMA/native IRQ/ring driver; no native build or F1/F2 run. No F3+ work.
 Stop for parent review. Future kill gate: F1 and F2 must both achieve native PASS
 by29 November2026 UK, otherwise stop. No schedule created.
+
+## Portable C host-only closure
+
+Added [C driver-core foundation](docs/C_CORE.md): transport descriptor/hook core and9P framing.
+Native adapter/rings/DMA/QNX IRQ lifecycle NOT_IMPLEMENTED; native PASS NOT_RUN.
