@@ -1,0 +1,11 @@
+--- .local/sdk-gate-20261112/controller.before.py	2026-11-12 20:46:10.720340580 +0000
++++ /home/ubuntu/qnx-host/guest/guestctl-capped.py	2026-11-12 23:28:52.827969030 +0000
+@@ -45,7 +45,7 @@
+   try: print(request('query-status'));sys.exit(0)
+   except (OSError,ValueError):qmp.unlink()
+  (p/'shared/ready').unlink(missing_ok=True)
+- os.execvp('systemd-run',['systemd-run','--user','--scope','--quiet','-p','CPUQuota=100%','-p','MemoryMax=1G','-p','MemorySwapMax=0','nice','-n','15',sys.executable,__file__,'run'])
++ os.execvp('systemd-run',['systemd-run','--user','--scope','--quiet','-p','CPUQuota=100%','-p','MemoryMax=2G','-p','MemorySwapMax=0','nice','-n','15',sys.executable,__file__,'run'])
+ elif mode=='status':print(request('query-status'))
+ elif mode=='stop':
+  print(request('system_powerdown'))
