@@ -1,0 +1,10 @@
+{
+  "clone_command": "git clone https://github.com/Mizzen-Studios/qnx-hostshare.git",
+  "clone_parent": "/home/ubuntu/.openclaw/workspace/apps/qnx-hostshare/.local/cold-reader",
+  "source_sha": "44a2ffc3fdcd9a6de035d10f6bff134504826b1d",
+  "status_porcelain": "",
+  "README_and_RUN_NATIVE": "Exact documented env/export and command used without runner modifications; default .local output. No out-of-band route changes.",
+  "CI": 43415115066,
+  "CI_conclusion": "success",
+  "SDK_stopped_reaped_before_launch": true
+}

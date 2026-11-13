@@ -1,0 +1,37 @@
+{
+  "hello.txt": {
+    "sha256": "b22af944a505a8ede078761309ce122faccb453a810939fc81ac5a87f6033eac",
+    "size": 41,
+    "posix_cksum": 948244384
+  },
+  "empty": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0,
+    "posix_cksum": 4294967295
+  },
+  "one": {
+    "sha256": "2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881",
+    "size": 1,
+    "posix_cksum": 12738659
+  },
+  "4KiB": {
+    "sha256": "c8f5d0341d54d951a71b136e6e2afcb14d11ed8489a7ae126a8fee0df6ecf193",
+    "size": 4096,
+    "posix_cksum": 300014538
+  },
+  "1MiB": {
+    "sha256": "fbbab289f7f94b25736c58be46a994c441fd02552cc6022352e3d86d2fab7c83",
+    "size": 1048576,
+    "posix_cksum": 2572415250
+  },
+  "nested/leaf.txt": {
+    "sha256": "ccfaddf8a328fc1379b04548ee3bf55bd5afd41362a244cd54b7c40547ac0c8e",
+    "size": 19,
+    "posix_cksum": 3989433292
+  },
+  "unicode-\u03bb.txt": {
+    "sha256": "0a072230c5be5c694c3ab02344a6ab2c6db03572a01d0653ca0dc1223905000b",
+    "size": 13,
+    "posix_cksum": 2157407375
+  }
+}

@@ -1,0 +1,218 @@
+{
+  "completed_at": 1794568792.7892683,
+  "status": "PARTIAL_PRECISE_BLOCKED",
+  "baseline_accepted": "28882093e9a15a33dc67aeae5e46ef3f6aa219ed N1c/idle-N5 preserved",
+  "native_source_sha": "44a2ffc3fdcd9a6de035d10f6bff134504826b1d",
+  "build": {
+    "files": {
+      "core/hostshare.h": "23978f97e87b4c570b062d37add9b0ade3dc3d00bb1c2f104fab7a91b399f518",
+      "core/transport.c": "ea549067c359fbb32394d0dd940410b20d4a9699ea7a3d424e978753948534f9",
+      "core/protocol.c": "a5f7d75af4fada0a377eff7157884d917d26a32cf26db62686a24080c33152c8",
+      "native/qnx_hostshare.c": "7856f52a115407af265e641bcfbd795978ed90feff3a51ecd9e6c236b4914d9c",
+      "native/mount_checksum.c": "5f91860052d72ecd7163d7613e6ebf2afbce16f0eeb02a1deb7f236e4bf96333",
+      "native/hostshare_mount.h": "8f5af745ead1542fff7eae5e2824225f84dcd43ad2f6baf0aca261e5571e8d03"
+    },
+    "elf_sha256": "84bb0bd51836e8e9e6f06f1abd97221974e43a3fc5429ea60c7e66493d19e959",
+    "installed_headers": {}
+  },
+  "cold_reader": {
+    "clone_command": "git clone https://github.com/Mizzen-Studios/qnx-hostshare.git",
+    "clone_parent": "/home/ubuntu/.openclaw/workspace/apps/qnx-hostshare/.local/cold-reader",
+    "source_sha": "44a2ffc3fdcd9a6de035d10f6bff134504826b1d",
+    "status_porcelain": "",
+    "README_and_RUN_NATIVE": "Exact documented env/export and command used without runner modifications; default .local output. No out-of-band route changes.",
+    "CI": 43415115066,
+    "CI_conclusion": "success",
+    "SDK_stopped_reaped_before_launch": true
+  },
+  "runs": {
+    "cold-historical": {
+      "status": "BLOCKED_GATE",
+      "source_sha": "44a2ffc3fdcd9a6de035d10f6bff134504826b1d",
+      "image_kind": "historical",
+      "image_sha256": "764e7e9f3ffcb74e851dce896a513c85abe16589d918937f3ba5157891882a22",
+      "disk_sha256": "903598ddfcc0a3fc2f4a1907872676033f29e333cd02b5db4d5f460cd387f516",
+      "elf_sha256": "84bb0bd51836e8e9e6f06f1abd97221974e43a3fc5429ea60c7e66493d19e959",
+      "probe": {
+        "passed": true
+      },
+      "mount": {
+        "passed": true
+      },
+      "corpus": {
+        "hello.txt": {
+          "passed": true,
+          "observed_cksum": 948244384,
+          "observed_size": 41
+        },
+        "empty": {
+          "passed": true,
+          "observed_cksum": 4294967295,
+          "observed_size": 0
+        },
+        "one": {
+          "passed": true,
+          "observed_cksum": 12738659,
+          "observed_size": 1
+        },
+        "4KiB": {
+          "passed": true,
+          "observed_cksum": 300014538,
+          "observed_size": 4096
+        },
+        "1MiB": {
+          "passed": true,
+          "observed_cksum": 2572415250,
+          "observed_size": 1048576
+        },
+        "nested/leaf.txt": {
+          "passed": true,
+          "observed_cksum": 3989433292,
+          "observed_size": 19
+        },
+        "unicode-\u03bb.txt": {
+          "passed": true,
+          "observed_cksum": 2157407375,
+          "observed_size": 13
+        }
+      },
+      "host_edit": {
+        "passed": true,
+        "elapsed_seconds": 0.18188631196971983,
+        "sha256": "6507e3dc36ef5bff95f64ffefe3b50083789815e1415a60c558e3d8c35efd12c",
+        "rebuild": false
+      },
+      "readonly": {
+        "passed": true
+      },
+      "normal_stop": {
+        "passed": true
+      },
+      "midread": {
+        "handler_pending_before_kill": true,
+        "scope": "Explicit diagnostic pause in read handler before RPC; actual blocked POSIX read. NOT active virtio DMA safety.",
+        "server_wait_rc": 137,
+        "client_wait_rc": 3,
+        "observed_read_n": -1,
+        "observed_errno": 3,
+        "EIO_constant": 5,
+        "elapsed_seconds": 1.157177,
+        "passed": false
+      },
+      "remount": {
+        "passed": true
+      },
+      "memory_peak": 723689472,
+      "blocker": "Pending-read death did not produce observed n=-1 errno=EIO; actual result retained, no translation/inference."
+    },
+    "cold-stock": {
+      "status": "BLOCKED_GATE",
+      "source_sha": "44a2ffc3fdcd9a6de035d10f6bff134504826b1d",
+      "image_kind": "stock",
+      "image_sha256": "68bbe1b49a9b723c09d152773ee323ec6ab576eb29de933bfe3f08fdae21c753",
+      "disk_sha256": "0aee00c281f8eeb5b02c66555ed9517e317bb1503002a19dbf2b0155de336532",
+      "elf_sha256": "84bb0bd51836e8e9e6f06f1abd97221974e43a3fc5429ea60c7e66493d19e959",
+      "probe": {
+        "passed": true
+      },
+      "mount": {
+        "passed": true
+      },
+      "corpus": {
+        "hello.txt": {
+          "passed": true,
+          "observed_cksum": 948244384,
+          "observed_size": 41
+        },
+        "empty": {
+          "passed": true,
+          "observed_cksum": 4294967295,
+          "observed_size": 0
+        },
+        "one": {
+          "passed": true,
+          "observed_cksum": 12738659,
+          "observed_size": 1
+        },
+        "4KiB": {
+          "passed": true,
+          "observed_cksum": 300014538,
+          "observed_size": 4096
+        },
+        "1MiB": {
+          "passed": true,
+          "observed_cksum": 2572415250,
+          "observed_size": 1048576
+        },
+        "nested/leaf.txt": {
+          "passed": true,
+          "observed_cksum": 3989433292,
+          "observed_size": 19
+        },
+        "unicode-\u03bb.txt": {
+          "passed": true,
+          "observed_cksum": 2157407375,
+          "observed_size": 13
+        }
+      },
+      "host_edit": {
+        "passed": true,
+        "elapsed_seconds": 0.13649908802472055,
+        "sha256": "6507e3dc36ef5bff95f64ffefe3b50083789815e1415a60c558e3d8c35efd12c",
+        "rebuild": false
+      },
+      "readonly": {
+        "passed": true
+      },
+      "normal_stop": {
+        "passed": true
+      },
+      "midread": {
+        "handler_pending_before_kill": true,
+        "scope": "Explicit diagnostic pause in read handler before RPC; actual blocked POSIX read. NOT active virtio DMA safety.",
+        "server_wait_rc": 137,
+        "client_wait_rc": 3,
+        "observed_read_n": -1,
+        "observed_errno": 3,
+        "EIO_constant": 5,
+        "elapsed_seconds": 1.139556,
+        "passed": false
+      },
+      "remount": {
+        "passed": true
+      },
+      "memory_peak": 597225472,
+      "blocker": "Pending-read death did not produce observed n=-1 errno=EIO; actual result retained, no translation/inference."
+    }
+  },
+  "N7": {
+    "passed": true,
+    "image_provenance": "New hashed stock mkqnximage IFS/disk from EDU be712b27; NOT historical CAN image",
+    "SSH": "UNVERIFIED; stock sshd boot fault, serial-only transfer; no repair"
+  },
+  "sdk": {
+    "status": "REQUESTED_STOP",
+    "boot_attempts": 1,
+    "reserve_bytes": 67108864,
+    "pid": 596187,
+    "cmdline": "qemu-system-x86_64 -machine q35 -accel tcg,tb-size=256 -cpu max -smp 1 -m 512 -display none -no-reboot -serial stdio -monitor none -qmp unix:/home/ubuntu/qnx-host/guest/qmp.sock,server=on,wait=off -drive file=/home/ubuntu/qnx-host/guest/guest.qcow2,format=qcow2,if=virtio -drive file=/home/ubuntu/qnx-host/guest/seed.iso,format=raw,media=cdrom,readonly=on -nic user,model=virtio-net-pci -virtfs local,path=/home/ubuntu/qnx-host/guest/shared,mount_tag=hostshare,security_model=mapped-xattr,id=shared ",
+    "nice": 15,
+    "caps": {
+      "cpu.max": "100000 100000",
+      "memory.max": "2147483648",
+      "memory.swap.max": "0"
+    },
+    "stop_rc": 0,
+    "owner_child_rc": 0,
+    "samples": 648,
+    "peak_cgroup_bytes": 883838976,
+    "stopped_reaped": true
+  },
+  "cleanup": {
+    "all_stopped_reaped": true,
+    "qemu_count": 0,
+    "canonical_lease": "FREE"
+  },
+  "restrictions": "Private \u00a30 existing SDK; no install/login/platform repair/EDU retry/routing rewrite/MSIX/CAN/C6/media/public/PR",
+  "scope": "Readonly synthetic data only. Explicit diagnostic server read-handler pause before RPC/DMA, actual POSIX errno observation. NOT active-DMA or physical-device crash safety. Previous reduced-privilege/idle results not rerun or expanded."
+}

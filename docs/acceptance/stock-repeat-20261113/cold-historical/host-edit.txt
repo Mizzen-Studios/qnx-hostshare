@@ -1,0 +1,4 @@
+# cat /mnt/host/hello.txt; echo EDIT_RC=$?; echo EDIT_DONE
+HostShare host edit observed without rebuild.
+EDIT_RC=0
+EDIT_DONE

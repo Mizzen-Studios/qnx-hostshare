@@ -55,7 +55,10 @@ sh tools/run-native-suite.sh --image-kind stock --run-id cold-stock --midread
 
 New run-id per attempt; readonly seven-file corpus, timed host edit and explicit
 pending-read kill/error observation. No qtest, PIRQ writes, fallback or MSI-X retry.
-Native results will be only those in [stock-repeat evidence](docs/acceptance/stock-repeat-20261113/).
+Fresh [stock-repeat result](docs/acceptance/stock-repeat-20261113/RESULT.md): both
+images pass seven-file checksums, timed host edit, readonly mount and post-kill
+remount. N7 clean-stock mount PASS. **MIDREAD EIO gate BLOCKED:** actual native
+read returns -1/errno3, not EIO5; --midread intentionally exits1. No translation.
 The prior [N1c/idle-N5 result](docs/acceptance/irq-restart-20261113/receipt.json)
 remains accepted in its own scope. Its old stock dependency block is preserved,
 not a claim about the newly handed-off hashed stock image.

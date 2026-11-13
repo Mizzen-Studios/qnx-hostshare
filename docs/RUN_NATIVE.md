@@ -49,6 +49,16 @@ The stock preflight hard-checks IFS68bbe1b4.../disk0aee00c2... full hashes from
 upstream-handoff.json. The raw disk is snapshot=on; baseline hashes are checked
 before and after. No lesson ELF or modifications are injected into an IFS.
 
+## Measured result / expected failure
+
+Both exact commands have been executed from a fresh clean HTTPS clone. Data,
+seven-file corpus, host-edit and post-kill remount gates PASS on both images; N7
+new clean-stock mount PASS. The required MIDREAD EIO gate is BLOCKED: actual
+read returns -1/errno3, whereas EIO is5, on both images. Thus --midread exits1
+truthfully. It does not translate errno or infer EIO from server disappearance.
+See stock-repeat-20261113/RESULT.md and raw midread-result logs. Omitting
+--midread selects data gates only, not an EIO acceptance result.
+
 ## What is actually exercised
 
 - HOST2GiB, TCG256MiB, guest512MiB, CPU100%, nice15, smp1, swap0; reserve64MiB.

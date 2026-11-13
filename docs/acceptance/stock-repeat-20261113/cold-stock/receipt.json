@@ -1,0 +1,157 @@
+{
+  "status": "BLOCKED_GATE",
+  "source_sha": "44a2ffc3fdcd9a6de035d10f6bff134504826b1d",
+  "clean_checkout": true,
+  "caps": {
+    "cpu.max": "100000 100000",
+    "memory.max": "2147483648",
+    "memory.swap.max": "0"
+  },
+  "nice": 15,
+  "command": [
+    "qemu-system-x86_64",
+    "-machine",
+    "pc",
+    "-accel",
+    "tcg,tb-size=256",
+    "-cpu",
+    "max",
+    "-smp",
+    "1",
+    "-m",
+    "512",
+    "-display",
+    "none",
+    "-serial",
+    "stdio",
+    "-monitor",
+    "none",
+    "-no-reboot",
+    "-kernel",
+    "/home/ubuntu/qnx-host/guest/shared/edu-stock-control-1024-20261113/stock-output/ifs.bin",
+    "-drive",
+    "file=/home/ubuntu/qnx-host/guest/shared/edu-stock-control-1024-20261113/stock-output/disk-qemu,format=raw,if=ide,snapshot=on",
+    "-nic",
+    "none",
+    "-device",
+    "virtio-rng-pci",
+    "-fsdev",
+    "local,id=f0,path=/home/ubuntu/.openclaw/workspace/apps/qnx-hostshare/.local/cold-reader/qnx-hostshare/.local/corpus-cold-stock,security_model=none,readonly=on",
+    "-device",
+    "virtio-9p-pci,fsdev=f0,mount_tag=f0test,disable-legacy=on"
+  ],
+  "image_kind": "stock",
+  "image_sha256": "68bbe1b49a9b723c09d152773ee323ec6ab576eb29de933bfe3f08fdae21c753",
+  "disk_sha256": "0aee00c281f8eeb5b02c66555ed9517e317bb1503002a19dbf2b0155de336532",
+  "elf_sha256": "84bb0bd51836e8e9e6f06f1abd97221974e43a3fc5429ea60c7e66493d19e959",
+  "source_files": {
+    "core/hostshare.h": "23978f97e87b4c570b062d37add9b0ade3dc3d00bb1c2f104fab7a91b399f518",
+    "core/transport.c": "ea549067c359fbb32394d0dd940410b20d4a9699ea7a3d424e978753948534f9",
+    "core/protocol.c": "a5f7d75af4fada0a377eff7157884d917d26a32cf26db62686a24080c33152c8",
+    "native/qnx_hostshare.c": "7856f52a115407af265e641bcfbd795978ed90feff3a51ecd9e6c236b4914d9c",
+    "native/mount_checksum.c": "5f91860052d72ecd7163d7613e6ebf2afbce16f0eeb02a1deb7f236e4bf96333",
+    "native/hostshare_mount.h": "8f5af745ead1542fff7eae5e2824225f84dcd43ad2f6baf0aca261e5571e8d03"
+  },
+  "qtest": false,
+  "irq_routing_mutated": false,
+  "commands": [
+    "uname -a; mkdir -p /data/hostshare; stty -echo; echo HS_PREPARED",
+    ": > /data/hostshare/hostshare; echo COPY_READY",
+    "chmod 700 /data/hostshare/hostshare; echo HS_BYTES_BEGIN; od -An -v -tx1 /data/hostshare/hostshare; echo HS_BYTES_END",
+    "/data/hostshare/hostshare --pci-line; echo APP_RC=$?; echo PROBE_DONE",
+    "/data/hostshare/hostshare --pci-line --mount > /data/hostshare/mount.log 2>&1 & HS_PID=$!; sleep 2; cat /data/hostshare/mount.log; cat /mnt/host/hello.txt; echo CAT_RC=$?; ls -1 /mnt/host; echo LS_RC=$?; echo MOUNT_DONE",
+    "/data/hostshare/hostshare --checksum '/mnt/host/hello.txt'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "/data/hostshare/hostshare --checksum '/mnt/host/empty'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "/data/hostshare/hostshare --checksum '/mnt/host/one'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "/data/hostshare/hostshare --checksum '/mnt/host/4KiB'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "/data/hostshare/hostshare --checksum '/mnt/host/1MiB'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "/data/hostshare/hostshare --checksum '/mnt/host/nested/leaf.txt'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "/data/hostshare/hostshare --checksum '/mnt/host/unicode-\u03bb.txt'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "cat /mnt/host/hello.txt; echo EDIT_RC=$?; echo EDIT_DONE",
+    "echo forbidden > /mnt/host/hello.txt; echo WRITE_RC=$?; echo WRITE_DONE",
+    "kill -TERM $HS_PID; wait $HS_PID; echo STOP_RC=$?; cat /data/hostshare/mount.log; echo NORMAL_STOP_DONE",
+    "/data/hostshare/hostshare --pci-line --mount-pause-read > /data/hostshare/pause.log 2>&1 & PAUSE_PID=$!; sleep 2; cat /data/hostshare/pause.log; /data/hostshare/hostshare --read-once /mnt/host/1MiB > /data/hostshare/client.log 2>&1 & CLIENT_PID=$!; sleep 1; cat /data/hostshare/pause.log; cat /data/hostshare/client.log; echo MIDREAD_PENDING",
+    "kill -KILL $PAUSE_PID; wait $PAUSE_PID; echo SERVER_WAIT_RC=$?; wait $CLIENT_PID; echo CLIENT_WAIT_RC=$?; cat /data/hostshare/client.log; cat /data/hostshare/pause.log; echo MIDREAD_RESULT_DONE",
+    "/data/hostshare/hostshare --pci-line --mount > /data/hostshare/remount.log 2>&1 & AGAIN_PID=$!; sleep 2; cat /data/hostshare/remount.log; cat /mnt/host/hello.txt; echo REMOUNT_CAT_RC=$?; /data/hostshare/hostshare --checksum /mnt/host/1MiB; echo REMOUNT_CHECK_RC=$?; kill -TERM $AGAIN_PID; wait $AGAIN_PID; echo REMOUNT_STOP_RC=$?; cat /data/hostshare/remount.log; echo REMOUNT_DONE"
+  ],
+  "reserve_bytes": 67108864,
+  "native_copy_byte_exact": true,
+  "copy_bytes": 42736,
+  "transfer_route": "serial builtin printf octal128; exact od hex readback",
+  "probe": {
+    "passed": true
+  },
+  "mount": {
+    "passed": true
+  },
+  "corpus": {
+    "hello.txt": {
+      "passed": true,
+      "observed_cksum": 948244384,
+      "observed_size": 41
+    },
+    "empty": {
+      "passed": true,
+      "observed_cksum": 4294967295,
+      "observed_size": 0
+    },
+    "one": {
+      "passed": true,
+      "observed_cksum": 12738659,
+      "observed_size": 1
+    },
+    "4KiB": {
+      "passed": true,
+      "observed_cksum": 300014538,
+      "observed_size": 4096
+    },
+    "1MiB": {
+      "passed": true,
+      "observed_cksum": 2572415250,
+      "observed_size": 1048576
+    },
+    "nested/leaf.txt": {
+      "passed": true,
+      "observed_cksum": 3989433292,
+      "observed_size": 19
+    },
+    "unicode-\u03bb.txt": {
+      "passed": true,
+      "observed_cksum": 2157407375,
+      "observed_size": 13
+    }
+  },
+  "host_edit": {
+    "passed": true,
+    "elapsed_seconds": 0.13649908802472055,
+    "sha256": "6507e3dc36ef5bff95f64ffefe3b50083789815e1415a60c558e3d8c35efd12c",
+    "rebuild": false
+  },
+  "readonly": {
+    "passed": true
+  },
+  "normal_stop": {
+    "passed": true
+  },
+  "midread": {
+    "handler_pending_before_kill": true,
+    "scope": "Explicit diagnostic pause in read handler before RPC; actual blocked POSIX read. NOT active virtio DMA safety.",
+    "server_wait_rc": 137,
+    "client_wait_rc": 3,
+    "observed_read_n": -1,
+    "observed_errno": 3,
+    "EIO_constant": 5,
+    "elapsed_seconds": 1.139556,
+    "passed": false
+  },
+  "remount": {
+    "passed": true
+  },
+  "blocker": "Pending-read death did not produce observed n=-1 errno=EIO; actual result retained, no translation/inference.",
+  "qemu_exit_rc": 0,
+  "stopped_reaped": true,
+  "memory_events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\n",
+  "memory_peak": 597225472,
+  "disk_sha256_after": "0aee00c281f8eeb5b02c66555ed9517e317bb1503002a19dbf2b0155de336532",
+  "image_sha256_after": "68bbe1b49a9b723c09d152773ee323ec6ab576eb29de933bfe3f08fdae21c753"
+}

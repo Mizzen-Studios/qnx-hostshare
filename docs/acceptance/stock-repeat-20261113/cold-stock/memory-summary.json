@@ -1,0 +1,13 @@
+{
+  "provenance": "Derived summary; full original immutable runner memory log retained at private workspace path",
+  "raw_path": "/home/ubuntu/.openclaw/workspace/apps/qnx-hostshare/.local/cold-reader/qnx-hostshare/.local/user-runs/cold-stock/memory.jsonl",
+  "raw_sha256": "5e0e0c6901813030e73a0d552f7542a35b380bce17ca3dd78de84d9309afe909",
+  "raw_bytes": 26975646,
+  "samples": 167828,
+  "max_current": 597225472,
+  "max_peak": 597225472,
+  "reserve_bytes": 67108864,
+  "cap_bytes": 2147483648,
+  "reserve_violations": 0,
+  "event_violations": 0
+}
