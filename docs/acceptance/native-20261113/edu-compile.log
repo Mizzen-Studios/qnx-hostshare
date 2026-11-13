@@ -1,0 +1,108 @@
+job 1794533976365229864
+/mnt/host/hostshare-native-20261113/edu-handoff/step3-wrong.c: OK
+/home/qnx/qnx800/host/linux/x86_64/usr/bin/qcc
+EDU_STOCK_COMPILE phase=before_compile
+               total        used        free      shared  buff/cache   available
+Mem:          468212      135772       20360         968      334120      332440
+Swap:              0           0           0
+Filename				Type		Size		Used		Priority
+    PID COMMAND           RSS STAT
+    362 multipathd      27300 SLsl
+    779 unattended-upgr 23052 Ssl
+    305 systemd-journal 17248 S<s
+      1 systemd         13296 Ss
+    512 systemd-resolve 13036 Ss
+    817 ModemManager    13012 Ssl
+    620 systemd-network  9468 Ss
+    696 systemd-logind   8896 Ss
+    673 polkitd          8160 Ssl
+    515 systemd-timesyn  7912 Ssl
+    368 systemd-udevd    7800 Ss
+EDU_STOCK_COMPILE phase=after_compile
+               total        used        free      shared  buff/cache   available
+Mem:          468212      137968       17684         968      334600      330244
+Swap:              0           0           0
+Filename				Type		Size		Used		Priority
+    PID COMMAND           RSS STAT
+    362 multipathd      27300 SLsl
+    779 unattended-upgr 23052 Ssl
+    305 systemd-journal 17248 S<s
+      1 systemd         13296 Ss
+    512 systemd-resolve 13036 Ss
+    817 ModemManager    13012 Ssl
+    620 systemd-network  9468 Ss
+    696 systemd-logind   8896 Ss
+    673 polkitd          8160 Ssl
+    515 systemd-timesyn  7912 Ssl
+    368 systemd-udevd    7800 Ss
+EDU_STOCK_COMPILE phase=after_link
+               total        used        free      shared  buff/cache   available
+Mem:          468212      135660       19948         968      334644      332552
+Swap:              0           0           0
+Filename				Type		Size		Used		Priority
+    PID COMMAND           RSS STAT
+    362 multipathd      27300 SLsl
+    779 unattended-upgr 23052 Ssl
+    305 systemd-journal 17248 S<s
+      1 systemd         13296 Ss
+    512 systemd-resolve 13036 Ss
+    817 ModemManager    13012 Ssl
+    620 systemd-network  9468 Ss
+    696 systemd-logind   8896 Ss
+    673 polkitd          8160 Ssl
+    515 systemd-timesyn  7912 Ssl
+    368 systemd-udevd    7800 Ss
+/mnt/host/hostshare-native-20261113/edu-handoff/step6-own.c: OK
+/home/qnx/qnx800/host/linux/x86_64/usr/bin/qcc
+EDU_STOCK_COMPILE phase=before_compile
+               total        used        free      shared  buff/cache   available
+Mem:          468212      135636       19964         968      334652      332576
+Swap:              0           0           0
+Filename				Type		Size		Used		Priority
+    PID COMMAND           RSS STAT
+    362 multipathd      27300 SLsl
+    779 unattended-upgr 23052 Ssl
+    305 systemd-journal 17248 S<s
+      1 systemd         13296 Ss
+    512 systemd-resolve 13036 Ss
+    817 ModemManager    13012 Ssl
+    620 systemd-network  9468 Ss
+    696 systemd-logind   8896 Ss
+    673 polkitd          8160 Ssl
+    515 systemd-timesyn  7912 Ssl
+    368 systemd-udevd    7800 Ss
+EDU_STOCK_COMPILE phase=after_compile
+               total        used        free      shared  buff/cache   available
+Mem:          468212      139116       16196         968      334940      329096
+Swap:              0           0           0
+Filename				Type		Size		Used		Priority
+    PID COMMAND           RSS STAT
+    362 multipathd      27300 SLsl
+    779 unattended-upgr 23052 Ssl
+    305 systemd-journal 17248 S<s
+      1 systemd         13296 Ss
+    512 systemd-resolve 13036 Ss
+    817 ModemManager    13012 Ssl
+    620 systemd-network  9468 Ss
+    696 systemd-logind   8896 Ss
+    673 polkitd          8160 Ssl
+    515 systemd-timesyn  7912 Ssl
+    368 systemd-udevd    7800 Ss
+EDU_STOCK_COMPILE phase=after_link
+               total        used        free      shared  buff/cache   available
+Mem:          468212      137188       18124         968      334940      331024
+Swap:              0           0           0
+Filename				Type		Size		Used		Priority
+    PID COMMAND           RSS STAT
+    362 multipathd      27300 SLsl
+    779 unattended-upgr 23052 Ssl
+    305 systemd-journal 17248 S<s
+      1 systemd         13296 Ss
+    512 systemd-resolve 13036 Ss
+    817 ModemManager    13012 Ssl
+    620 systemd-network  9468 Ss
+    696 systemd-logind   8896 Ss
+    673 polkitd          8160 Ssl
+    515 systemd-timesyn  7912 Ssl
+    368 systemd-udevd    7800 Ss
+
