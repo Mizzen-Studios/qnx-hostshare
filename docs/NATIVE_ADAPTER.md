@@ -1,3 +1,8 @@
+> Historical F1/F2 description below. Current source also includes the bounded
+> read-only resource-manager follow-up described in [MOUNT_WAVE.md](MOUNT_WAVE.md).
+> Current standalone build scripts are `tools/mount-sdk-build*.sh`; they also link
+> `native/mount_checksum.c`. Historical build scripts/receipts remain historical.
+
 # QNX8 HostShare diagnostic adapter (Nov13)
 
 native/qnx_hostshare.c is original native QNX adapter source, not the Python

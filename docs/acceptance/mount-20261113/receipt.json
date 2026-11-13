@@ -1,0 +1,145 @@
+{
+  "observed_epoch": 1794559794.6468463,
+  "baseline_preserved": "790e9b2dc45eaa1de67d6f988394afd1b2e1ec43",
+  "source_commit": "145c9e0300a1bcc6b6c30c828aed78dda13be428",
+  "status": "PASS_MOUNT_CORPUS",
+  "n1": {
+    "--pci-line": {
+      "passed": false,
+      "app_rc": 1,
+      "routing_mutated": false
+    },
+    "--msix": {
+      "passed": false,
+      "app_rc": 1,
+      "routing_mutated": false
+    }
+  },
+  "n1_evidence": "native2/receipt.json; same ELF/source, NOT rerun in native3",
+  "n2": {
+    "passed": true
+  },
+  "n3": {
+    "hello.txt": {
+      "passed": true,
+      "observed_cksum": 948244384,
+      "observed_size": 41
+    },
+    "empty": {
+      "passed": true,
+      "observed_cksum": 4294967295,
+      "observed_size": 0
+    },
+    "one": {
+      "passed": true,
+      "observed_cksum": 12738659,
+      "observed_size": 1
+    },
+    "4KiB": {
+      "passed": true,
+      "observed_cksum": 300014538,
+      "observed_size": 4096
+    },
+    "1MiB": {
+      "passed": true,
+      "observed_cksum": 2572415250,
+      "observed_size": 1048576
+    },
+    "nested/leaf.txt": {
+      "passed": true,
+      "observed_cksum": 3989433292,
+      "observed_size": 19
+    },
+    "unicode-\u03bb.txt": {
+      "passed": true,
+      "observed_cksum": 2157407375,
+      "observed_size": 13
+    }
+  },
+  "n4": {
+    "passed": true,
+    "elapsed_seconds": 0.1685530620161444,
+    "new_sha256": "6507e3dc36ef5bff95f64ffefe3b50083789815e1415a60c558e3d8c35efd12c",
+    "rebuild": false
+  },
+  "readonly": {
+    "passed": true
+  },
+  "routing_workaround_used_final_attempt": true,
+  "sdk_sampled_peak_bytes": [
+    1316786176,
+    888369152
+  ],
+  "native_peak_bytes": [
+    927485952,
+    784404480,
+    851124224
+  ],
+  "cleanup": {
+    "all_guests_stopped_reaped": true,
+    "qemu_count": 0,
+    "lease": "FREE",
+    "next_slot": "EDU via parent coordination; no EDU repo changes"
+  },
+  "native_command_parity": "identical native1/native2/native3; original attempt3 differs only fresh corpus path",
+  "limits": "SDK2GiB/TCG256MiB; native original argv and stricter1GiB; guest512MiB, CPU100%, nice15, smp1, swap cap0, reserve64MiB",
+  "external_review": "timed out without findings; not completed review",
+  "scope": "bounded synthetic readonly mount; no production filesystem, stock-image, hardware, concurrency, reconnect or broad-coherency claim",
+  "proofs": {
+    "ATTEMPT1.md": "1e44f973d7825e7b2968516e8efb77be7e08afb0519a9b4003ae451e87b5e8d4",
+    "ATTEMPT2.md": "6305a84d3eec562e73690f4dad93327ad4c33aac1f6da3007862a26046878e18",
+    "BOOT_STARTED": "f2c023a7568d77357c48c03f0e606243e9306569e47f38ac4f6dc4ea5327433d",
+    "RESULT.md": "43155525c0191d7d1f7d6731ce634ab7e339f7a6dce29dde4efe1553ed751c1e",
+    "build-source-hashes.json": "949f8f461960d6110569d888c4d2cbfb6d34e8612429a2c868b9edb0556b460c",
+    "build1.log": "db83a01c60ea1626a6f5027b2890fd6bbca125b069a507767f8b9cee330c067d",
+    "build2-source-hashes.json": "3bac74033e4255a1f5332f2868d8c004c18866fd64e6a853171bd5b1a38d6f80",
+    "build2.log": "1ea843b504451ac1e49edf38ca76931693049891690434b039e2906267229a02",
+    "command-comparison.json": "999ccb739c5f5966acc189c7d16dc2c1d711709863ede7aa3126d1678486c39b",
+    "controller-sha256.txt": "a69bcc6af88f7be6d0410ef90d7600f2939ed12a447ec8ad9599d00ebcb0c8c3",
+    "corpus.json": "58bf4c917694bdbc0bc821cd6a1d8a70453b8f0b86f928b817d507b10819106a",
+    "harness-hashes.json": "7252c8b94f77d51996773cc062f4965882cdf0ebe60077d7294b07e9f0faafee",
+    "host-tests.txt": "be1bb619d0b660ab81d43e58a091f9b2e346b4d6c2b92a30d96b2ad59a2fa442",
+    "installed-api-hashes.json": "90ad8a2e9731465c970e6901c7e3eb8c94b9e7b3b17877fd2d3b4f3e860960b3",
+    "inventory-exit.txt": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "native1/live-samples.jsonl": "7c802e5e8c703f65d55b5c9948e344110ea70afa30296f6bc328b7915fab929d",
+    "native1/msix.txt": "0f424b6e99b1505e42dc496c6d5428b50c2c85f4e99e39b60e9f7c83e4fab34a",
+    "native1/n2.txt": "0decaf969c8984800faad69f6ba1294505bb8c15e87ee98dba9717f9267c1ea5",
+    "native1/pci-line.txt": "75036455f3a2c026cd101b3a1152f716faec13121eafe17690486a5bf2b6d7c4",
+    "native1/readonly.txt": "956bd3b80ab8bc746350bfbb8ddad3553e50632a87b35d5b60057a203e4c1a84",
+    "native1/serial.txt": "5f578a552c4ab846179442ea9b31df1975c517e5638c13ac6e8cc0893f123490",
+    "native2/listing-adjudication.json": "8f6080f4b6597015e40470ab7f10573eb1fe73aad3aed439a18440be519b5656",
+    "native2/live-samples.jsonl": "743afbe119b962d79e8cd1f6903d935cbcd7f6e80c61619a5bc257bf5c229f75",
+    "native2/msix.txt": "0f424b6e99b1505e42dc496c6d5428b50c2c85f4e99e39b60e9f7c83e4fab34a",
+    "native2/n2.txt": "0828709b798648aa22efd387068724ac6781700708dab7b3d775f75a6cfdb8e3",
+    "native2/pci-line.txt": "2f370df84be1d1e2a8623dafb0b84ddf2ce97b05b4eec4603c53136ceb9637c0",
+    "native2/readonly.txt": "85bc04883db6ed1268b2323339beb86aae129c60b25be42de2e55531fa564715",
+    "native2/serial.txt": "87df056d1459309f43023057864d4b6663bf919ca8f85100d32a91e794560718",
+    "native3/checksum-1MiB.txt": "a06c014a160c0cf808e7f8a142606e9f994a8ff699cc9404600f20c34a1d1010",
+    "native3/checksum-4KiB.txt": "35dd6cd642e18c1faf5345b5dc22d724d271353e313b0e7f5c99dd3762d0b897",
+    "native3/checksum-empty.txt": "5390ed0fec173c2c0825dac061401c5522a7f0ec3c8475b6bf83797cb1eb2d93",
+    "native3/checksum-hello.txt.txt": "0a13723ecaba459e39aa42b2ee69958c775e3505dd664e211b9501c61e2848ae",
+    "native3/checksum-nested_leaf.txt.txt": "e103de5736bacb7e53c4820a9f50ee660f9e64ece1b91310015d1d9bc97243aa",
+    "native3/checksum-one.txt": "5ce1cd6071c5e8dd04a11b2c8768b33159f1ba66095966deae669fdc5f43e579",
+    "native3/checksum-unicode-\u03bb.txt.txt": "bc876ce26e3eb68f849a37e5c831851f86b52df0ff97e9694f7b11d39f696682",
+    "native3/n2.txt": "0828709b798648aa22efd387068724ac6781700708dab7b3d775f75a6cfdb8e3",
+    "native3/n4.txt": "e2873b7e61af874aec902254d32aa220a618cba188e909f9e69f08ab9ee17f6d",
+    "native3/readonly.txt": "3cbb98166952ab87bb620358ced6a941d4fad980ae3d4a5fbbabfd2c7c7ce768",
+    "native3/serial.txt": "045052b73fdc8ddf1641a3d285411b750f593f110323629124a0997ab2407e67",
+    "sdk-launch.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sdk-memory.jsonl": "52b77664cb3ec12683f8549ee6853d6a13fb833293203b8bd7eade0e9592497f",
+    "sdk-owner.json": "f7296cab93c8050d42e66a98f517ef6940de629fda75349fea349339735c5fc6",
+    "sdk-qmp-jit.json": "112d171e376294e62b9bb76dc0de8a4c3a2a0af1b70836c374686c69b1b1b6a8",
+    "sdk-stop.log": "c68328a1db1a5e84f064c530f569a63395faeff4eb3e1f71815552f0ad08f4d0",
+    "sdk2/BOOT_STARTED": "d5662057ed7a1f568c0a2891e7892e75f86f9b9f32befade4802369bd92e6d1b",
+    "sdk2/inventory-exit.txt": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "sdk2/sdk-launch.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sdk2/sdk-memory.jsonl": "a8cc6891884efb42a099861ee2821e98f5bc06853f00c403dcf5bf4ba054dde3",
+    "sdk2/sdk-owner.json": "c54e1bd23156a2fd262e826588d04e19ebe8fa7d0db8403c48ba07a7a48e3634",
+    "sdk2/sdk-qmp-jit.json": "45c403a8bff2a6872195aab0dafb77b7cfa200f2f76b092d2087ea9f06f90637",
+    "sdk2/sdk-stop.log": "c68328a1db1a5e84f064c530f569a63395faeff4eb3e1f71815552f0ad08f4d0",
+    "serial-preservation.json": "0b46957c13a699705d77bd64ec17dd9ccb0bfacf6417d65eac2a1da12d89fa6f",
+    "native1/receipt.json": "3f9526e3c278a284c24a1a1ca20324b2d4d6baddfbfd0d353c2d9f8bb3750d0d",
+    "native2/receipt.json": "a9bbef4f41be2a20854f67f2d55ef0a76dae23e541ef261d20114c57cd3871fa",
+    "native3/receipt.json": "3160be8c4a86be23a7e8d2f17c0c59a4c0e2ef9ce3f7f1731a647fd665ff6cc3"
+  }
+}

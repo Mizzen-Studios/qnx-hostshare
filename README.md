@@ -1,7 +1,8 @@
 # QNX HostShare
 
-Private Apache-2.0 feasibility project. No production mount/resource-manager
-filesystem driver is delivered.
+Private Apache-2.0 feasibility project. No production filesystem driver is
+delivered. The bounded read-only resource-manager follow-up is documented in
+[Mount wave](docs/MOUNT_WAVE.md); only its fresh receipts establish native status.
 
 - F0: real QNX8 pci-tool observed virtio-9p. Original [receipt](docs/acceptance/f0/receipt.json) unchanged.
 - Host reference work: [portable C core](docs/C_CORE.md), Python models and host tests.
@@ -23,3 +24,8 @@ No F3+ work or production-readiness claim. Kill gate: F1+F2 native PASS by
 readonly41-byte synthetic file read; app rc0. Requires explicitly recorded own-device
 PIRQ_D-toIRQ10 routing. See [result and limits](docs/acceptance/native-20261113/RESULT.md).
 Not default-routing, production filesystem or hardware-support acceptance.
+
+**Mount follow-up:** N1 default routing still FAIL. N2/N3/N4 bounded native PASS
+with explicitly documented IRQ10 workaround: real read-only resource manager,
+seven mounted-file checksums, host edit observed without rebuild. See
+[result and limitations](docs/acceptance/mount-20261113/RESULT.md).

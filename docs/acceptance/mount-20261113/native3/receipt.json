@@ -1,0 +1,155 @@
+{
+  "status": "PASS_MOUNT_CORPUS",
+  "source_sha": "145c9e0300a1bcc6b6c30c828aed78dda13be428",
+  "caps": {
+    "cpu.max": "100000 100000",
+    "memory.max": "1073741824",
+    "memory.swap.max": "0"
+  },
+  "command": [
+    "qemu-system-x86_64",
+    "-machine",
+    "pc,accel=tcg",
+    "-cpu",
+    "max",
+    "-smp",
+    "1",
+    "-m",
+    "512",
+    "-display",
+    "none",
+    "-serial",
+    "stdio",
+    "-monitor",
+    "none",
+    "-no-reboot",
+    "-kernel",
+    "/home/ubuntu/qnx-host/guest/shared/incident-20261108/incident.ifs",
+    "-drive",
+    "file=/home/ubuntu/qnx-host/guest/shared/qnx-native/disk-qemu,format=raw,if=ide,snapshot=on",
+    "-nic",
+    "user,model=virtio-net-pci",
+    "-fsdev",
+    "local,id=f0,path=/home/ubuntu/.openclaw/workspace/apps/qnx-hostshare/.local/mount-20261113/corpus,security_model=none,readonly=on",
+    "-device",
+    "virtio-9p-pci,fsdev=f0,mount_tag=f0test,disable-legacy=on",
+    "-qtest",
+    "unix:/home/ubuntu/.openclaw/workspace/apps/qnx-hostshare/.local/hostshare-qtest.sock,server=on,wait=off"
+  ],
+  "image_sha256": "764e7e9f3ffcb74e851dce896a513c85abe16589d918937f3ba5157891882a22",
+  "disk_sha256": "903598ddfcc0a3fc2f4a1907872676033f29e333cd02b5db4d5f460cd387f516",
+  "elf_sha256": "715b1ed187904e6c38ce43d0799cd921acfecd27f8da776557351ccd265f60db",
+  "native_source_sha256": "0e2508713f016bca5f5ec3372a607267d656aa73a0150eb40be7f9e8804b6ded",
+  "source_files": {
+    "native/qnx_hostshare.c": "0e2508713f016bca5f5ec3372a607267d656aa73a0150eb40be7f9e8804b6ded",
+    "native/mount_checksum.c": "2c2ff58fdded122ed853f33d61c16fdd068b055bdebd09fff211c312215c9e9c",
+    "native/hostshare_mount.h": "71cffa07d3c309bbd3c2d40d57e9e5a17cd08bf6348f2ba81d5920b6ea6ba32b",
+    "core/hostshare.h": "23978f97e87b4c570b062d37add9b0ade3dc3d00bb1c2f104fab7a91b399f518",
+    "core/transport.c": "ea549067c359fbb32394d0dd940410b20d4a9699ea7a3d424e978753948534f9",
+    "core/protocol.c": "a5f7d75af4fada0a377eff7157884d917d26a32cf26db62686a24080c33152c8"
+  },
+  "corpus_sha256": "b22af944a505a8ede078761309ce122faccb453a810939fc81ac5a87f6033eac",
+  "prebuilt_source_record": "d913faffb3ebd83d11f65c44c50437154b3450ec",
+  "native_exit_rc": null,
+  "commands": [
+    "uname -a; pidin ar; pci-tool -v; echo PROBE_BASE_DONE",
+    ": > /data/home/root/hostshare; echo COPY_READY",
+    "chmod 700 /data/home/root/hostshare; echo HS_BINARY_BEGIN; cat /data/home/root/hostshare; echo; echo HS_BINARY_END",
+    "/data/home/root/hostshare --pci-api --mount > /data/home/root/mount.log 2>&1 & echo HS_MOUNT_PID=$!; sleep 2; cat /data/home/root/mount.log; echo MOUNT_START_DONE",
+    "cat /mnt/host/hello.txt; echo CAT_RC=$?; ls -1 /mnt/host; echo LS_RC=$?; echo N2_DONE",
+    "echo forbidden > /mnt/host/hello.txt; echo WRITE_RC=$?; echo READONLY_DONE",
+    "/data/home/root/hostshare --checksum '/mnt/host/hello.txt'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "/data/home/root/hostshare --checksum '/mnt/host/empty'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "/data/home/root/hostshare --checksum '/mnt/host/one'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "/data/home/root/hostshare --checksum '/mnt/host/4KiB'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "/data/home/root/hostshare --checksum '/mnt/host/1MiB'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "/data/home/root/hostshare --checksum '/mnt/host/nested/leaf.txt'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "/data/home/root/hostshare --checksum '/mnt/host/unicode-\u03bb.txt'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "cat /mnt/host/hello.txt; echo EDIT_RC=$?; echo EDIT_DONE",
+    "cat /data/home/root/mount.log; echo MOUNT_LOG_DONE"
+  ],
+  "copy_route": "ksh builtin printf %b octal chunks128 to snapshot data volume; no image build",
+  "copy_bytes": 37928,
+  "native_copy_byte_exact": true,
+  "copy_verification": "readback cat bytes compared to ELF with explicit tty ONLCR transformation; no target hash utility required",
+  "n1": {
+    "--pci-line": {
+      "passed": false,
+      "app_rc": 1,
+      "routing_mutated": false
+    },
+    "--msix": {
+      "passed": false,
+      "app_rc": 1,
+      "routing_mutated": false
+    }
+  },
+  "n1_evidence": "native2/receipt.json; same ELF/source, NOT rerun in native3",
+  "irq_routing": {
+    "device": {
+      "slot": 4,
+      "id": 273226484,
+      "irq": 267
+    },
+    "pirq_index": 3,
+    "original": 185272842,
+    "updated": 168495626,
+    "irq": 10,
+    "scope": "only own9p PIRQ route per existing QNX PC native collector pattern; no CAN device"
+  },
+  "mount_mode": "--pci-api",
+  "listing_encoding": "QNX ls octal escapes decoded to UTF-8 for exact-name comparison; raw output retained",
+  "n2": {
+    "passed": true
+  },
+  "readonly": {
+    "passed": true
+  },
+  "n3": {
+    "hello.txt": {
+      "passed": true,
+      "observed_cksum": 948244384,
+      "observed_size": 41
+    },
+    "empty": {
+      "passed": true,
+      "observed_cksum": 4294967295,
+      "observed_size": 0
+    },
+    "one": {
+      "passed": true,
+      "observed_cksum": 12738659,
+      "observed_size": 1
+    },
+    "4KiB": {
+      "passed": true,
+      "observed_cksum": 300014538,
+      "observed_size": 4096
+    },
+    "1MiB": {
+      "passed": true,
+      "observed_cksum": 2572415250,
+      "observed_size": 1048576
+    },
+    "nested/leaf.txt": {
+      "passed": true,
+      "observed_cksum": 3989433292,
+      "observed_size": 19
+    },
+    "unicode-\u03bb.txt": {
+      "passed": true,
+      "observed_cksum": 2157407375,
+      "observed_size": 13
+    }
+  },
+  "n4": {
+    "passed": true,
+    "elapsed_seconds": 0.1685530620161444,
+    "new_sha256": "6507e3dc36ef5bff95f64ffefe3b50083789815e1415a60c558e3d8c35efd12c",
+    "rebuild": false
+  },
+  "qemu_exit_rc": 0,
+  "stopped_reaped": true,
+  "memory_events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\n",
+  "memory_peak": "851124224\n"
+}

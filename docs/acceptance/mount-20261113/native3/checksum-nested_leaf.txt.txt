@@ -1,0 +1,4 @@
+# /data/home/root/hostshare --checksum '/mnt/host/nested/leaf.txt'; echo CHECK_RC=$?; echo CHECK_DONE
+HOSTSHARE CHECKSUM 3989433292 19 /mnt/host/nested/leaf.txt
+CHECK_RC=0
+CHECK_DONE

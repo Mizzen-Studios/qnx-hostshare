@@ -1,0 +1,13 @@
+# cat /mnt/host/hello.txt; echo CAT_RC=$?; ls -1 /mnt/host; echo LS_RC=$?; echo N2_DONE
+HostShare F0 public synthetic test only.
+CAT_RC=0
+1MiB
+4KiB
+empty
+hello.txt
+nested
+one
+unicode-\316\273.txt
+LS_RC=0
+N2_DONE
+# 

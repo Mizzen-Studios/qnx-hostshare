@@ -1,0 +1,12 @@
+{
+  "comparison_to": "790e9b2 native attempt3",
+  "differences": [
+    {
+      "index": 23,
+      "old": "local,id=f0,path=/home/ubuntu/.openclaw/workspace/apps/qnx-hostshare/.local/native-20261113/corpus,security_model=none,readonly=on",
+      "new": "local,id=f0,path=/home/ubuntu/.openclaw/workspace/apps/qnx-hostshare/.local/mount-20261113/corpus,security_model=none,readonly=on"
+    }
+  ],
+  "device_accelerator_cpu_memory_options_unchanged": true,
+  "note": "Fresh corpus path only. N1 performs no qtest routing writes. Workaround after failed N1 is separately logged. Native retains prior stricter1GiB cap and original accelerator argv; SDK cache256MiB explicitly configured and QMP verified."
+}

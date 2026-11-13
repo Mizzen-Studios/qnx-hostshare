@@ -1,0 +1,7 @@
+{
+  "raw_receipt_preserved": true,
+  "original_automated_gate": false,
+  "reason": "QNX ls escapes UTF-8 filename bytes as octal; native directory read itself completed successfully",
+  "decoded_names_verified": true,
+  "n3": "NOT_RUN in native2; fresh unchanged-ELF mounted corpus run required"
+}

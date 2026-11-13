@@ -1,0 +1,18 @@
+{
+  "status": "REQUESTED_STOP",
+  "boot_attempts": 1,
+  "reserve_bytes": 67108864,
+  "pid": 572153,
+  "cmdline": "qemu-system-x86_64 -machine q35 -accel tcg,tb-size=256 -cpu max -smp 1 -m 512 -display none -no-reboot -serial stdio -monitor none -qmp unix:/home/ubuntu/qnx-host/guest/qmp.sock,server=on,wait=off -drive file=/home/ubuntu/qnx-host/guest/guest.qcow2,format=qcow2,if=virtio -drive file=/home/ubuntu/qnx-host/guest/seed.iso,format=raw,media=cdrom,readonly=on -nic user,model=virtio-net-pci -virtfs local,path=/home/ubuntu/qnx-host/guest/shared,mount_tag=hostshare,security_model=mapped-xattr,id=shared ",
+  "nice": 15,
+  "caps": {
+    "cpu.max": "100000 100000",
+    "memory.max": "2147483648",
+    "memory.swap.max": "0"
+  },
+  "stop_rc": 0,
+  "owner_child_rc": 0,
+  "samples": 220,
+  "peak_cgroup_bytes": 888369152,
+  "stopped_reaped": true
+}

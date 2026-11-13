@@ -5,8 +5,8 @@ Source c09c566; ELF b242f3779774b753f33d9232d663ba026a158b3c3e43fbd1edc20ccf244f
 * N1 PCI line11: real Tversion IRQ completion, then a pulse with ISR0 and unchanged
   used index1. The first implementation rejected this shared/duplicate pulse.
   No routing mutations before either N1 probe.
-* N1 MSI-X: installed PCI capability-enable route rejected configuration with
-  PCI_ERR_IRQ_CFG. This is not evidence of working MSI-X.
+* N1 MSI-X: installed PCI MSI-X setup returned
+  PCI_ERR_IRQ_CFG (individual setup call not logged). This is not evidence of working MSI-X.
 * Authorized fallback changed only own PIRQ_D to IRQ10, separately recorded.
 * Actual resource-manager cat returned original41 bytes with rc0. Write open
   rejected EROFS and host checksum unchanged. Directory ls rc0 returned no entries,

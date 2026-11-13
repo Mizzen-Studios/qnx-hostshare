@@ -1,0 +1,1 @@
+{"observed_epoch": 1794559407.422378, "nice": 15, "caps": {"cpu.max": "100000 100000", "memory.max": "1073741824", "memory.swap.max": "0"}, "memory": {"memory.current": "514088960", "memory.peak": "514486272", "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0", "memory.swap.current": "0"}}

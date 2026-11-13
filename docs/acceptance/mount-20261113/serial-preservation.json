@@ -1,0 +1,23 @@
+{
+  "note": "Own ELF copy commands redacted; readback bytes outside Git; gate output retained unchanged. Readback compared with ELF accounting for tty ONLCR.",
+  "attempts": {
+    "native1": {
+      "private_raw_sha256": "0e12ee686b9b079ba48b4acaca98e5f96be28ab09de98b91f046303451771824",
+      "private_elf_readback_sha256": "6e34802ea7f9bb646930c24ff42478e9accdac1d179667cf75ccea992f6cb6fb",
+      "committed_redacted_serial_sha256": "5f578a552c4ab846179442ea9b31df1975c517e5638c13ac6e8cc0893f123490",
+      "native_copy_byte_exact": true
+    },
+    "native2": {
+      "private_raw_sha256": "4308d93fe79c41f21a08cce958bcaa7b66dad36cba0217cac30045d759b1057b",
+      "private_elf_readback_sha256": "2e5444f3054aac08491c40312ff95f5b5fc7d7daafca5bc3815243adbddb68bc",
+      "committed_redacted_serial_sha256": "87df056d1459309f43023057864d4b6663bf919ca8f85100d32a91e794560718",
+      "native_copy_byte_exact": true
+    },
+    "native3": {
+      "private_raw_sha256": "9e0a477eb2b7e989be9da197890332af9c57b2eee21862b01b3839a858e20e69",
+      "private_elf_readback_sha256": "2e5444f3054aac08491c40312ff95f5b5fc7d7daafca5bc3815243adbddb68bc",
+      "committed_redacted_serial_sha256": "045052b73fdc8ddf1641a3d285411b750f593f110323629124a0997ab2407e67",
+      "native_copy_byte_exact": true
+    }
+  }
+}
