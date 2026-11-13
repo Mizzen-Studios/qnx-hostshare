@@ -1,0 +1,7 @@
+# /data/home/root/hostshare --msix; echo HOSTSHARE_APP_RC=$?; echo PROBE_DONE
+HOSTSHARE NATIVE BEGIN
+HOSTSHARE MSIX set_nirq FAIL
+HOSTSHARE NATIVE RC=1 pci=Requested Interrupt Configuration Is Invalid Or Previously Allocated Interrupts Could Not Be Released [(PCI_ERR_IRQ_CFG)] errno=2
+HOSTSHARE_APP_RC=1
+PROBE_DONE
+# 

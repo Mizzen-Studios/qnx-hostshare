@@ -1,0 +1,21 @@
+/data/home/root/hostshare --pci-line --mount-drop > /data/home/root/drop.log 2>&1 & HS_DROP_PID=$!; echo HS_DROP_PID=$HS_DROP_PID; sleep 2; cat /data/home/root/drop.log; cat /mnt/host/hello.txt; echo DROP_CAT_RC=$?; /data/home/root/hostshare --checksum /mnt/host/hello.txt; echo DROP_CHECK_RC=$?; pidin -p $HS_DROP_PID info; echo DROP_DONE
+[1] 3178498
+HS_DROP_PID=3178498
+HOSTSHARE NATIVE BEGIN
+HOSTSHARE IRQ api=10 config=11
+HOSTSHARE F1 READY tag=f0test features=100000001 irq=11 dma=1f821000
+HOSTSHARE IRQ_PULSE type=100 reply=101 bytes=21
+HOSTSHARE ISR_HINT_ZERO used=2
+HOSTSHARE SHARED_PULSES ignored=4
+HOSTSHARE IRQ_PULSE type=104 reply=105 bytes=20
+HOSTSHARE PRIVILEGE uid=65534 euid=65534 gid=65534 IO_REACQUIRE_RC=-1 errno=1 ROOT_REACQUIRE_RC=-1 errno=1
+HOSTSHARE ABILITIES deny-lock IO,MEM_PHYS,PATHSPACE root+nonroot; INTERRUPT explicitly retained nonroot for existing IRQ; other abilities NOT exhaustively audited
+HOSTSHARE MOUNT READY /mnt/host READONLY
+HostShare F0 public synthetic test only.
+DROP_CAT_RC=0
+HOSTSHARE CHECKSUM 948244384 41 /mnt/host/hello.txt
+DROP_CHECK_RC=0
+CPU:X86_64 Release:8.0.0  FreeMem:375MB/511MB BootTime:Nov 13 09:28:37 UTC 2026
+Processes: 17, Threads: 84
+Processor1: 686 AMD 686 F6M6S3 997MHz FPU 
+DROP_DONE

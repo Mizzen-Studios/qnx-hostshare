@@ -94,7 +94,7 @@ static int serve_mount(struct adapter *a,int drop){
  if((attach_id=resmgr_attach(dpp,&r,"/mnt/host",_FTYPE_ANY,_RESMGR_FLAG_DIR,&connect,&io,&root))<0){perror("resmgr_attach");return 1;}
  dispatch_context_t *ctp=dispatch_context_alloc(dpp);if(!ctp)return 1;
  struct sigaction sa={0};sa.sa_handler=mount_signal;sigemptyset(&sa.sa_mask);sigaction(SIGTERM,&sa,NULL);sigaction(SIGINT,&sa,NULL);
- if(drop && mount_drop_privileges())return 1;
+ if(drop){a->privileges_reduced=1;if(mount_drop_privileges())return 1;}
  puts("HOSTSHARE MOUNT READY /mnt/host READONLY");
  while(!mount_stop){
   uint64_t timeout=UINT64_C(500000000);if(TimerTimeout(CLOCK_MONOTONIC,_NTO_TIMEOUT_RECEIVE,NULL,&timeout,NULL)<0)return 1;

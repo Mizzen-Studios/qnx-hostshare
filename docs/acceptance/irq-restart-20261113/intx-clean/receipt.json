@@ -1,0 +1,91 @@
+{
+  "status": "FAIL_BOUNDED_GATE",
+  "source_sha": "ed4ab6460cdf6e28dffd29c59a4038805d4a301b",
+  "caps": {
+    "cpu.max": "100000 100000",
+    "memory.max": "1073741824",
+    "memory.swap.max": "0"
+  },
+  "command": [
+    "qemu-system-x86_64",
+    "-machine",
+    "pc,accel=tcg",
+    "-cpu",
+    "max",
+    "-smp",
+    "1",
+    "-m",
+    "512",
+    "-display",
+    "none",
+    "-serial",
+    "stdio",
+    "-monitor",
+    "none",
+    "-no-reboot",
+    "-kernel",
+    "/home/ubuntu/qnx-host/guest/shared/incident-20261108/incident.ifs",
+    "-drive",
+    "file=/home/ubuntu/qnx-host/guest/shared/qnx-native/disk-qemu,format=raw,if=ide,snapshot=on",
+    "-nic",
+    "user,model=virtio-net-pci",
+    "-fsdev",
+    "local,id=f0,path=/home/ubuntu/.openclaw/workspace/apps/qnx-hostshare/.local/irq-clean-checkout/.local/irq-restart-20261113/corpus,security_model=none,readonly=on",
+    "-device",
+    "virtio-9p-pci,fsdev=f0,mount_tag=f0test,disable-legacy=on"
+  ],
+  "image_sha256": "764e7e9f3ffcb74e851dce896a513c85abe16589d918937f3ba5157891882a22",
+  "disk_sha256": "903598ddfcc0a3fc2f4a1907872676033f29e333cd02b5db4d5f460cd387f516",
+  "elf_sha256": "1991454b6120b4c78148d61265f549bca4c3522c99e943bfc58fc92d9e7241f6",
+  "native_source_sha256": "c3003916e22a06612d07ac68662cb85b72c99fbcc33a5f80170add7f6749fef6",
+  "source_files": {
+    "native/qnx_hostshare.c": "c3003916e22a06612d07ac68662cb85b72c99fbcc33a5f80170add7f6749fef6",
+    "native/mount_checksum.c": "2c2ff58fdded122ed853f33d61c16fdd068b055bdebd09fff211c312215c9e9c",
+    "native/hostshare_mount.h": "3fa861a14f41575f6cc16dc674e64b6ab6328d25ccdb4792ee54c4f4cb78f03b",
+    "core/hostshare.h": "23978f97e87b4c570b062d37add9b0ade3dc3d00bb1c2f104fab7a91b399f518",
+    "core/transport.c": "ea549067c359fbb32394d0dd940410b20d4a9699ea7a3d424e978753948534f9",
+    "core/protocol.c": "a5f7d75af4fada0a377eff7157884d917d26a32cf26db62686a24080c33152c8"
+  },
+  "corpus_sha256": "b22af944a505a8ede078761309ce122faccb453a810939fc81ac5a87f6033eac",
+  "image_provenance": "external prebuilt, NOT clean stock",
+  "native_exit_rc": null,
+  "commands": [
+    "uname -a; pidin ar; pci-tool -v; echo PROBE_BASE_DONE",
+    ": > /data/home/root/hostshare; echo COPY_READY",
+    "chmod 700 /data/home/root/hostshare; echo HS_BINARY_BEGIN; cat /data/home/root/hostshare; echo; echo HS_BINARY_END",
+    "/data/home/root/hostshare --pci-line; echo HOSTSHARE_APP_RC=$?; echo PROBE_DONE",
+    "/data/home/root/hostshare --pci-line --mount > /data/home/root/mount.log 2>&1 & HS_PID=$!; echo HS_PID=$HS_PID; sleep 2; cat /data/home/root/mount.log; cat /mnt/host/hello.txt; echo MOUNT_CAT_RC=$?; ls -1 /mnt/host; echo MOUNT_DONE",
+    "kill -KILL $HS_PID; wait $HS_PID; echo KILL_WAIT_RC=$?; cat /data/home/root/mount.log; cat /mnt/host/hello.txt; echo AFTER_STOP_RC=$?; echo STOP_DONE",
+    "/data/home/root/hostshare --pci-line --mount-drop > /data/home/root/drop.log 2>&1 & HS_DROP_PID=$!; echo HS_DROP_PID=$HS_DROP_PID; sleep 2; cat /data/home/root/drop.log; cat /mnt/host/hello.txt; echo DROP_CAT_RC=$?; /data/home/root/hostshare --checksum /mnt/host/hello.txt; echo DROP_CHECK_RC=$?; pidin -p $HS_DROP_PID info; echo DROP_DONE",
+    "kill -TERM $HS_DROP_PID; wait $HS_DROP_PID; echo DROP_TERM_RC=$?; cat /data/home/root/drop.log; echo FINAL_DONE"
+  ],
+  "copy_route": "ksh builtin printf %b octal chunks128 to snapshot data volume; no image build",
+  "copy_bytes": 42560,
+  "native_copy_byte_exact": true,
+  "copy_verification": "readback cat bytes compared to ELF with explicit tty ONLCR transformation; no target hash utility required",
+  "irq_routing_mutated": false,
+  "qtest": false,
+  "n1c": {
+    "passed": true,
+    "app_rc": 0,
+    "mode": "pci-line"
+  },
+  "mount": {
+    "passed": true
+  },
+  "n5_stop": {
+    "passed": true,
+    "signal": "SIGKILL after idle completed reads. No DMA quiesce by killed process; remounter resets. No active/in-flight crash safety claim."
+  },
+  "n5_drop_remount": {
+    "passed": false,
+    "least_privilege_scope": "exact ability drops and IO reacquire denial only, not a security audit"
+  },
+  "drop_cleanup": {
+    "passed": false
+  },
+  "qemu_exit_rc": 0,
+  "stopped_reaped": true,
+  "memory_events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\n",
+  "memory_peak": "921415680\n"
+}

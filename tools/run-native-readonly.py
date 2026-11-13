@@ -14,8 +14,12 @@ caps={k:(cg/k).read_text().strip() for k in ['cpu.max','memory.max','memory.swap
 shared=Path('/home/ubuntu/qnx-host/guest/shared');image=Path(os.environ['HS_IFS']);disk=Path(os.environ['HS_DISK']);elf=Path(os.environ['HS_ELF'])
 corpus=root/'.local/irq-restart-20261113/corpus';corpus.mkdir(parents=True,exist_ok=True)
 (corpus/'hello.txt').write_text('HostShare F0 public synthetic test only.\n')
+expected_crc=int(subprocess.check_output(['cksum',str(corpus/'hello.txt')],text=True).split()[0])
 args=['qemu-system-x86_64','-machine','pc,accel=tcg','-cpu','max','-smp','1','-m','512','-display','none','-serial','stdio','-monitor','none','-no-reboot','-kernel',str(image),'-drive','file='+str(disk)+',format=raw,if=ide,snapshot=on','-nic','user,model=virtio-net-pci','-fsdev','local,id=f0,path='+str(corpus)+',security_model=none,readonly=on','-device','virtio-9p-pci,fsdev=f0,mount_tag=f0test,disable-legacy=on']
 h=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+build=json.loads(Path(os.environ['HS_BUILD_MANIFEST']).read_text())
+assert h(elf)==build['elf_sha256']
+for name,digest in build['files'].items():assert h(root/name)==digest
 report={'status':'FAIL','source_sha':subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),'caps':caps,'command':args,'image_sha256':h(image),'disk_sha256':h(disk),'elf_sha256':h(elf),'native_source_sha256':h(root/'native/qnx_hostshare.c'),'source_files':{str(p.relative_to(root)):h(p) for p in list((root/'native').glob('*.[ch]'))+list((root/'core').glob('*.[ch]'))},'corpus_sha256':h(corpus/'hello.txt'),'image_provenance':'external prebuilt, NOT clean stock','native_exit_rc':None,'commands':[]}
 r=subprocess.Popen(args,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.STDOUT);sel=selectors.DefaultSelector();sel.register(r.stdout,selectors.EVENT_READ);serial=bytearray()
 def until(marker,timeout=90,start=0):
@@ -68,9 +72,9 @@ try:
   text=command('kill -KILL $HS_PID; wait $HS_PID; echo KILL_WAIT_RC=$?; cat /data/home/root/mount.log; cat /mnt/host/hello.txt; echo AFTER_STOP_RC=$?; echo STOP_DONE','STOP_DONE',60)
   (out/'stop.txt').write_text(text);report['n5_stop']={'passed':bool(re.search(r'^KILL_WAIT_RC=[1-9][0-9]*$',text.replace(chr(13),''),re.M)) and bool(re.search(r'^AFTER_STOP_RC=[1-9][0-9]*$',text.replace(chr(13),''),re.M)),'signal':'SIGKILL after idle completed reads. No DMA quiesce by killed process; remounter resets. No active/in-flight crash safety claim.'}
   text=command('/data/home/root/hostshare '+mode+' --mount-drop > /data/home/root/drop.log 2>&1 & HS_DROP_PID=$!; echo HS_DROP_PID=$HS_DROP_PID; sleep 2; cat /data/home/root/drop.log; cat /mnt/host/hello.txt; echo DROP_CAT_RC=$?; /data/home/root/hostshare --checksum /mnt/host/hello.txt; echo DROP_CHECK_RC=$?; pidin -p $HS_DROP_PID info; echo DROP_DONE','DROP_DONE',60)
-  (out/'drop.txt').write_text(text);report['n5_drop_remount']={'passed':'HostShare F0 public synthetic test only.' in text.replace(chr(13),'').splitlines() and '\nDROP_CAT_RC=0' in text and '\nDROP_CHECK_RC=0' in text and 'HOSTSHARE PRIVILEGE uid=65534 euid=65534' in text and bool(re.search(r'^HOSTSHARE CHECKSUM 838956572 41 /mnt/host/hello.txt$',text.replace(chr(13),''),re.M)),'least_privilege_scope':'exact ability drops and IO reacquire denial only, not a security audit'}
+  (out/'drop.txt').write_text(text);report['n5_drop_remount']={'passed':'HostShare F0 public synthetic test only.' in text.replace(chr(13),'').splitlines() and '\nDROP_CAT_RC=0' in text and '\nDROP_CHECK_RC=0' in text and 'HOSTSHARE PRIVILEGE uid=65534 euid=65534' in text and bool(re.search(r'^HOSTSHARE CHECKSUM '+str(expected_crc)+r' 41 /mnt/host/hello.txt$',text.replace(chr(13),''),re.M)),'least_privilege_scope':'exact ability drops and IO reacquire denial only, not a security audit'}
   text=command('kill -TERM $HS_DROP_PID; wait $HS_DROP_PID; echo DROP_TERM_RC=$?; cat /data/home/root/drop.log; echo FINAL_DONE','FINAL_DONE',60)
-  (out/'drop-stop.txt').write_text(text);report['drop_cleanup']={'passed':'\nDROP_TERM_RC=0' in text and 'HOSTSHARE MOUNT TERM_DETACHED' in text}
+  (out/'drop-stop.txt').write_text(text);report['drop_cleanup']={'passed':'\nDROP_TERM_RC=0' in text and 'HOSTSHARE MOUNT TERM_DETACHED' in text and 'HOSTSHARE REDUCED_RESET status=0 queue_enable=0 PCI_BACKEND_SKIPPED' in text}
  report['status']='PASS_DEFAULT_ROUTE_MOUNT_RESTART_DROP' if report['n1c']['passed'] and all(report.get(k,{}).get('passed') for k in ['mount','n5_stop','n5_drop_remount','drop_cleanup']) else 'FAIL_BOUNDED_GATE'
 except Exception as e:report['error']=repr(e)
 finally:

@@ -33,9 +33,10 @@ qcc -Vgcc_ntox86_64 -std=gnu11 -O0 -g0 -Wall -Wextra -Werror \
 ~~~sh
 git clone git@github.com:Mizzen-Studios/qnx-hostshare.git
 cd qnx-hostshare
-export HS_ELF=/home/ubuntu/qnx-host/guest/shared/hostshare-irq-restart-20261113/build1/qnx_hostshare
+export HS_ELF=/home/ubuntu/qnx-host/guest/shared/hostshare-irq-restart-20261113/build2/qnx_hostshare
 export HS_IFS=/home/ubuntu/qnx-host/guest/shared/incident-20261108/incident.ifs
 export HS_DISK=/home/ubuntu/qnx-host/guest/shared/qnx-native/disk-qemu
+export HS_BUILD_MANIFEST="$PWD/docs/acceptance/irq-restart-20261113/build2-source-hashes.json"
 sh tools/run-native-readonly.sh --irq-mode pci-line --run-id intx-first
 ~~~
 
@@ -73,3 +74,10 @@ The wrapper always stops/reaps the isolated VM; failed steps remain failed.
 
 Read exact gates and caveats in docs/acceptance/irq-restart-20261113/receipt.json.
 No production, broad coherence, clean-stock or recording claim follows from CI.
+
+Reduced-privilege cleanup resets the mapped virtio device and verifies status0
+and queue_enable0 before releasing its DMA memory. It deliberately skips the
+privileged PCI backend after IO ability is locked off; PCI Bus Master disable/
+restore is NOT verified on that reduced path. This is trusted-QEMU-only cleanup,
+not safe untrusted/physical DMA teardown. The original post-detach SIGSEGV is
+preserved in intx-clean; the correction must have its own fresh receipt.

@@ -14,7 +14,7 @@
 #include <errno.h>
 struct adapter {
  volatile uint8_t *common,*isr,*notify; uint32_t multiplier;
- uint8_t *dma; off_t physical; int channel,connection,interrupt,irq; int msix;
+ uint8_t *dma; off_t physical; int channel,connection,interrupt,irq; int msix,privileges_reduced;
  uint16_t avail,used;volatile uint16_t *doorbell;
 };
 static uint16_t r16(volatile uint8_t *p){return *(volatile uint16_t *)p;}
@@ -127,14 +127,19 @@ int main(int argc,char **argv){
  le32(body,2);if(exchange(&a,120,5,body,4,121,&frame))goto done;le32(body,1);if(exchange(&a,120,6,body,4,121,&frame))goto done;rc=0;
 done:
  if(a.common){a.common[20]=0;__sync_synchronize();}
- if(changed){if(pci_device_write_cmd(h,original&~4,&current)!=PCI_ERR_OK||(current&4)){puts("HOSTSHARE cannot quiesce; retain DMA until VM stop");for(;;)pause();}}
+ if(a.privileges_reduced){
+  uint8_t status=a.common?a.common[20]:255;uint16_t enabled=a.common?r16(a.common+28):1;
+  printf("HOSTSHARE REDUCED_RESET status=%u queue_enable=%u PCI_BACKEND_SKIPPED\n",status,enabled);
+  if(status||enabled){puts("HOSTSHARE reset unconfirmed; retain DMA until VM stop");for(;;)pause();}
+ }
+ if(changed&&!a.privileges_reduced){if(pci_device_write_cmd(h,original&~4,&current)!=PCI_ERR_OK||(current&4)){puts("HOSTSHARE cannot quiesce; retain DMA until VM stop");for(;;)pause();}}
  if(a.interrupt>=0)InterruptDetach(a.interrupt);
- if(menabled)pci_device_cfg_cap_disable(h,pci_reqType_e_UNSPECIFIED,mcap);
+ if(menabled&&!a.privileges_reduced)pci_device_cfg_cap_disable(h,pci_reqType_e_UNSPECIFIED,mcap);
  if(mcap)free(mcap);
  if(a.connection>=0)ConnectDetach(a.connection);if(a.channel>=0)ChannelDestroy(a.channel);
  if(a.dma!=MAP_FAILED)munmap(a.dma,16384);
  for(int i=0;i<6;i++)if(maps[i])munmap(maps[i],maplen[i]);
- if(h){if(changed)pci_device_write_cmd(h,original,NULL);pci_device_detach(h);}
+ if(h&&!a.privileges_reduced){if(changed)pci_device_write_cmd(h,original,NULL);pci_device_detach(h);}
  ThreadCtl(_NTO_TCTL_IO_LEVEL,(void *)(uintptr_t)_NTO_IO_LEVEL_NONE);
  printf("HOSTSHARE NATIVE RC=%d pci=%s errno=%d\n",rc,pci_strerror(error),errno);return rc;
 }
