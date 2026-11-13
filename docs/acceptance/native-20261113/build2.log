@@ -1,0 +1,12 @@
+job 1794533963638393727
+               total        used        free      shared  buff/cache   available
+Mem:          468212      132064       27456         968      330732      336148
+Swap:              0           0           0
+dec8b0a8eec923d6bbf3e35001c280da78f57f26c73c8a80445211599c86f4cb  /mnt/host/hostshare-native-20261113/build2/qnx_hostshare
+8b972a281c476ad36e66e76c98cf6dc62cc2b0a07eb697099166732630d7bff1  /mnt/host/hostshare-native-20261113/source/native/qnx_hostshare.c
+eda0763cd10f9e87f76fc37a0c108a8758df8790a62e3afa6f960b3dd95d69ee  /mnt/host/hostshare-native-20261113/source/core/protocol.c
+ea549067c359fbb32394d0dd940410b20d4a9699ea7a3d424e978753948534f9  /mnt/host/hostshare-native-20261113/source/core/transport.c
+               total        used        free      shared  buff/cache   available
+Mem:          468212      135772       20360         968      334120      332440
+Swap:              0           0           0
+
