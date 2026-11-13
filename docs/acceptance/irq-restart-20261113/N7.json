@@ -1,0 +1,40 @@
+{
+  "gate": "N7_CLEAN_STOCK_REPEAT",
+  "status": "DEPENDENCY_BLOCKED_NOT_RUN",
+  "upstream_repo": "Mizzen-Studios/qnx-edu-kit",
+  "upstream_delivery_commit": "d182130534adadeca7fa34eb53e63d8cc04dd214",
+  "upstream_ci": 43399612758,
+  "upstream_receipt": "docs/site/docs/acceptance/stock-20261113/receipt.json",
+  "upstream_outcome": "BLOCKED_CLEAN_STOCK_IFS_OOM",
+  "guest_oom": {
+    "pid": 1620,
+    "task": "x86_64-pc-nto-q",
+    "timestamp_utc": "2026-11-13T09:03:44Z",
+    "anon_rss_kib": 329384,
+    "file_rss_kib": 1736,
+    "total_vm_kib": 588924,
+    "before_generator_available_kib": 295232,
+    "minimum_available_during_link": "UNVERIFIED",
+    "exact_internal_relink_input": "UNVERIFIED; not captured"
+  },
+  "host_measurement": {
+    "sample_count": 361,
+    "monitored_peak_cgroup_bytes": 1105190912,
+    "minimum_reserve_against_monitored_peak_bytes": 1042292736,
+    "maximum_swap_bytes": 0,
+    "sampled_oom_kill_max": 0,
+    "sampled_max_events": 0,
+    "sampling_window": "boot through stop request; shutdown hard-capped but not sampled",
+    "effective_caps": {
+      "cpu.max": "100000 100000",
+      "memory.max": "2147483648",
+      "memory.swap.max": "0"
+    },
+    "nice": 15,
+    "tcg_cache_mib": 256,
+    "guest_memory_mib": 512,
+    "guest_cpus": 1,
+    "reserve_policy_bytes": 67108864
+  },
+  "decision": "No clean stock image available. No EDU repair/retry; historical CAN-custom image must not be called stock. Other HostShare gates proceed on hash-bound historical image."
+}

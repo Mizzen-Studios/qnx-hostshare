@@ -1,0 +1,17 @@
+{
+  "files": {
+    "core/hostshare.h": "23978f97e87b4c570b062d37add9b0ade3dc3d00bb1c2f104fab7a91b399f518",
+    "core/transport.c": "ea549067c359fbb32394d0dd940410b20d4a9699ea7a3d424e978753948534f9",
+    "core/protocol.c": "a5f7d75af4fada0a377eff7157884d917d26a32cf26db62686a24080c33152c8",
+    "native/qnx_hostshare.c": "c3003916e22a06612d07ac68662cb85b72c99fbcc33a5f80170add7f6749fef6",
+    "native/mount_checksum.c": "2c2ff58fdded122ed853f33d61c16fdd068b055bdebd09fff211c312215c9e9c",
+    "native/hostshare_mount.h": "3fa861a14f41575f6cc16dc674e64b6ab6328d25ccdb4792ee54c4f4cb78f03b"
+  },
+  "elf_sha256": "1991454b6120b4c78148d61265f549bca4c3522c99e943bfc58fc92d9e7241f6",
+  "installed_headers": {
+    "neutrino.h": "811f603e45f2db4738501eaa74f89e04c383df379c829847ecc6e370bef71a5a",
+    "grp.h": "be1d09f2a59da065e14f57c21a439c2f27737f0009c5da52227ab87d31008653",
+    "procmgr.h": "0ba55a333e37b2647133ff73d7cd4e550b2590f986e29093b9f92f7c0d74a94c",
+    "signal.h": "e725c19b20e088a7f08dc7900fead45afe06fe1a7f63acf552d368b8ba9dbd7e"
+  }
+}

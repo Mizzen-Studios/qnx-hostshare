@@ -1,0 +1,6 @@
+.................
+----------------------------------------------------------------------
+Ran 17 tests in 0.003s
+
+OK
+C_CORE_PASS transport/protocol groups; synthetic fixtures only; native NOT_RUN

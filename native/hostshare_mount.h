@@ -4,6 +4,9 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include <stddef.h>
+#include <signal.h>
+#include <grp.h>
+#include <sys/procmgr.h>
 static uint64_t get64(const uint8_t *p){return get32(p)|((uint64_t)get32(p+4)<<32);}
 static void put64(uint8_t *p,uint64_t n){le32(p,n);le32(p+4,n>>32);}
 struct mount_attr { iofunc_attr_t base; uint32_t fid; };
@@ -66,14 +69,39 @@ static int mount_close(resmgr_context_t *ctp,void *reserved,iofunc_ocb_t *ocb){
  int e=iofunc_close_ocb_default(ctp,reserved,ocb);free(a);return e;
 }
 static int mount_write(resmgr_context_t *ctp,io_write_t *msg,iofunc_ocb_t *ocb){(void)ctp;(void)msg;(void)ocb;return EROFS;}
-static int serve_mount(struct adapter *a){
+static int mount_drop_privileges(void){
+ if(ThreadCtl(_NTO_TCTL_IO_LEVEL,(void *)(uintptr_t)_NTO_IO_LEVEL_NONE)<0){perror("drop IO level");return 1;}
+ unsigned deny=PROCMGR_ADN_ROOT|PROCMGR_ADN_NONROOT|PROCMGR_AOP_DENY|PROCMGR_AOP_LOCK;
+ if(procmgr_ability(0,PROCMGR_ADN_NONROOT|PROCMGR_AOP_ALLOW|PROCMGR_AID_INTERRUPT,
+   deny|PROCMGR_AID_IO,deny|PROCMGR_AID_MEM_PHYS,deny|PROCMGR_AID_PATHSPACE,PROCMGR_AID_EOL)<0){perror("drop abilities");return 1;}
+ if(setgroups(0,NULL)<0||setgid(65534)<0||setuid(65534)<0){perror("drop uid/gid");return 1;}
+ int io=ThreadCtl(_NTO_TCTL_IO_LEVEL,(void *)(uintptr_t)_NTO_IO_LEVEL_1);int io_errno=errno;
+ if(io==0){ThreadCtl(_NTO_TCTL_IO_LEVEL,(void *)(uintptr_t)_NTO_IO_LEVEL_NONE);puts("HOSTSHARE PRIVILEGE IO reacquire unexpectedly allowed");return 1;}
+ int root=setuid(0);int root_errno=errno;
+ printf("HOSTSHARE PRIVILEGE uid=%u euid=%u gid=%u IO_REACQUIRE_RC=%d errno=%d ROOT_REACQUIRE_RC=%d errno=%d\n",(unsigned)getuid(),(unsigned)geteuid(),(unsigned)getgid(),io,io_errno,root,root_errno);
+ puts("HOSTSHARE ABILITIES deny-lock IO,MEM_PHYS,PATHSPACE root+nonroot; INTERRUPT explicitly retained nonroot for existing IRQ; other abilities NOT exhaustively audited");
+ return getuid()==65534&&geteuid()==65534&&io<0&&root<0?0:1;
+}
+static volatile sig_atomic_t mount_stop;
+static void mount_signal(int signo){(void)signo;mount_stop=1;}
+static int serve_mount(struct adapter *a,int drop){
  mount_adapter=a;dispatch_t *dpp=dispatch_create();if(!dpp){perror("dispatch_create");return 1;}
  resmgr_connect_funcs_t connect;resmgr_io_funcs_t io;resmgr_attr_t r={0};iofunc_attr_t root;
  iofunc_func_init(_RESMGR_CONNECT_NFUNCS,&connect,_RESMGR_IO_NFUNCS,&io);
  connect.open=mount_open;io.chmod=NULL;io.chown=NULL;io.utime=NULL;io.read=mount_read;io.write=mount_write;io.close_ocb=mount_close;
  iofunc_attr_init(&root,S_IFDIR|0555,NULL,NULL);r.nparts_max=1;r.msg_max_size=8192;
- if(resmgr_attach(dpp,&r,"/mnt/host",_FTYPE_ANY,_RESMGR_FLAG_DIR,&connect,&io,&root)<0){perror("resmgr_attach");return 1;}
+ int attach_id;
+ if((attach_id=resmgr_attach(dpp,&r,"/mnt/host",_FTYPE_ANY,_RESMGR_FLAG_DIR,&connect,&io,&root))<0){perror("resmgr_attach");return 1;}
  dispatch_context_t *ctp=dispatch_context_alloc(dpp);if(!ctp)return 1;
+ struct sigaction sa={0};sa.sa_handler=mount_signal;sigemptyset(&sa.sa_mask);sigaction(SIGTERM,&sa,NULL);sigaction(SIGINT,&sa,NULL);
+ if(drop && mount_drop_privileges())return 1;
  puts("HOSTSHARE MOUNT READY /mnt/host READONLY");
- for(;;){ctp=dispatch_block(ctp);if(!ctp){perror("dispatch_block");return 1;}dispatch_handler(ctp);}
+ while(!mount_stop){
+  uint64_t timeout=UINT64_C(500000000);if(TimerTimeout(CLOCK_MONOTONIC,_NTO_TIMEOUT_RECEIVE,NULL,&timeout,NULL)<0)return 1;
+  dispatch_context_t *next=dispatch_block(ctp);
+  if(!next){if(errno==EINTR||errno==ETIMEDOUT)continue;perror("dispatch_block");return 1;}
+  ctp=next;dispatch_handler(ctp);
+ }
+ resmgr_detach(dpp,attach_id,0);dispatch_context_free(ctp);dispatch_destroy(dpp);
+ puts("HOSTSHARE MOUNT TERM_DETACHED");return 0;
 }

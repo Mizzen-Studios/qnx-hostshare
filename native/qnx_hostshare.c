@@ -38,11 +38,12 @@ static int exchange(struct adapter *a,uint8_t type,uint16_t tag,const uint8_t *b
   uint64_t timeout=deadline-current;
   if(TimerTimeout(CLOCK_MONOTONIC,_NTO_TIMEOUT_RECEIVE,NULL,&timeout,NULL)<0)return -1;
   if(MsgReceivePulse(a->channel,&pulse,sizeof pulse,NULL)<0){perror("IRQ pulse wait");return -1;}
-  uint8_t isr=*a->isr;__sync_synchronize();uint16_t used=r16(a->dma+4098);
+  uint16_t used=r16(a->dma+4098);__sync_synchronize();uint8_t isr=*a->isr;
   if(InterruptUnmask(a->irq,a->interrupt)<0){perror("InterruptUnmask");return -1;}
   if(pulse.code!=_PULSE_CODE_MINAVAIL+1)return -1;
   if(used==a->used){shared_pulses++;continue;}
-  if(used!=(uint16_t)(a->used+1)||(!a->msix&&!(isr&1))){fprintf(stderr,"IRQ/used mismatch isr=%u used=%u\n",isr,used);return -1;}
+  if(used!=(uint16_t)(a->used+1)){fprintf(stderr,"IRQ/used mismatch isr=%u used=%u\n",isr,used);return -1;}
+  if(!a->msix && !(isr&1))printf("HOSTSHARE ISR_HINT_ZERO used=%u\n",used);
   size_t entry=4100+8*(a->used%8);id=r32(a->dma+entry);count=r32(a->dma+entry+4);a->used++;break;
  }
  if(shared_pulses)printf("HOSTSHARE SHARED_PULSES ignored=%u\n",shared_pulses);
@@ -95,26 +96,27 @@ int main(int argc,char **argv){
  if(a.dma==MAP_FAILED||mem_offset(a.dma,NOFD,16384,&a.physical,&contiguous)<0||a.physical<0||contiguous<16384)goto done;
  memset(a.dma,0,16384);w64(a.common+32,(uint64_t)a.physical);w64(a.common+40,(uint64_t)a.physical+128);w64(a.common+48,(uint64_t)a.physical+4096);
  uint64_t no=(uint64_t)r16(a.common+30)*a.multiplier;if(no+2>regions[1].length||no%2)goto done;a.doorbell=(volatile uint16_t *)(a.notify+no);
+ if(pci_device_read_cmd(bdf,&original)!=PCI_ERR_OK)goto done;changed=1;
+ if(pci_device_write_cmd(h,original|2,&current)!=PCI_ERR_OK||!(current&2))goto done;
  if(argc>1 && !strcmp(argv[1],"--msix")){
   int_t idx=pci_device_find_capid(bdf,CAPID_MSIX);
   if(idx<0){puts("HOSTSHARE MSIX absent");goto done;}
   if((error=pci_device_read_cap(bdf,&mcap,idx))!=PCI_ERR_OK)goto done;
-  if((error=cap_msix_set_nirq(h,mcap,1))!=PCI_ERR_OK)goto done;
-  if((error=pci_device_cfg_cap_enable(h,pci_reqType_e_UNSPECIFIED,mcap))!=PCI_ERR_OK)goto done;
+  if((error=cap_msix_set_nirq(h,mcap,1))!=PCI_ERR_OK){puts("HOSTSHARE MSIX set_nirq FAIL");goto done;}
+  if((error=pci_device_cfg_cap_enable(h,pci_reqType_e_UNSPECIFIED,mcap))!=PCI_ERR_OK){puts("HOSTSHARE MSIX cap_enable FAIL");goto done;}
   menabled=1;a.msix=1;w16(a.common+26,0);if(r16(a.common+26)!=0){puts("HOSTSHARE MSIX queue vector rejected");goto done;}
  }
  pci_irq_t irq=-1;int_t ni=1;if(pci_device_read_irq(h,&ni,&irq)!=PCI_ERR_OK||ni!=1||irq<0)goto done;printf("HOSTSHARE IRQ api=%d config=%u\n",irq,config[0x3c]); if(argc>1 && !strcmp(argv[1],"--pci-line"))irq=config[0x3c]; a.irq=irq;
  a.channel=ChannelCreate(0);if(a.channel<0)goto done;a.connection=ConnectAttach(0,0,a.channel,_NTO_SIDE_CHANNEL,0);if(a.connection<0)goto done;
  struct sigevent ev;SIGEV_PULSE_INIT(&ev,a.connection,10,_PULSE_CODE_MINAVAIL+1,0);
  a.interrupt=InterruptAttachEvent(irq,&ev,_NTO_INTR_FLAGS_TRK_MSK);if(a.interrupt<0){perror("InterruptAttachEvent");goto done;}
- if(pci_device_read_cmd(bdf,&original)!=PCI_ERR_OK)goto done;changed=1;
  if(pci_device_write_cmd(h,(original|6)&~0x400,&current)!=PCI_ERR_OK||(current&6)!=6)goto done;
  w16(a.common+28,1);a.common[20]=15;__sync_synchronize();printf("HOSTSHARE F1 READY tag=f0test features=%llx irq=%d dma=%llx\n",(unsigned long long)selected,irq,(unsigned long long)a.physical);
  memset(body,0,sizeof body);le32(body,4096);body[4]=8;memcpy(body+6,"9P2000.L",8);
  if(exchange(&a,100,HS_NOTAG,body,14,101,&frame)||get32(frame.body)!=4096)goto done;
  memset(body,0,sizeof body);le32(body,1);le32(body+4,HS_NOFID);body[8]=4;memcpy(body+10,"root",4); /* uname, empty aname, n_uname0 */
  if(exchange(&a,104,1,body,20,105,&frame))goto done;
- if(argc>2 && !strcmp(argv[2],"--mount")){rc=serve_mount(&a);goto done;}
+ if(argc>2 && (!strcmp(argv[2],"--mount")||!strcmp(argv[2],"--mount-drop"))){rc=serve_mount(&a,!strcmp(argv[2],"--mount-drop"));goto done;}
  memset(body,0,sizeof body);le32(body,1);le32(body+4,2);body[8]=1;body[10]=9;memcpy(body+12,"hello.txt",9);
  if(exchange(&a,110,2,body,21,111,&frame)||frame.body_length!=15||frame.body[0]!=1)goto done;
  memset(body,0,sizeof body);le32(body,2);if(exchange(&a,12,3,body,8,13,&frame))goto done;
