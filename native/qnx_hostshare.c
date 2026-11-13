@@ -1,6 +1,7 @@
 /* Original QNX8/QEMU-only bounded read-only diagnostic; no SDK source. */
 #include "hostshare.h"
 #include <pci/pci.h>
+#include <pci/cap_msix.h>
 #include <sys/neutrino.h>
 #include <sys/mman.h>
 #include <sys/siginfo.h>
@@ -13,7 +14,7 @@
 #include <errno.h>
 struct adapter {
  volatile uint8_t *common,*isr,*notify; uint32_t multiplier;
- uint8_t *dma; off_t physical; int channel,connection,interrupt,irq;
+ uint8_t *dma; off_t physical; int channel,connection,interrupt,irq; int msix;
  uint16_t avail,used;volatile uint16_t *doorbell;
 };
 static uint16_t r16(volatile uint8_t *p){return *(volatile uint16_t *)p;}
@@ -32,19 +33,21 @@ static int exchange(struct adapter *a,uint8_t type,uint16_t tag,const uint8_t *b
  if(TimerTimeout(CLOCK_MONOTONIC,_NTO_TIMEOUT_RECEIVE,NULL,&timeout,NULL)<0)return -1;
  if(MsgReceivePulse(a->channel,&pulse,sizeof pulse,NULL)<0){perror("IRQ pulse wait");return -1;}
  uint8_t isr=*a->isr;__sync_synchronize();
- if(pulse.code!=_PULSE_CODE_MINAVAIL+1||!(isr&1)||r16(a->dma+4098)!=(uint16_t)(a->used+1)){fprintf(stderr,"IRQ/used mismatch code=%d isr=%u used=%u\n",pulse.code,isr,r16(a->dma+4098));return -1;}
+ if(pulse.code!=_PULSE_CODE_MINAVAIL+1||(!a->msix && !(isr&1))||r16(a->dma+4098)!=(uint16_t)(a->used+1)){fprintf(stderr,"IRQ/used mismatch code=%d isr=%u used=%u\n",pulse.code,isr,r16(a->dma+4098));return -1;}
  size_t entry=4100+8*(a->used%8);uint32_t id=r32(a->dma+entry),count=r32(a->dma+entry+4);a->used++;
  if(InterruptUnmask(a->irq,a->interrupt)<0){perror("InterruptUnmask");return -1;}
  if(id!=0||count<7||count>4096||hs_9p_decode(rx,count,4096,tag,reply,frame))return -1;
  if(frame->kind==7){fprintf(stderr,"9P remote errno=%u\n",get32(frame->body));return -1;}
  printf("HOSTSHARE IRQ_PULSE type=%u reply=%u bytes=%u\n",type,frame->kind,count);return 0;
 }
-/* main follows after installed PCI API inspection. */
+#include "hostshare_mount.h"
 
-int main(void){
+int mount_checksum(const char *path);
+int main(int argc,char **argv){
+ if(argc==3 && !strcmp(argv[1],"--checksum"))return mount_checksum(argv[2]);
  struct adapter a={.dma=MAP_FAILED,.channel=-1,.connection=-1,.interrupt=-1,.irq=-1};
  pci_ba_t bars[6]={{0}};int_t nb=6;uint8_t config[256],body[256];uint64_t sizes[6]={0};void *maps[6]={0};size_t maplen[6]={0};struct hs_region regions[4];struct hs_frame frame;
- pci_err_t error=PCI_ERR_OK;pci_devhdl_t h=NULL;pci_cmd_t original=0,current=0;int changed=0,rc=1;size_t contiguous=0;uint64_t selected;uint16_t taglen;const uint8_t *tag;
+ pci_err_t error=PCI_ERR_OK;pci_devhdl_t h=NULL;pci_cap_t mcap=NULL;int menabled=0;pci_cmd_t original=0,current=0;int changed=0,rc=1;size_t contiguous=0;uint64_t selected;uint16_t taglen;const uint8_t *tag;
  setvbuf(stdout,NULL,_IONBF,0);puts("HOSTSHARE NATIVE BEGIN");
  if(ThreadCtl(_NTO_TCTL_IO_LEVEL,(void *)(uintptr_t)_NTO_IO_LEVEL_1)<0){perror("IO_LEVEL");return 1;}
  pci_bdf_t bdf=pci_device_find(0,0x1af4,0x1049,PCI_CCODE_ANY);
@@ -82,7 +85,15 @@ int main(void){
  if(a.dma==MAP_FAILED||mem_offset(a.dma,NOFD,16384,&a.physical,&contiguous)<0||a.physical<0||contiguous<16384)goto done;
  memset(a.dma,0,16384);w64(a.common+32,(uint64_t)a.physical);w64(a.common+40,(uint64_t)a.physical+128);w64(a.common+48,(uint64_t)a.physical+4096);
  uint64_t no=(uint64_t)r16(a.common+30)*a.multiplier;if(no+2>regions[1].length||no%2)goto done;a.doorbell=(volatile uint16_t *)(a.notify+no);
- pci_irq_t irq=-1;int_t ni=1;if(pci_device_read_irq(h,&ni,&irq)!=PCI_ERR_OK||ni!=1||irq<0)goto done;a.irq=irq;
+ if(argc>1 && !strcmp(argv[1],"--msix")){
+  int_t idx=pci_device_find_capid(bdf,CAPID_MSIX);
+  if(idx<0){puts("HOSTSHARE MSIX absent");goto done;}
+  if((error=pci_device_read_cap(bdf,&mcap,idx))!=PCI_ERR_OK)goto done;
+  if((error=cap_msix_set_nirq(h,mcap,1))!=PCI_ERR_OK)goto done;
+  if((error=pci_device_cfg_cap_enable(h,pci_reqType_e_UNSPECIFIED,mcap))!=PCI_ERR_OK)goto done;
+  menabled=1;a.msix=1;w16(a.common+26,0);if(r16(a.common+26)!=0){puts("HOSTSHARE MSIX queue vector rejected");goto done;}
+ }
+ pci_irq_t irq=-1;int_t ni=1;if(pci_device_read_irq(h,&ni,&irq)!=PCI_ERR_OK||ni!=1||irq<0)goto done;printf("HOSTSHARE IRQ api=%d config=%u\n",irq,config[0x3c]); if(argc>1 && !strcmp(argv[1],"--pci-line"))irq=config[0x3c]; a.irq=irq;
  a.channel=ChannelCreate(0);if(a.channel<0)goto done;a.connection=ConnectAttach(0,0,a.channel,_NTO_SIDE_CHANNEL,0);if(a.connection<0)goto done;
  struct sigevent ev;SIGEV_PULSE_INIT(&ev,a.connection,10,_PULSE_CODE_MINAVAIL+1,0);
  a.interrupt=InterruptAttachEvent(irq,&ev,_NTO_INTR_FLAGS_TRK_MSK);if(a.interrupt<0){perror("InterruptAttachEvent");goto done;}
@@ -93,6 +104,7 @@ int main(void){
  if(exchange(&a,100,HS_NOTAG,body,14,101,&frame)||get32(frame.body)!=4096)goto done;
  memset(body,0,sizeof body);le32(body,1);le32(body+4,HS_NOFID);body[8]=4;memcpy(body+10,"root",4); /* uname, empty aname, n_uname0 */
  if(exchange(&a,104,1,body,20,105,&frame))goto done;
+ if(argc>2 && !strcmp(argv[2],"--mount")){rc=serve_mount(&a);goto done;}
  memset(body,0,sizeof body);le32(body,1);le32(body+4,2);body[8]=1;body[10]=9;memcpy(body+12,"hello.txt",9);
  if(exchange(&a,110,2,body,21,111,&frame)||frame.body_length!=15||frame.body[0]!=1)goto done;
  memset(body,0,sizeof body);le32(body,2);if(exchange(&a,12,3,body,8,13,&frame))goto done;
@@ -105,6 +117,8 @@ done:
  if(a.common){a.common[20]=0;__sync_synchronize();}
  if(changed){if(pci_device_write_cmd(h,original&~4,&current)!=PCI_ERR_OK||(current&4)){puts("HOSTSHARE cannot quiesce; retain DMA until VM stop");for(;;)pause();}}
  if(a.interrupt>=0)InterruptDetach(a.interrupt);
+ if(menabled)pci_device_cfg_cap_disable(h,pci_reqType_e_UNSPECIFIED,mcap);
+ if(mcap)free(mcap);
  if(a.connection>=0)ConnectDetach(a.connection);if(a.channel>=0)ChannelDestroy(a.channel);
  if(a.dma!=MAP_FAILED)munmap(a.dma,16384);
  for(int i=0;i<6;i++)if(maps[i])munmap(maps[i],maplen[i]);

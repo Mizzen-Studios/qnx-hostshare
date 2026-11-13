@@ -42,6 +42,9 @@ static void protocol(void){
  memset(body,0,sizeof body);roundtrip(13,body,17);roundtrip(25,body,153);roundtrip(121,body,0);roundtrip(7,body,4);
  roundtrip(117,body,4);roundtrip(41,body,4);
  body[0]=25;body[26]=1;body[28]='x';roundtrip(41,body,29); /* one dirent */
+ body[28]='.';roundtrip(41,body,29); /* directory dot is legal */
+ body[28]='/';assert(hs_9p_encode(wire,sizeof wire,512,41,12,body,29,&n));
+ body[28]='x';
  body[26]=2;assert(hs_9p_encode(wire,sizeof wire,512,41,12,body,29,&n));
  memset(body,255,4);assert(hs_9p_encode(wire,sizeof wire,512,120,12,body,4,&n));
  memset(body,0,sizeof body);body[0]=1;assert(hs_9p_encode(wire,sizeof wire,512,117,12,body,4,&n));

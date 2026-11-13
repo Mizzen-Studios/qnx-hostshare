@@ -1,0 +1,8 @@
+{
+  "core/hostshare.h": "23978f97e87b4c570b062d37add9b0ade3dc3d00bb1c2f104fab7a91b399f518",
+  "core/transport.c": "ea549067c359fbb32394d0dd940410b20d4a9699ea7a3d424e978753948534f9",
+  "core/protocol.c": "a5f7d75af4fada0a377eff7157884d917d26a32cf26db62686a24080c33152c8",
+  "native/qnx_hostshare.c": "5997512cd85ab3e8d93ed043e515c831b779145ddc76dade4b1c01e24f14bf96",
+  "native/mount_checksum.c": "2c2ff58fdded122ed853f33d61c16fdd068b055bdebd09fff211c312215c9e9c",
+  "native/hostshare_mount.h": "0d5e450e86127e6bb263a5fd79245ae4d9d29e39641280080dab070e03f559d2"
+}

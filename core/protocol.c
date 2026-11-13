@@ -9,7 +9,7 @@ static int text(const uint8_t *p,size_t n,size_t *at,int component){
  len=u16(p+*at);*at+=2;
  if(len>n-*at||(component&&(!len||len>255)))return -1;
  for(i=0;i<len;i++)if(!p[*at+i]||(component&&p[*at+i]=='/'))return -1;
- if(component&&((len==1&&p[*at]=='.')||(len==2&&p[*at]=='.'&&p[*at+1]=='.')))return -1;
+ if(component==1&&((len==1&&p[*at]=='.')||(len==2&&p[*at]=='.'&&p[*at+1]=='.')))return -1;
  *at+=len;return 0;
 }
 static int live(const uint8_t *p){return u32(p)!=HS_NOFID;}
@@ -36,7 +36,7 @@ static int valid(uint8_t k,const uint8_t *p,size_t n){
  case 41: /* Rreaddir: count + packed qid/offset/type/name entries */
   if(n<4||u32(p)!=n-4)return -1;
   at=4;
-  while(at<n){if(n-at<24)return -1;at+=22;if(text(p,n,&at,1))return -1;}
+  while(at<n){if(n-at<24)return -1;at+=22;if(text(p,n,&at,2))return -1;}
   return 0;
  case 24:return n==12&&live(p)?0:-1; /* Tgetattr fid request_mask */
  case 25:return n==153?0:-1; /* valid[8], qid[13], mode/uid/gid[12],15*u64 */
