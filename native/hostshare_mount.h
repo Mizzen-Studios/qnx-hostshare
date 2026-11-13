@@ -11,6 +11,8 @@ static uint64_t get64(const uint8_t *p){return get32(p)|((uint64_t)get32(p+4)<<3
 static void put64(uint8_t *p,uint64_t n){le32(p,n);le32(p+4,n>>32);}
 struct mount_attr { iofunc_attr_t base; uint32_t fid; };
 static struct adapter *mount_adapter;
+/* Diagnostic scheduling window, disabled normally; no DMA submitted during pause. */
+static int mount_pause_read;
 static uint32_t next_fid=2;
 static uint16_t next_tag=1;
 static uint8_t mount_reply[8192];
@@ -51,6 +53,10 @@ static int mount_read(resmgr_context_t *ctp,io_read_t *msg,iofunc_ocb_t *ocb){
  size_t limit=_IO_READ_GET_NBYTES(msg);if(limit>4000)limit=4000;
  if(!limit){_IO_SET_READ_NBYTES(ctp,0);return EOK;}
  struct mount_attr *a=(struct mount_attr *)ocb->attr;uint8_t b[16]={0};struct hs_frame f;
+ if(mount_pause_read && S_ISREG(a->base.mode)){
+  printf("HOSTSHARE MIDREAD_HANDLER_ENTER rcvid=%lld count=%zu offset=%lld DIAGNOSTIC_PAUSE_BEFORE_RPC\n",(long long)ctp->rcvid,limit,(long long)ocb->offset);
+  sleep(30);
+ }
  le32(b,a->fid);put64(b+4,ocb->offset);le32(b+12,S_ISDIR(a->base.mode)?4000:limit);
  if((e=rpc(S_ISDIR(a->base.mode)?40:116,b,16,S_ISDIR(a->base.mode)?41:117,&f)))return e;
  size_t n=0;

@@ -20,4 +20,6 @@ jobs:
           python3 -m compileall -q src tests tools
           sh -n tools/run-native-readonly.sh
           python3 tools/run-native-readonly.py --help >/dev/null
+          sh -n tools/run-native-suite.sh
+          python3 tools/run-native-suite.py --help >/dev/null
           git diff --check

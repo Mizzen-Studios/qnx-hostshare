@@ -1,0 +1,2 @@
+68bbe1b49a9b723c09d152773ee323ec6ab576eb29de933bfe3f08fdae21c753  /home/ubuntu/qnx-host/guest/shared/edu-stock-control-1024-20261113/stock-output/ifs.bin
+0aee00c281f8eeb5b02c66555ed9517e317bb1503002a19dbf2b0155de336532  /home/ubuntu/qnx-host/guest/shared/edu-stock-control-1024-20261113/stock-output/disk-qemu

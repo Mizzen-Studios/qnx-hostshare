@@ -54,8 +54,10 @@ static int exchange(struct adapter *a,uint8_t type,uint16_t tag,const uint8_t *b
 #include "hostshare_mount.h"
 
 int mount_checksum(const char *path);
+int mount_read_once(const char *path);
 int main(int argc,char **argv){
  if(argc==3 && !strcmp(argv[1],"--checksum"))return mount_checksum(argv[2]);
+ if(argc==3 && !strcmp(argv[1],"--read-once"))return mount_read_once(argv[2]);
  struct adapter a={.dma=MAP_FAILED,.channel=-1,.connection=-1,.interrupt=-1,.irq=-1};
  pci_ba_t bars[6]={{0}};int_t nb=6;uint8_t config[256],body[256];uint64_t sizes[6]={0};void *maps[6]={0};size_t maplen[6]={0};struct hs_region regions[4];struct hs_frame frame;
  pci_err_t error=PCI_ERR_OK;pci_devhdl_t h=NULL;pci_cap_t mcap=NULL;int menabled=0;pci_cmd_t original=0,current=0;int changed=0,rc=1;size_t contiguous=0;uint64_t selected;uint16_t taglen;const uint8_t *tag;
@@ -116,7 +118,7 @@ int main(int argc,char **argv){
  if(exchange(&a,100,HS_NOTAG,body,14,101,&frame)||get32(frame.body)!=4096)goto done;
  memset(body,0,sizeof body);le32(body,1);le32(body+4,HS_NOFID);body[8]=4;memcpy(body+10,"root",4); /* uname, empty aname, n_uname0 */
  if(exchange(&a,104,1,body,20,105,&frame))goto done;
- if(argc>2 && (!strcmp(argv[2],"--mount")||!strcmp(argv[2],"--mount-drop"))){rc=serve_mount(&a,!strcmp(argv[2],"--mount-drop"));goto done;}
+ if(argc>2 && (!strcmp(argv[2],"--mount")||!strcmp(argv[2],"--mount-drop")||!strcmp(argv[2],"--mount-pause-read"))){mount_pause_read=!strcmp(argv[2],"--mount-pause-read");rc=serve_mount(&a,!strcmp(argv[2],"--mount-drop"));goto done;}
  memset(body,0,sizeof body);le32(body,1);le32(body+4,2);body[8]=1;body[10]=9;memcpy(body+12,"hello.txt",9);
  if(exchange(&a,110,2,body,21,111,&frame)||frame.body_length!=15||frame.body[0]!=1)goto done;
  memset(body,0,sizeof body);le32(body,2);if(exchange(&a,12,3,body,8,13,&frame))goto done;

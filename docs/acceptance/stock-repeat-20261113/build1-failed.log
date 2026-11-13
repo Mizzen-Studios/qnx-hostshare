@@ -1,0 +1,14 @@
+job 1794567232943429490
+               total        used        free      shared  buff/cache   available
+Mem:          468216      160200      186136         976      143984      308016
+Swap:              0           0           0
+In file included from /mnt/host/hostshare-stock-repeat-20261113/source/native/qnx_hostshare.c:54:
+/mnt/host/hostshare-stock-repeat-20261113/source/native/hostshare_mount.h: In function 'mount_read':
+/mnt/host/hostshare-stock-repeat-20261113/source/native/hostshare_mount.h:57:50: error: format '%d' expects argument of type 'int', but argument 2 has type 'rcvid_t' {aka 'long int'} [-Werror=format=]
+   57 |   printf("HOSTSHARE MIDREAD_HANDLER_ENTER rcvid=%d count=%zu offset=%lld DIAGNOSTIC_PAUSE_BEFORE_RPC\n",ctp->rcvid,limit,(long long)ocb->offset);
+      |                                                 ~^                                                      ~~~~~~~~~~
+      |                                                  |                                                         |
+      |                                                  int                                                       rcvid_t {aka long int}
+      |                                                 %ld
+cc1: all warnings being treated as errors
+

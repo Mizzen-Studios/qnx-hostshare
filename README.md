@@ -32,21 +32,31 @@ seven mounted-file checksums, host edit observed without rebuild. See
 [result and limitations](docs/acceptance/mount-20261113/RESULT.md).
 
 
-## Visible launch, no IRQ routing changes
+## Cold-reader launch, no IRQ routing changes
 
-See [exact prerequisites/build/clean-checkout commands](docs/RUN_NATIVE.md).
-On the configured host, after SDK STOP/reap and with current external artifacts:
+See [exact clean-clone/prerequisite/build commands](docs/RUN_NATIVE.md).
+On the configured host, in a clean checkout after SDK STOP/reap:
 
 ~~~sh
-export HS_ELF=/home/ubuntu/qnx-host/guest/shared/hostshare-irq-restart-20261113/build2/qnx_hostshare
+export HS_ELF=/home/ubuntu/qnx-host/guest/shared/hostshare-stock-repeat-20261113/build2/qnx_hostshare
+export HS_BUILD_MANIFEST="$PWD/docs/acceptance/stock-repeat-20261113/build-source-hashes.json"
 export HS_IFS=/home/ubuntu/qnx-host/guest/shared/incident-20261108/incident.ifs
 export HS_DISK=/home/ubuntu/qnx-host/guest/shared/qnx-native/disk-qemu
-export HS_BUILD_MANIFEST="$PWD/docs/acceptance/irq-restart-20261113/build2-source-hashes.json"
-sh tools/run-native-readonly.sh --irq-mode pci-line --run-id fresh-intx
+sh tools/run-native-suite.sh --image-kind historical --run-id cold-historical --midread
 ~~~
 
-No qtest, PIRQ writes, automatic fallback, SDK download or image build. The script
-checks ELF/source hashes before boot and always owns/reaps the VM. The image is
-historical/custom, NOT clean stock. Read individual current gate results in
-[the next-wave receipt](docs/acceptance/irq-restart-20261113/receipt.json).
-[Written demo draft](docs/DEMO_DRAFT.md) is not recorded or published.
+After that guest is reaped, clean-stock repeat:
+
+~~~sh
+export HS_IFS=/home/ubuntu/qnx-host/guest/shared/edu-stock-control-1024-20261113/stock-output/ifs.bin
+export HS_DISK=/home/ubuntu/qnx-host/guest/shared/edu-stock-control-1024-20261113/stock-output/disk-qemu
+sh tools/run-native-suite.sh --image-kind stock --run-id cold-stock --midread
+~~~
+
+New run-id per attempt; readonly seven-file corpus, timed host edit and explicit
+pending-read kill/error observation. No qtest, PIRQ writes, fallback or MSI-X retry.
+Native results will be only those in [stock-repeat evidence](docs/acceptance/stock-repeat-20261113/).
+The prior [N1c/idle-N5 result](docs/acceptance/irq-restart-20261113/receipt.json)
+remains accepted in its own scope. Its old stock dependency block is preserved,
+not a claim about the newly handed-off hashed stock image.
+[Written demo draft](docs/DEMO_DRAFT.md) remains unrecorded/unpublished.

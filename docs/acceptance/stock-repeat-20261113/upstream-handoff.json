@@ -1,0 +1,38 @@
+{
+  "status": "STOCK_BUILD_BOOT_PASS_EDU_FINISH_BLOCKED",
+  "external_directory": "/home/ubuntu/qnx-host/guest/shared/edu-stock-control-1024-20261113/stock-output",
+  "artifacts": {
+    "stock-hashes-and-sizes.txt": {
+      "sha256": "1bda9597ded96ebf36afb53bd6658f3566b414c1ca66fb419ca9299f9913b3c5",
+      "bytes": 682
+    },
+    "qemu_options": {
+      "sha256": "f72b3d8f85b7f82f03c8572d10369a212ef87dfd322c0cc882ed441261d770df",
+      "bytes": 12
+    },
+    "disk-qemu": {
+      "sha256": "0aee00c281f8eeb5b02c66555ed9517e317bb1503002a19dbf2b0155de336532",
+      "bytes": 154345984
+    },
+    "options": {
+      "sha256": "340ec003fd11044e6eea2d2e39eae00f024bfc483b70dc05cb1cc239a06665f5",
+      "bytes": 2543
+    },
+    "ifs.bin": {
+      "sha256": "68bbe1b49a9b723c09d152773ee323ec6ab576eb29de933bfe3f08fdae21c753",
+      "bytes": 10910404
+    },
+    "disk-qemu.vmdk": {
+      "sha256": "1d01efe9cc8d4a418416d50fac0b2dc8f12100ac2912a1418286e1169528576e",
+      "bytes": 169
+    },
+    "qemu_options.edu": {
+      "sha256": "f72b3d8f85b7f82f03c8572d10369a212ef87dfd322c0cc882ed441261d770df",
+      "bytes": 12
+    }
+  },
+  "stock_generator": "existing licensed mkqnximage; ram512M cpu1; EDU qemu_options snippet only; no lesson IFS injection",
+  "native_changes": "headless TCG256; nic none (serial transfer); pc;512MiB;1CPU; EDU device; independent qcow2 overlay",
+  "limits": "Stock sshd logged memory fault on boot; SSH/SCP not verified; no repair attempted",
+  "lease": "FREE after all SDK/native reaped; parent coordinates HostShare next"
+}

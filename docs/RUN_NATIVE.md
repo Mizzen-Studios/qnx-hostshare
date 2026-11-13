@@ -1,24 +1,75 @@
 # Exact bounded native launch (private, no routing rewrite)
 
-This is an installation-specific QNX8/QEMU smoke run, not an SDK installer or a
-production filesystem service. It uses the **existing historical custom image**,
-not a clean stock image. N7 is dependency-blocked by EDU's stock IFS OOM receipt.
-The earlier pc/shared-INTx limitation and failed attempts remain preserved.
-The current runner does not invoke qtest, rewrite PIRQ routing, or silently switch
-interrupt modes. An MSI-X run is always a separate fresh VM boot.
+Installation-specific QNX8/QEMU readonly feasibility suite, not a production
+filesystem or SDK installer. Historical results and failures stay immutable.
+The earlier stock-OOM dependency block is superseded **only for this repeat** by
+EDU be712b27 stock-build/boot handoff. SSH remains unverified (stock sshd fault);
+this runner uses serial only, without login/network/platform repair.
 
-## Prerequisites, deliberately not downloaded or built by launcher
+## Prerequisites (not provisioned by launcher)
 
-- Linux host with Python3, QEMU x86_64, systemd user scopes/cgroupv2 and nice.
-- Exclusive canonical lock directory /home/ubuntu/qnx-host; no other SDK/QNX VM.
-- Existing authorized IFS plus snapshot-capable raw data disk. The tested image
-  emits CANOPY_SLM_IMAGE_READY, has /data/home/root and the recorded utilities.
-- Current source's externally built QNX ELF. SDK headers, libraries, ELF, disk,
-  IFS and credentials are not in Git. Missing prerequisites fail before boot.
-- Existing licensed QNX8 SDP for a source rebuild, if required. No install/login,
-  package repair, custom image generation or network service setup here.
+- Configured Linux host: Python3, QEMU x86_64, POSIX cksum, systemd user manager,
+  cgroupv2, nice, and authenticated read access to this private GitHub repository.
+- Existing licensed QNX8 SDP only if rebuilding; proprietary headers/libraries,
+  ELF, IFS and disks remain outside Git. No downloads/install/login/image build.
+- /home/ubuntu/qnx-host/native-test.lock writable; no other QEMU/SDK running.
+- External hash-matching executable and raw base disk/IFS below. Missing inputs
+  fail before QEMU. Source mismatch fails; do not substitute an older ELF.
+- Guest image has a serial root shell, /data, ksh printf, od, cat, ls and pidin.
+  No CANOPY boot marker is assumed. Both authorized images are BIOS/pc.
 
-Inside that existing licensed SDP, from this checkout (serial build, O0/g0):
+## Cold-reader exact commands on the configured host
+
+From a directory that does not already contain qnx-hostshare:
+
+~~~sh
+git clone https://github.com/Mizzen-Studios/qnx-hostshare.git
+cd qnx-hostshare
+export HS_ELF=/home/ubuntu/qnx-host/guest/shared/hostshare-stock-repeat-20261113/build2/qnx_hostshare
+export HS_BUILD_MANIFEST="$PWD/docs/acceptance/stock-repeat-20261113/build-source-hashes.json"
+export HS_IFS=/home/ubuntu/qnx-host/guest/shared/incident-20261108/incident.ifs
+export HS_DISK=/home/ubuntu/qnx-host/guest/shared/qnx-native/disk-qemu
+sh tools/run-native-suite.sh --image-kind historical --run-id cold-historical --midread
+~~~
+
+Each run-id must be fresh. Outputs default to .local/user-runs/<run-id>; the
+corpus is new at .local/corpus-<run-id>. Optional HS_RECEIPT_BASE is an absolute
+workspace-local directory for receipts. The source checkout must be clean.
+
+After the previous command exits and its guest is stopped/reaped, repeat on the
+**new clean-stock pair** (never replace it with the historical image):
+
+~~~sh
+export HS_IFS=/home/ubuntu/qnx-host/guest/shared/edu-stock-control-1024-20261113/stock-output/ifs.bin
+export HS_DISK=/home/ubuntu/qnx-host/guest/shared/edu-stock-control-1024-20261113/stock-output/disk-qemu
+sh tools/run-native-suite.sh --image-kind stock --run-id cold-stock --midread
+~~~
+
+The stock preflight hard-checks IFS68bbe1b4.../disk0aee00c2... full hashes from
+upstream-handoff.json. The raw disk is snapshot=on; baseline hashes are checked
+before and after. No lesson ELF or modifications are injected into an IFS.
+
+## What is actually exercised
+
+- HOST2GiB, TCG256MiB, guest512MiB, CPU100%, nice15, smp1, swap0; reserve64MiB.
+  Canonical lease held until termination/reap, refuses an existing QEMU.
+- Fixed pc topology; historical uses user virtio NIC, stock uses nic none and
+  virtio-rng (as stock serial recipe). Both add only readonly virtio-9p. No
+  qtest, PIRQ rewrite, fallback or MSI-X retry. Topology fixed before boot.
+- Serial copy of own ELF, byte-for-byte hex readback, default pci-line probe
+  requiring41 exact bytes, mounted listing, seven independent POSIX checksums
+  (empty/1B/4KiB/1MiB/nested/Unicode/hello), denied writes, timed host edit.
+- Optional --midread explicitly uses --mount-pause-read: normal open completes,
+  client enters native POSIX read, server emits handler-enter rcvid/count then
+  pauses **before RPC**, and harness SIGKILLs that server. Client prints actual
+  read n and errno unchanged, with10s timeout; only n=-1/errno=EIO passes. EOF,
+  disconnect error, timeout or missing result is NOT accepted as EIO.
+- Fresh server resets/remounts and checks hello plus1MiB checksum, then SIGTERM.
+  This pending-read test is not active virtio DMA/physical-device crash safety.
+- Any failure is retained as FAIL/BLOCKED, never silently rerouted. VM always
+  stopped/reaped. Read actual receipts, not CI, for native claims.
+
+## Existing licensed SDK source rebuild (inside SDP guest)
 
 ~~~sh
 source /home/qnx/qnx800/qnxsdp-env.sh
@@ -28,56 +79,17 @@ qcc -Vgcc_ntox86_64 -std=gnu11 -O0 -g0 -Wall -Wextra -Werror \
   -o /absolute/external/output/qnx_hostshare -lpci
 ~~~
 
-## Linux-host clean checkout and launch
+A rebuild needs a fresh manifest binding every core/native C/header and the ELF;
+this suite does not start an SDK. Existing owner helper scripts are bounded
+installation-specific receipts, not portable provisioning tools. Stop/reap SDK
+before any native run. No cap increase beyond2GiB.
 
-~~~sh
-git clone git@github.com:Mizzen-Studios/qnx-hostshare.git
-cd qnx-hostshare
-export HS_ELF=/home/ubuntu/qnx-host/guest/shared/hostshare-irq-restart-20261113/build2/qnx_hostshare
-export HS_IFS=/home/ubuntu/qnx-host/guest/shared/incident-20261108/incident.ifs
-export HS_DISK=/home/ubuntu/qnx-host/guest/shared/qnx-native/disk-qemu
-export HS_BUILD_MANIFEST="$PWD/docs/acceptance/irq-restart-20261113/build2-source-hashes.json"
-sh tools/run-native-readonly.sh --irq-mode pci-line --run-id intx-first
-~~~
+## Earlier scope and remaining caveats
 
-Use a new run-id for every attempt. Outputs default to .local/user-runs/<run-id>.
-Optional HS_RECEIPT_BASE selects another workspace-local evidence directory.
-The wrapper applies HOST1GiB (existing stricter cap), CPU100%, nice15, swap0;
-guest512MiB/smp1 and reserve64MiB are checked. The SDK build owner separately uses
-HOST2GiB/TCG256MiB; native accelerator argv is the established pc,accel=tcg route.
-No cap can exceed2GiB. No SDK may run concurrently; the launcher holds the lease
-until VM termination/reap and refuses another QEMU process.
-
-For a **clean MSI-X-only boot**, after the previous guest is completely reaped:
-
-~~~sh
-sh tools/run-native-readonly.sh --irq-mode msix --run-id msix-clean-first
-~~~
-
-MSI-X enables PCI Memory Space before capability setup. It does NOT first run
-pci-line. Its actual installed-API result is a receipt, not presumed support.
-
-## What runner does and does not prove
-
-Only a fresh one-file public synthetic corpus is exported readonly, with
-security_model=none. The ELF is copied into a snapshot data volume and byte-exact
-readback checked. Default-route 9P probe must return41 exact bytes before mount
-checks run. No hidden route fallback occurs if that probe fails.
-
-N5 deliberately SIGKILLs the **idle** mounted process only after completed reads,
-checks that the old mount disappears, resets the device in a replacement process,
-then tests a UID65534 mount with explicit ability reductions. Active/in-flight
-SIGKILL/DMA safety, malicious hardware and physical-device resilience are NOT
-claimed. INTERRUPT is retained for the existing IRQ; other abilities are not
-exhaustively audited. A final SIGTERM requests cooperative detach/quiescence.
-The wrapper always stops/reaps the isolated VM; failed steps remain failed.
-
-Read exact gates and caveats in docs/acceptance/irq-restart-20261113/receipt.json.
-No production, broad coherence, clean-stock or recording claim follows from CI.
-
-Reduced-privilege cleanup resets the mapped virtio device and verifies status0
-and queue_enable0 before releasing its DMA memory. It deliberately skips the
-privileged PCI backend after IO ability is locked off; PCI Bus Master disable/
-restore is NOT verified on that reduced path. This is trusted-QEMU-only cleanup,
-not safe untrusted/physical DMA teardown. The original post-detach SIGSEGV is
-preserved in intx-clean; the correction must have its own fresh receipt.
+Prior measured N1c/idle N5/UID65534 results are in irq-restart-20261113. The older
+one-file launcher run-native-readonly.sh remains historical; its old ELF cannot
+be used against changed source. Clean MSI-X-only failed PCI_ERR_IRQ_CFG and is
+not retried here. Reduced-privilege cleanup verifies virtio status0/queue0 but
+does NOT verify PCI bus-master disable/restore; trusted QEMU only. Other abilities
+not exhaustively audited. This repeat does not claim a production service,
+malicious hardware safety, broad cache coherence, video or publication.
