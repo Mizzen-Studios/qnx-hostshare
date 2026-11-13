@@ -4,13 +4,20 @@ recorded: false
 published: false
 media_generated: false
 
-1. Show the private source commit and exact receipt/source/ELF/image hashes.
-2. State the historical custom image and clean-stock dependency block.
-3. Use docs/RUN_NATIVE.md, one fresh run-id, no other guests.
-4. Show the actual N1c result; do not hide an IRQ failure or imply MSI-X passed.
-5. If probe passes, show mounted cat/listing, idle SIGKILL/remount, UID/ability
-   observations and checksum, plus final cooperative stop.
-6. Show receipt gates, exact limitations, stopped/reaped VM and lease FREE.
+Storyboard of existing evidence only, not a new run or recording plan.
 
-Do not record, publish, create media, or claim this draft was performed as a
-recorded demonstration. Native acceptance is only the linked actual receipts.
+1. Show [current contract](CURRENT_CONTRACT.md) and recorded source/ELF/image hashes.
+2. Distinguish historical custom and new hashed clean-stock images. Stock SSH
+   remains unverified; show existing serial receipts, not simulated output.
+3. Show default IRQ11 without qtest/PIRQ rewrite, readonly mount/list and seven
+   checksums. Host-edit timings are observations, not latency guarantees.
+4. Show pending-read handler pause before RPC/DMA, SIGKILL, actual native read
+   -1/ESRCH errno3, then fresh remount/read. Owner accepts QNX server-death ESRCH;
+   never map to EIO5. Show old EIO assertion failure alongside review, not a
+   fabricated PASS receipt.
+5. Link prior idle-kill/remount separately. Neither HA scope proves active-DMA
+   crash safety. MSI-X failed PCI_ERR_IRQ_CFG: skip, never imply success.
+6. Show recorded cleanup evidence, not a claim about today's lease owner.
+
+No recording, publication, media, new native run, SDK work, contacts or spend.
+Native observations are only the linked existing receipts.

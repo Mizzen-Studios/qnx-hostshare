@@ -49,15 +49,18 @@ The stock preflight hard-checks IFS68bbe1b4.../disk0aee00c2... full hashes from
 upstream-handoff.json. The raw disk is snapshot=on; baseline hashes are checked
 before and after. No lesson ELF or modifications are injected into an IFS.
 
-## Measured result / expected failure
+## Measured result / accepted server-death contract
 
-Both exact commands have been executed from a fresh clean HTTPS clone. Data,
-seven-file corpus, host-edit and post-kill remount gates PASS on both images; N7
-new clean-stock mount PASS. The required MIDREAD EIO gate is BLOCKED: actual
-read returns -1/errno3, whereas EIO is5, on both images. Thus --midread exits1
-truthfully. It does not translate errno or infer EIO from server disappearance.
-See stock-repeat-20261113/RESULT.md and raw midread-result logs. Omitting
---midread selects data gates only, not an EIO acceptance result.
+Both commands ran from the fresh clean clone at source
+44a2ffc3fdcd9a6de035d10f6bff134504826b1d. Data, seven-file corpus, host-edit and
+post-kill remount passed on both images; N7 clean-stock mount passed.
+Owner review on Nov13 accepted observed native read -1/ESRCH (errno3) as correct
+QNX MsgSend server-death behavior. Keep it unchanged; never map to EIO5.
+Historical --midread still exits1 against its old EIO-only assertion. Receipts
+and raw failures remain byte-identical; this docs review changes no code,
+runs no native test and does not relabel original machine status.
+See [current contract and exact evidence](CURRENT_CONTRACT.md).
+Omitting --midread selects data gates only, not a server-death test.
 
 ## What is actually exercised
 
@@ -72,8 +75,9 @@ See stock-repeat-20261113/RESULT.md and raw midread-result logs. Omitting
 - Optional --midread explicitly uses --mount-pause-read: normal open completes,
   client enters native POSIX read, server emits handler-enter rcvid/count then
   pauses **before RPC**, and harness SIGKILLs that server. Client prints actual
-  read n and errno unchanged, with10s timeout; only n=-1/errno=EIO passes. EOF,
-  disconnect error, timeout or missing result is NOT accepted as EIO.
+  read n and errno unchanged, with10s timeout. Old automation requires EIO;
+  owner review accepts observed ESRCH server-death behavior instead.
+  EOF, timeout or missing result does not establish that contract.
 - Fresh server resets/remounts and checks hello plus1MiB checksum, then SIGTERM.
   This pending-read test is not active virtio DMA/physical-device crash safety.
 - Any failure is retained as FAIL/BLOCKED, never silently rerouted. VM always
@@ -103,3 +107,8 @@ not retried here. Reduced-privilege cleanup verifies virtio status0/queue0 but
 does NOT verify PCI bus-master disable/restore; trusted QEMU only. Other abilities
 not exhaustively audited. This repeat does not claim a production service,
 malicious hardware safety, broad cache coherence, video or publication.
+
+MSI-X is not proven (PCI_ERR_IRQ_CFG); skip MSI-X tests. Recorded idle and
+pending-read kill/remount are scoped HA only, not active-DMA crash safety.
+Timings are observations, not latency guarantees. Demo remains written-only,
+recorded=false; no media or publication is authorized.

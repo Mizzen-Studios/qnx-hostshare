@@ -32,6 +32,15 @@ seven mounted-file checksums, host edit observed without rebuild. See
 [result and limitations](docs/acceptance/mount-20261113/RESULT.md).
 
 
+## Proven quickstart scope
+
+- Proven: readonly mount/list and seven-file checksums on both recorded images,
+  default IRQ11, no qtest or PIRQ rewrite.
+- Not proven: MSI-X (PCI_ERR_IRQ_CFG; skip MSI-X tests), production readiness,
+  active-DMA crash safety or latency guarantees. Timings are observations only.
+- Scoped HA: recorded idle-kill/remount and pending-read ESRCH/remount only.
+  Demo is written-only, recorded=false. This docs wave adds no native evidence.
+
 ## Cold-reader launch, no IRQ routing changes
 
 See [exact clean-clone/prerequisite/build commands](docs/RUN_NATIVE.md).
@@ -57,8 +66,11 @@ New run-id per attempt; readonly seven-file corpus, timed host edit and explicit
 pending-read kill/error observation. No qtest, PIRQ writes, fallback or MSI-X retry.
 Fresh [stock-repeat result](docs/acceptance/stock-repeat-20261113/RESULT.md): both
 images pass seven-file checksums, timed host edit, readonly mount and post-kill
-remount. N7 clean-stock mount PASS. **MIDREAD EIO gate BLOCKED:** actual native
-read returns -1/errno3, not EIO5; --midread intentionally exits1. No translation.
+remount. N7 clean-stock mount PASS. **Owner-accepted midread contract:** native
+ESRCH (errno3) on server death, followed by successful remount. Never map to EIO5.
+Historical --midread still exits1 against its superseded EIO-only assertion.
+See [current contract and exact evidence](docs/CURRENT_CONTRACT.md); original
+blocked labels/raw failures remain unchanged, not a new native failure.
 The prior [N1c/idle-N5 result](docs/acceptance/irq-restart-20261113/receipt.json)
 remains accepted in its own scope. Its old stock dependency block is preserved,
 not a claim about the newly handed-off hashed stock image.
