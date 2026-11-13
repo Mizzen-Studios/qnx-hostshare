@@ -4,33 +4,21 @@ Private Apache-2.0 feasibility project. No production filesystem driver is
 delivered. The bounded read-only resource-manager follow-up is documented in
 [Mount wave](docs/MOUNT_WAVE.md); only its fresh receipts establish native status.
 
-- F0: real QNX8 pci-tool observed virtio-9p. Original [receipt](docs/acceptance/f0/receipt.json) unchanged.
-- Host reference work: [portable C core](docs/C_CORE.md), Python models and host tests.
-- Nov13: actual [QNX diagnostic adapter](docs/NATIVE_ADAPTER.md) now source-bound
-  and cross-built with installed qcc. Native results are ONLY those in fresh
-  [attempt receipts](docs/acceptance/native-20261113/), not host CI or READY lines.
-- SDK-host2GiB/guest512 boot with256MiB TCG cache completed inventory/standalone
-  builds without OOM. No SDK install/login/repair, swap, custom IFS or image build.
-- Installed stock-run grammar and EDU compile handoff: [relay](docs/acceptance/native-20261113/STOCK-RELAY.md).
-  Existing CANcustom images are NOT stock; stock SSH/transfer remains UNVERIFIED.
+## Current native proof — default route, read-only
 
-Run host tests: PYTHONPATH=src python3 -m unittest discover -s tests -v
+- [N1c/default-routing and idle-N5 receipt](docs/acceptance/irq-restart-20261113/receipt.json)
+  establishes its recorded default-route and idle-kill/remount scope.
+- [New clean-stock mount and seven-file corpus](docs/acceptance/stock-repeat-20261113/receipt.json):
+  default IRQ11, no qtest/PIRQ rewrite; readonly mount/list, independent checksums,
+  denied writes and host-edit visibility. Historical and clean-stock repeats also
+  remount/read successfully after server kill.
+- Pending-read server death returns native **ESRCH errno3**, the owner-accepted
+  QNX contract; never map to EIO5. [Current contract and exact source/ELF/image pins](docs/CURRENT_CONTRACT.md).
+  Original EIO-only assertion failures and all historical receipts remain unchanged.
 
-Native F1 requires actual completion/IRQ evidence; F2 requires byte-exact read.
-No production-readiness claim. Mounted gates require their separate follow-up
-receipts. Original kill gate: F1+F2 native PASS by
-29November2026 UK, otherwise stop. No schedule created.
-
-**Nov13 bounded native F1/F2 PASS:** seven actual QNX IRQ-pulse replies and byte-exact
-readonly41-byte synthetic file read; app rc0. Requires explicitly recorded own-device
-PIRQ_D-toIRQ10 routing. See [result and limits](docs/acceptance/native-20261113/RESULT.md).
-Not default-routing, production filesystem or hardware-support acceptance.
-
-**Historical mount follow-up (c4e4f25):** N1 default routing was FAIL. N2/N3/N4 bounded native PASS
-with explicitly documented IRQ10 workaround: real read-only resource manager,
-seven mounted-file checksums, host edit observed without rebuild. See
-[result and limitations](docs/acceptance/mount-20261113/RESULT.md).
-
+Read-only, scoped HA only: idle/pending-read kill then fresh remount, **not
+active-DMA crash safety**. MSI-X is not proven (PCI_ERR_IRQ_CFG; skip MSI-X tests).
+No production-readiness or latency guarantees. Written demo only, recorded=false.
 
 ## Proven quickstart scope
 
@@ -75,3 +63,35 @@ The prior [N1c/idle-N5 result](docs/acceptance/irq-restart-20261113/receipt.json
 remains accepted in its own scope. Its old stock dependency block is preserved,
 not a claim about the newly handed-off hashed stock image.
 [Written demo draft](docs/DEMO_DRAFT.md) remains unrecorded/unpublished.
+
+## Historical milestones — not the current default-route result
+
+The earlier PIRQ workaround and N1 failure below are preserved history; they do
+not replace the later N1c and clean-stock default-IRQ11 evidence above.
+
+- F0: real QNX8 pci-tool observed virtio-9p. Original [receipt](docs/acceptance/f0/receipt.json) unchanged.
+- Host reference work: [portable C core](docs/C_CORE.md), Python models and host tests.
+- Nov13: actual [QNX diagnostic adapter](docs/NATIVE_ADAPTER.md) now source-bound
+  and cross-built with installed qcc. Native results are ONLY those in fresh
+  [attempt receipts](docs/acceptance/native-20261113/), not host CI or READY lines.
+- SDK-host2GiB/guest512 boot with256MiB TCG cache completed inventory/standalone
+  builds without OOM. No SDK install/login/repair, swap, custom IFS or image build.
+- Installed stock-run grammar and EDU compile handoff: [relay](docs/acceptance/native-20261113/STOCK-RELAY.md).
+  Existing CANcustom images are NOT stock; stock SSH/transfer remains UNVERIFIED.
+
+Run host tests: PYTHONPATH=src python3 -m unittest discover -s tests -v
+
+Native F1 requires actual completion/IRQ evidence; F2 requires byte-exact read.
+No production-readiness claim. Mounted gates require their separate follow-up
+receipts. Original kill gate: F1+F2 native PASS by
+29November2026 UK, otherwise stop. No schedule created.
+
+**Nov13 bounded native F1/F2 PASS:** seven actual QNX IRQ-pulse replies and byte-exact
+readonly41-byte synthetic file read; app rc0. Requires explicitly recorded own-device
+PIRQ_D-toIRQ10 routing. See [result and limits](docs/acceptance/native-20261113/RESULT.md).
+Not default-routing, production filesystem or hardware-support acceptance.
+
+**Historical mount follow-up (c4e4f25):** N1 default routing was FAIL. N2/N3/N4 bounded native PASS
+with explicitly documented IRQ10 workaround: real read-only resource manager,
+seven mounted-file checksums, host edit observed without rebuild. See
+[result and limitations](docs/acceptance/mount-20261113/RESULT.md).
