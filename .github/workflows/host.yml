@@ -17,5 +17,7 @@ jobs:
           .local/test-core
       - name: Syntax and whitespace
         run: |
-          python3 -m compileall -q src tests
+          python3 -m compileall -q src tests tools
+          sh -n tools/run-native-readonly.sh
+          python3 tools/run-native-readonly.py --help >/dev/null
           git diff --check
