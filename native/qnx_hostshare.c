@@ -58,7 +58,7 @@ int main(void){
  for(int k=0;k<4;k++){
   unsigned bar=regions[k].bar;
   if(maps[bar])continue;
-  for(int i=0;i<nb;i++)if(bars[i].bar_num==bar){
+  for(int i=0;i<nb;i++)if(bars[i].bar_num==(int_t)bar){
    if(bars[i].size>16777216)goto done;
    maplen[bar]=(size_t)bars[i].size;maps[bar]=mmap_device_memory(NULL,maplen[bar],PROT_READ|PROT_WRITE|PROT_NOCACHE,0,bars[i].addr);
    if(maps[bar]==MAP_FAILED){maps[bar]=NULL;perror("BAR mmap");goto done;}

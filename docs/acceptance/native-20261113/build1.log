@@ -1,0 +1,10 @@
+job 1794533915585341754
+               total        used        free      shared  buff/cache   available
+Mem:          468212      132016       54760         968      303464      336196
+Swap:              0           0           0
+/mnt/host/hostshare-native-20261113/source/native/qnx_hostshare.c: In function 'main':
+/mnt/host/hostshare-native-20261113/source/native/qnx_hostshare.c:61:42: error: comparison of integer expressions of different signedness: 'int_t' {aka 'int'} and 'unsigned int' [-Werror=sign-compare]
+   61 |   for(int i=0;i<nb;i++)if(bars[i].bar_num==bar){
+      |                                          ^~
+cc1: all warnings being treated as errors
+
