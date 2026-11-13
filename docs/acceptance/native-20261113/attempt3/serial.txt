@@ -1,0 +1,838 @@
+
+non UEFI or UEFI+CSM boot
+ACPI table not found (0x4746434d)
+System behaves poorly without PCID support.
+overriding mask for controller 2, vector_base 0
+---> Starting slogger2
+---> Starting PCI Services
+---> Starting fsevmgr
+# ---> Starting devb
+---> Mounting file systems
+Path=0 - Intel 82371SB
+ target=0 lun=0     Direct-Access(0) -          QEMU HARDDISK    Rev: 2.5+
+Path=1 - Intel 82371SB
+ target=0 lun=0            CD-ROM(5) - QEMU     QEMU DVD-ROM     Rev: 2.5+
+---> Mounting file systems
+---> Starting Networking
+---> Starting sshd
+Memory fault (core dumped) 
+---> Starting misc
+CANOPY_SLM_IMAGE_READY
+unameStartup complete
+ -a; pidin ar; pci-tool -v; echo PROBE_BASE_DONE
+QNX noname 8.0.0 2026/06/05-16:26:03EDT x86pc x86_64
+QNX noname 8.0.0 2026/06/05-16:26:03EDT x86pc x86_64
+     pid Arguments
+       1 procnto-smp-instr -mr -d 0777 -u 0777 
+   16387 slogger2 
+   28676 pci-server --aspace-enable --config=/proc/boot/pci_server.cfg 
+   49157 devc-ser8250 -e 
+   57351 ksh ksh 
+   61446 fsevmgr 
+   65544 devb-eide blk cache=64M,auto=partition,vnode=2000,ncache=2000,commit=low 
+  131081 random -s /data/var/random/rnd-seed 
+  143370 pipe 
+  155659 devc-pty 
+  159756 dumper -d /data/var/dumper -M 1000 -D cores 
+  163853 io-sock -m phy -m pci -m usb -d vtnet_pci 
+  217105 dhcpcd: [manager] [ip4] [ip6] -bq -f /system/etc/dhcpcd/dhcpcd.conf -c /system/etc/dhcpcd/dhcpcd-run-hooks 
+  245774 qconn 
+  249871 mqueue 
+  270338 pidin ar 
+
+Partition: pci
+
+Managing Server ID: 1, pid: 28676, running
+B000:D00:F00 @ idx 0
+	vid/did: 8086/1237
+		<vendor id - unknown>, <device id - unknown>
+	class/subclass/reg: 06/00/00
+		Host-to-PCI Bridge Device
+
+B000:D01:F00 @ idx 1
+	vid/did: 8086/7000
+		<vendor id - unknown>, <device id - unknown>
+	class/subclass/reg: 06/01/00
+		PCI-to-ISA Bridge Device
+
+B000:D01:F01 @ idx 2
+	vid/did: 8086/7010
+		<vendor id - unknown>, <device id - unknown>
+	class/subclass/reg: 01/01/80
+		IDE Controller (ANSI INCITS370-2004)
+
+B000:D01:F03 @ idx 3
+	vid/did: 8086/7113
+		<vendor id - unknown>, <device id - unknown>
+	class/subclass/reg: 06/80/00
+		Other Bridge Device
+
+B000:D02:F00 @ idx 4
+	vid/did: 1234/1111
+		<vendor id - unknown>, <device id - unknown>
+	class/subclass/reg: 03/00/00
+		PC Compatible VGA Display Controller
+
+B000:D03:F00 @ idx 5
+	vid/did: 1af4/1000
+		<vendor id - unknown>, <device id - unknown>
+	class/subclass/reg: 02/00/00
+		Ethernet Network Controller
+
+B000:D04:F00 @ idx 6
+	vid/did: 1af4/1049
+		<vendor id - unknown>, <device id - unknown>
+	class/subclass/reg: 00/02/00
+		<Classcode is undefined>
+
+
+PROBE_BASE_DONE
+[I 0.000001] OPENED
+[R +0.000033] outl 0xcf8 0x80000800
+[S +0.000054] OK
+[R +0.000116] inl 0xcfc
+[S +0.000123] OK 0x70008086
+[R +0.000186] outl 0xcf8 0x8000083c
+[S +0.000190] OK
+[R +0.000214] inl 0xcfc
+[S +0.000218] OK 0x0000
+[R +0.000268] outl 0xcf8 0x80001000
+[S +0.000272] OK
+[R +0.000302] inl 0xcfc
+[S +0.000306] OK 0x11111234
+[R +0.000358] outl 0xcf8 0x8000103c
+[S +0.000362] OK
+[R +0.000392] inl 0xcfc
+[S +0.000396] OK 0x0000
+[R +0.000441] outl 0xcf8 0x80001800
+[S +0.000445] OK
+[R +0.000473] inl 0xcfc
+[S +0.000478] OK 0x10001af4
+[R +0.000529] outl 0xcf8 0x8000183c
+[S +0.000533] OK
+[R +0.000631] inl 0xcfc
+[S +0.000636] OK 0x010b
+[R +0.000704] outl 0xcf8 0x80002000
+[S +0.000708] OK
+[R +0.000738] inl 0xcfc
+[S +0.000743] OK 0x10491af4
+# [R +0.000795] outl 0xcf8 0x8000203c
+[S +0.000799] OK
+[R +0.000827] inl 0xcfc
+[S +0.000830] OK 0x010b
+[R +0.000875] outl 0xcf8 0x80002800
+[S +0.000878] OK
+[R +0.000906] inl 0xcfc
+[S +0.000910] OK 0xffffffff
+[R +0.000961] outl 0xcf8 0x8000283c
+[S +0.000965] OK
+[R +0.000987] inl 0xcfc
+[S +0.000990] OK 0xffffffff
+[R +0.001051] outl 0xcf8 0x80003000
+[S +0.001056] OK
+[R +0.001089] inl 0xcfc
+[S +0.001093] OK 0xffffffff
+[R +0.001146] outl 0xcf8 0x8000303c
+[S +0.001150] OK
+[R +0.001178] inl 0xcfc
+[S +0.001182] OK 0xffffffff
+[R +0.001233] outl 0xcf8 0x80003800
+[S +0.001237] OK
+[R +0.001281] inl 0xcfc
+[S +0.001285] OK 0xffffffff
+[R +0.001339] outl 0xcf8 0x8000383c
+[S +0.001343] OK
+[R +0.001373] inl 0xcfc
+[S +0.001377] OK 0xffffffff
+[R +0.001439] outl 0xcf8 0x80000860
+[S +0.001443] OK
+[R +0.001472] inl 0xcfc
+[S +0.001475] OK 0xb0b0a0a
+[R +0.001529] outl 0xcf8 0x80000860
+[S +0.001532] OK
+[R +0.001564] outl 0xcfc 0xa0b0a0a
+[S +0.001579] OK
+[R +0.001624] outl 0xcf8 0x80000860
+[S +0.001628] OK
+[R +0.001659] inl 0xcfc
+[S +0.001662] OK 0xa0b0a0a
+[I +0.001736] CLOSED
+: > /data/home/root/hostshare; echo COPY_READY
+COPY_READY
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_0
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_128
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_256
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_384
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_512
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_640
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_768
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_896
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_1024
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_1152
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_1280
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_1408
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_1536
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_1664
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_1792
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_1920
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_2048
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_2176
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_2304
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_2432
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_2560
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_2688
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_2816
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_2944
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_3072
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_3200
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_3328
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_3456
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_3584
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_3712
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_3840
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_3968
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_4096
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_4224
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_4352
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_4480
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_4608
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_4736
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_4864
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_4992
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_5120
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_5248
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_5376
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_5504
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_5632
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_5760
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_5888
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_6016
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_6144
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_6272
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_6400
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_6528
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_6656
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_6784
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_6912
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_7040
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_7168
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_7296
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_7424
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_7552
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_7680
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_7808
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_7936
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_8064
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_8192
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_8320
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_8448
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_8576
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_8704
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_8832
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_8960
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_9088
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_9216
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_9344
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_9472
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_9600
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_9728
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_9856
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_9984
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_10112
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_10240
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_10368
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_10496
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_10624
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_10752
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_10880
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_11008
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_11136
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_11264
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_11392
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_11520
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_11648
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_11776
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_11904
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_12032
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_12160
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_12288
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_12416
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_12544
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_12672
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_12800
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_12928
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_13056
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_13184
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_13312
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_13440
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_13568
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_13696
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_13824
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_13952
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_14080
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_14208
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_14336
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_14464
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_14592
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_14720
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_14848
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_14976
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_15104
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_15232
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_15360
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_15488
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_15616
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_15744
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_15872
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_16000
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_16128
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_16256
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_16384
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_16512
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_16640
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_16768
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_16896
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_17024
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_17152
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_17280
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_17408
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_17536
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_17664
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_17792
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_17920
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_18048
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_18176
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_18304
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_18432
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_18560
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_18688
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_18816
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_18944
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_19072
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_19200
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_19328
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_19456
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_19584
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_19712
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_19840
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_19968
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_20096
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_20224
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_20352
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_20480
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_20608
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_20736
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_20864
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_20992
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_21120
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_21248
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_21376
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_21504
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_21632
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_21760
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_21888
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_22016
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_22144
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_22272
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_22400
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_22528
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_22656
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_22784
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_22912
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_23040
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_23168
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_23296
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_23424
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_23552
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_23680
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_23808
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_23936
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_24064
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_24192
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_24320
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_24448
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_24576
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_24704
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_24832
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_24960
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_25088
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_25216
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_25344
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_25472
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_25600
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_25728
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_25856
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_25984
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_26112
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_26240
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_26368
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_26496
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_26624
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_26752
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_26880
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_27008
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_27136
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_27264
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_27392
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_27520
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_27648
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_27776
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_27904
+[OWN ELF UPLOAD CHUNK REDACTED; raw retained locally]
+
+COPY_28032
+[OWN ELF READBACK REDACTED; byte comparison in receipt]
+
+# /data/home/root/hostshare; echo HOSTSHARE_APP_RC=$?; echo HOSTSHARE_GATE_DONE
+HOSTSHARE NATIVE BEGIN
+HOSTSHARE F1 READY tag=f0test features=100000001 irq=10 dma=1f821000
+qemu-system-x86_64: warning: 9p: degraded performance: a reasonable high msize should be chosen on client/guest side (chosen msize is <= 8192). See https://wiki.qemu.org/Documentation/9psetup#msize for details.
+HOSTSHARE IRQ_PULSE type=100 reply=101 bytes=21
+HOSTSHARE IRQ_PULSE type=104 reply=105 bytes=20
+HOSTSHARE IRQ_PULSE type=110 reply=111 bytes=22
+HOSTSHARE IRQ_PULSE type=12 reply=13 bytes=24
+HOSTSHARE IRQ_PULSE type=116 reply=117 bytes=52
+HOSTSHARE F2 READONLY BYTE_EXACT PASS
+HOSTSHARE IRQ_PULSE type=120 reply=121 bytes=7
+HOSTSHARE IRQ_PULSE type=120 reply=121 bytes=7
+HOSTSHARE NATIVE RC=0 pci=OK [(PCI_ERR_OK)] errno=3
+HOSTSHARE_APP_RC=0
+HOSTSHARE_GATE_DONE

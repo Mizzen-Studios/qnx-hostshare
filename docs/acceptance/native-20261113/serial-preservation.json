@@ -1,0 +1,26 @@
+[
+  {
+    "attempt": "attempt1",
+    "raw_path": "/home/ubuntu/.openclaw/workspace/apps/qnx-hostshare/.local/native-20261113/attempt1-serial-raw.txt",
+    "raw_sha256": "43266dbe126c173e48ae0a066a3631fdba8e3d63b9604ff771ae04af893b47c8",
+    "committed_sha256": "a4fb871b1e8682f93c7b2efc58c1af9f7761aa7ed4f0fbdd9acce2dd857776cc",
+    "redacted_elf_upload_lines": 220,
+    "reason": "no encoded executable artifacts in Git; exact logs retained local"
+  },
+  {
+    "attempt": "attempt2",
+    "raw_path": "/home/ubuntu/.openclaw/workspace/apps/qnx-hostshare/.local/native-20261113/attempt2-serial-raw.txt",
+    "raw_sha256": "44993ec0be73ece1b277a7c3ee18d77b3012f8c8c660466275fe90c02d253779",
+    "committed_sha256": "b3a8a797484e70bf1aeb939ca792dfd7122de83dd4a2cc7a2b6fd1ec157abac4",
+    "redacted_elf_upload_lines": 220,
+    "reason": "no encoded executable artifacts in Git; exact logs retained local"
+  },
+  {
+    "attempt": "attempt3",
+    "raw_path": "/home/ubuntu/.openclaw/workspace/apps/qnx-hostshare/.local/native-20261113/attempt3-serial-raw.txt",
+    "raw_sha256": "efb5bba736df70698a8fe0a4560b49cae35148614b9a426e2a6512adaa7196a9",
+    "committed_sha256": "89108c041c4571538795249e224b28b94f83d168315ff50e00bfef3c4c8ad401",
+    "redacted_elf_upload_lines": 220,
+    "reason": "no encoded executable artifacts in Git; exact logs retained local"
+  }
+]

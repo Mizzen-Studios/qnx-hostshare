@@ -1,0 +1,13 @@
+{
+  "samples": 374,
+  "peak_memory_bytes": 1190170624,
+  "peak_swap_bytes": 0,
+  "oom_kill_max": 0,
+  "max_event": 0,
+  "reserve_min_bytes": 957833216,
+  "first_ready": 1794533637.1664076,
+  "native_adapter_build2_rc": 0,
+  "EDU_wrong_finish_rc": 0,
+  "inventory_rc": 0,
+  "image_builds": 0
+}

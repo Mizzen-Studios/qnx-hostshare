@@ -1,0 +1,9 @@
+# /data/home/root/hostshare; echo HOSTSHARE_APP_RC=$?; echo HOSTSHARE_GATE_DONE
+HOSTSHARE NATIVE BEGIN
+HOSTSHARE F1 READY tag=f0test features=100000001 irq=10 dma=1f821000
+qemu-system-x86_64: warning: 9p: degraded performance: a reasonable high msize should be chosen on client/guest side (chosen msize is <= 8192). See https://wiki.qemu.org/Documentation/9psetup#msize for details.
+IRQ pulse wait: Connection timed out
+HOSTSHARE NATIVE RC=1 pci=OK [(PCI_ERR_OK)] errno=260
+HOSTSHARE_APP_RC=1
+HOSTSHARE_GATE_DONE
+# 

@@ -1,0 +1,191 @@
+{
+  "schema": "hostshare-native-wave-20261113-1",
+  "baseline": "c5926cf5eb09f2b77ba8345185838d003193b6a6",
+  "status": "PASS_BOUNDED_NATIVE_F1_F2_READONLY_DIAGNOSTIC",
+  "F1": {
+    "status": "PASS_BOUNDED_QNX8_QEMU",
+    "evidence": "attempt3/probe.txt",
+    "features": "VERSION_1|MOUNT_TAG=0x100000001",
+    "mount_tag": "f0test",
+    "device": "1af4:1049",
+    "irq": 10,
+    "dma_physical": "0x1f821000",
+    "completion_pulses": 7,
+    "requires": "explicit own-device PIRQ_D->IRQ10 route; original PCI line11 mismatched reported QNXirq10; default route probe failed"
+  },
+  "F2": {
+    "status": "PASS_READONLY_SYNTHETIC_SINGLE_FILE",
+    "protocol": "9P2000.L",
+    "operations": [
+      "version",
+      "attach",
+      "walk hello.txt",
+      "lopen RDONLY",
+      "read",
+      "clunk file",
+      "clunk root"
+    ],
+    "read_payload_bytes": 41,
+    "read_reply_bytes": 52,
+    "app_rc": 0,
+    "evidence": "attempt3/probe.txt"
+  },
+  "native": {
+    "status": "PASS_NATIVE_READONLY_IRQ_PULSE",
+    "source_sha": "ade94c1d287106d23762a92ecc01e66a3f199551",
+    "caps": {
+      "cpu.max": "100000 100000",
+      "memory.max": "1073741824",
+      "memory.swap.max": "0"
+    },
+    "command": [
+      "qemu-system-x86_64",
+      "-machine",
+      "pc,accel=tcg",
+      "-cpu",
+      "max",
+      "-smp",
+      "1",
+      "-m",
+      "512",
+      "-display",
+      "none",
+      "-serial",
+      "stdio",
+      "-monitor",
+      "none",
+      "-no-reboot",
+      "-kernel",
+      "/home/ubuntu/qnx-host/guest/shared/incident-20261108/incident.ifs",
+      "-drive",
+      "file=/home/ubuntu/qnx-host/guest/shared/qnx-native/disk-qemu,format=raw,if=ide,snapshot=on",
+      "-nic",
+      "user,model=virtio-net-pci",
+      "-fsdev",
+      "local,id=f0,path=/home/ubuntu/.openclaw/workspace/apps/qnx-hostshare/.local/native-20261113/corpus,security_model=none,readonly=on",
+      "-device",
+      "virtio-9p-pci,fsdev=f0,mount_tag=f0test,disable-legacy=on",
+      "-qtest",
+      "unix:/home/ubuntu/.openclaw/workspace/apps/qnx-hostshare/.local/hostshare-qtest.sock,server=on,wait=off"
+    ],
+    "image_sha256": "764e7e9f3ffcb74e851dce896a513c85abe16589d918937f3ba5157891882a22",
+    "disk_sha256": "903598ddfcc0a3fc2f4a1907872676033f29e333cd02b5db4d5f460cd387f516",
+    "elf_sha256": "dec8b0a8eec923d6bbf3e35001c280da78f57f26c73c8a80445211599c86f4cb",
+    "native_source_sha256": "8b972a281c476ad36e66e76c98cf6dc62cc2b0a07eb697099166732630d7bff1",
+    "corpus_sha256": "b22af944a505a8ede078761309ce122faccb453a810939fc81ac5a87f6033eac",
+    "prebuilt_source_record": "d913faffb3ebd83d11f65c44c50437154b3450ec",
+    "native_exit_rc": 0,
+    "commands": [
+      "uname -a; pidin ar; pci-tool -v; echo PROBE_BASE_DONE",
+      ": > /data/home/root/hostshare; echo COPY_READY",
+      "chmod 700 /data/home/root/hostshare; echo HS_BINARY_BEGIN; cat /data/home/root/hostshare; echo; echo HS_BINARY_END",
+      "/data/home/root/hostshare; echo HOSTSHARE_APP_RC=$?; echo HOSTSHARE_GATE_DONE"
+    ],
+    "irq_routing": {
+      "device": {
+        "slot": 4,
+        "id": 273226484,
+        "irq": 267
+      },
+      "pirq_index": 3,
+      "original": 185272842,
+      "updated": 168495626,
+      "irq": 10,
+      "scope": "only own9p PIRQ route per existing QNX PC native collector pattern; no CAN device"
+    },
+    "copy_route": "ksh builtin printf %b octal chunks128 to snapshot data volume; no image build",
+    "copy_bytes": 28096,
+    "native_copy_byte_exact": true,
+    "copy_verification": "readback cat bytes compared to ELF with explicit tty ONLCR transformation; no target hash utility required",
+    "qemu_exit_rc": 0,
+    "stopped_reaped": true,
+    "memory_events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\n",
+    "memory_peak": "677834752\n"
+  },
+  "sdk": {
+    "status": "REQUESTED_STOP",
+    "boot_attempts": 1,
+    "reserve_bytes": 67108864,
+    "pid": 527819,
+    "cmdline": "qemu-system-x86_64 -machine q35 -accel tcg,tb-size=256 -cpu max -smp 1 -m 512 -display none -no-reboot -serial stdio -monitor none -qmp unix:/home/ubuntu/qnx-host/guest/qmp.sock,server=on,wait=off -drive file=/home/ubuntu/qnx-host/guest/guest.qcow2,format=qcow2,if=virtio -drive file=/home/ubuntu/qnx-host/guest/seed.iso,format=raw,media=cdrom,readonly=on -nic user,model=virtio-net-pci -virtfs local,path=/home/ubuntu/qnx-host/guest/shared,mount_tag=hostshare,security_model=mapped-xattr,id=shared ",
+    "nice": 15,
+    "caps": {
+      "cpu.max": "100000 100000",
+      "memory.max": "2147483648",
+      "memory.swap.max": "0"
+    },
+    "stop_rc": 0,
+    "owner_child_rc": 0,
+    "samples": 374,
+    "peak_cgroup_bytes": 1190170624,
+    "stopped_reaped": true
+  },
+  "installed_inventory": {
+    "rc": 0,
+    "scope": "first120 filename matches 9p|virtio|virtiofs|pci under installed target/qnx/x86_64, first100 include matches; bounded metadata and installed help/script inspection; no global absence proof",
+    "absence": "UNVERIFIED_GLOBAL",
+    "raw_logs": "raw-private-log-hashes.txt",
+    "metadata": "INSTALLED-METADATA.md",
+    "stock_relay": "STOCK-RELAY.md"
+  },
+  "edu_compile": {
+    "source_commit": "4a00a4f4af71f24964450f257acc6aea30312ec4",
+    "handoff_hashes_verified": true,
+    "wrong_rc": 0,
+    "finish_rc": 0,
+    "wrong_elf_sha256": "b33336d938a1df7561552bd1c4c581a8362421043f2fbb7dc85c2d83b72e9b90",
+    "finish_elf_sha256": "66c1c767b32b5ac439dcd817101e45f3eff36f71edcf293ddf0e37717ed5f559",
+    "correct_source": "NOT_CREATED",
+    "stock_native": "NOT_RUN_STOCK_IMAGE_UNVERIFIED",
+    "repo_mutation": false
+  },
+  "failures_preserved": [
+    {
+      "step": "compile1",
+      "rc": 1,
+      "reason": "-Werror signed BAR comparison; fixed freshbuild2"
+    },
+    {
+      "step": "attempt1",
+      "reason": "target toybox sha256sum unavailable; adapter not executed"
+    },
+    {
+      "step": "attempt2",
+      "app_rc": 1,
+      "reason": "IRQ pulse timeout with default PC PIRQ route; source/ELF unchanged for route-only reprobe"
+    },
+    {
+      "step": "initial help",
+      "reason": "qnx helper temporary output permission denied; rootqueuehelp succeeds in existing SDK without repair"
+    },
+    {
+      "step": "pause handoff",
+      "reason": "runtime explicitly refused sessions_yield while background owner alive; completed safe sameboot work then stopped/reaped"
+    }
+  ],
+  "cleanup": {
+    "SDK_stopped_reaped": true,
+    "all_native_stopped_reaped": true,
+    "qemu_processes": 0,
+    "lease_free": true
+  },
+  "constraints": {
+    "sdk_boots": 1,
+    "sdk_host_mib": 2048,
+    "sdk_guest_mib": 512,
+    "sdk_tcg_cache_mib": 256,
+    "native_host_mib": 1024,
+    "native_guest_mib": 512,
+    "cpu_percent": 100,
+    "nice": 15,
+    "smp": 1,
+    "swap": 0,
+    "image_builds": 0,
+    "SDK_install_login_repair": false,
+    "CAN_C6_mutation": false,
+    "public_media_PR": false,
+    "F3_plus": false
+  },
+  "remaining": "Production mount/resource-manager filesystem, broad device support, resilience, security assurance not delivered. Current PASS is bounded QNX8/QEMU diagnostic with explicit PIRQ route.",
+  "kill_gate": "F1+F2 bounded native gate observed13Nov; original29NovUK deadline unchanged, no schedule"
+}

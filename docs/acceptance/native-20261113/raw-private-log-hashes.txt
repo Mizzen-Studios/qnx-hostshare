@@ -1,0 +1,3 @@
+d695ff4eb9f59887a612aa0cc8aba0f2556bbe862879beb97a63b99c34b8c02c  .local/native-20261113/sdk-inventory-raw.log
+5d3fd3e8719730672f1c93fd141923c7af29d22179f9985b6ec22a2a777064f7  .local/native-20261113/stock-metadata.log
+294e953d330072cce5727bc53b03d8577ecad23f0d9a9cd5749f91586c37c54d  .local/native-20261113/stock-final.log
