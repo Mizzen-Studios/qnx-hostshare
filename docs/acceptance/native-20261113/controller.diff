@@ -1,0 +1,11 @@
+--- /home/ubuntu/.openclaw/workspace/apps/qnx-hostshare/.local/native-20261113/controller.before.py	2026-11-12 23:28:52.827969030 +0000
++++ /home/ubuntu/qnx-host/guest/guestctl-capped.py	2026-11-13 01:29:33.028453493 +0000
+@@ -27,7 +27,7 @@
+  if not capped: raise SystemExit('Refusing uncapped QEMU: use guestctl.py start or an explicit <=250% CPU scope')
+  sdk_memory=os.environ.get('CAN_SDK_MEMORY_MIB','512')
+  if sdk_memory not in ('512','768'): raise SystemExit('SDK memory override must be512 or768')
+- args=['qemu-system-x86_64','-machine','q35,accel=tcg','-cpu','max','-smp','1','-m',sdk_memory,'-display','none','-no-reboot','-serial','stdio','-monitor','none','-qmp',f'unix:{qmp},server=on,wait=off','-drive',f'file={p}/guest.qcow2,format=qcow2,if=virtio','-drive',f'file={p}/seed.iso,format=raw,media=cdrom,readonly=on','-nic','user,model=virtio-net-pci','-virtfs',f'local,path={p}/shared,mount_tag=hostshare,security_model=mapped-xattr,id=shared']
++ args=['qemu-system-x86_64','-machine','q35','-accel','tcg,tb-size=256','-cpu','max','-smp','1','-m',sdk_memory,'-display','none','-no-reboot','-serial','stdio','-monitor','none','-qmp',f'unix:{qmp},server=on,wait=off','-drive',f'file={p}/guest.qcow2,format=qcow2,if=virtio','-drive',f'file={p}/seed.iso,format=raw,media=cdrom,readonly=on','-nic','user,model=virtio-net-pci','-virtfs',f'local,path={p}/shared,mount_tag=hostshare,security_model=mapped-xattr,id=shared']
+  (p/'launch.json').write_text(json.dumps({'args':args,'started':time.time()},indent=2))
+  proc=subprocess.Popen(args,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,stdin=subprocess.DEVNULL)
+  (p/'qemu.pid').write_text(str(proc.pid)); log=open(p/'serial.log','ab')
