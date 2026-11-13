@@ -1,0 +1,144 @@
+{
+  "kind": "hostshare-irq-restart-wave-v1",
+  "observed_epoch": 1794563182.5251095,
+  "source_commit": "ed27a3448ff043d6b7fe50467fbdb234b9e932bb",
+  "baseline_preserved": "c4e4f258acc992378f14e88fc88f98f80ce11b2e",
+  "n1c_intx": {
+    "passed": true,
+    "app_rc": 0,
+    "mode": "pci-line"
+  },
+  "intx_mount": {
+    "passed": true
+  },
+  "clean_msix": {
+    "passed": false,
+    "app_rc": 1,
+    "mode": "msix"
+  },
+  "clean_msix_scope": "clean boot only msix, Memory Space before installed API; its original ELF, no retest claimed for cleanup-only corrected ELF",
+  "n5_idle_sigkill": {
+    "passed": true,
+    "signal": "SIGKILL after idle completed reads. No DMA quiesce by killed process; remounter resets. No active/in-flight crash safety claim."
+  },
+  "n5_privilege_remount": {
+    "passed": true,
+    "least_privilege_scope": "exact ability drops and IO reacquire denial only, not a security audit"
+  },
+  "n5_cooperative_stop": {
+    "passed": true
+  },
+  "n6": {
+    "user_visible_launcher": "tools/run-native-readonly.sh",
+    "instructions": "docs/RUN_NATIVE.md",
+    "actual_clean_detached_checkout": "ed27a3448ff043d6b7fe50467fbdb234b9e932bb",
+    "demo": "docs/DEMO_DRAFT.md",
+    "recorded": false,
+    "published": false
+  },
+  "n7": {
+    "gate": "N7_CLEAN_STOCK_REPEAT",
+    "status": "DEPENDENCY_BLOCKED_NOT_RUN",
+    "upstream_repo": "Mizzen-Studios/qnx-edu-kit",
+    "upstream_delivery_commit": "d182130534adadeca7fa34eb53e63d8cc04dd214",
+    "upstream_ci": 43399612758,
+    "upstream_receipt": "docs/site/docs/acceptance/stock-20261113/receipt.json",
+    "upstream_outcome": "BLOCKED_CLEAN_STOCK_IFS_OOM",
+    "guest_oom": {
+      "pid": 1620,
+      "task": "x86_64-pc-nto-q",
+      "timestamp_utc": "2026-11-13T09:03:44Z",
+      "anon_rss_kib": 329384,
+      "file_rss_kib": 1736,
+      "total_vm_kib": 588924,
+      "before_generator_available_kib": 295232,
+      "minimum_available_during_link": "UNVERIFIED",
+      "exact_internal_relink_input": "UNVERIFIED; not captured"
+    },
+    "host_measurement": {
+      "sample_count": 361,
+      "monitored_peak_cgroup_bytes": 1105190912,
+      "minimum_reserve_against_monitored_peak_bytes": 1042292736,
+      "maximum_swap_bytes": 0,
+      "sampled_oom_kill_max": 0,
+      "sampled_max_events": 0,
+      "sampling_window": "boot through stop request; shutdown hard-capped but not sampled",
+      "effective_caps": {
+        "cpu.max": "100000 100000",
+        "memory.max": "2147483648",
+        "memory.swap.max": "0"
+      },
+      "nice": 15,
+      "tcg_cache_mib": 256,
+      "guest_memory_mib": 512,
+      "guest_cpus": 1,
+      "reserve_policy_bytes": 67108864
+    },
+    "decision": "No clean stock image available. No EDU repair/retry; historical CAN-custom image must not be called stock. Other HostShare gates proceed on hash-bound historical image."
+  },
+  "qtest_or_routing_writes": false,
+  "sdk": [
+    {
+      "status": "REQUESTED_STOP",
+      "boot_attempts": 1,
+      "reserve_bytes": 67108864,
+      "pid": 584924,
+      "cmdline": "qemu-system-x86_64 -machine q35 -accel tcg,tb-size=256 -cpu max -smp 1 -m 512 -display none -no-reboot -serial stdio -monitor none -qmp unix:/home/ubuntu/qnx-host/guest/qmp.sock,server=on,wait=off -drive file=/home/ubuntu/qnx-host/guest/guest.qcow2,format=qcow2,if=virtio -drive file=/home/ubuntu/qnx-host/guest/seed.iso,format=raw,media=cdrom,readonly=on -nic user,model=virtio-net-pci -virtfs local,path=/home/ubuntu/qnx-host/guest/shared,mount_tag=hostshare,security_model=mapped-xattr,id=shared ",
+      "nice": 15,
+      "caps": {
+        "cpu.max": "100000 100000",
+        "memory.max": "2147483648",
+        "memory.swap.max": "0"
+      },
+      "stop_rc": 0,
+      "owner_child_rc": 0,
+      "samples": 233,
+      "peak_cgroup_bytes": 895627264,
+      "stopped_reaped": true
+    },
+    {
+      "status": "REQUESTED_STOP",
+      "boot_attempts": 1,
+      "reserve_bytes": 67108864,
+      "pid": 585656,
+      "cmdline": "qemu-system-x86_64 -machine q35 -accel tcg,tb-size=256 -cpu max -smp 1 -m 512 -display none -no-reboot -serial stdio -monitor none -qmp unix:/home/ubuntu/qnx-host/guest/qmp.sock,server=on,wait=off -drive file=/home/ubuntu/qnx-host/guest/guest.qcow2,format=qcow2,if=virtio -drive file=/home/ubuntu/qnx-host/guest/seed.iso,format=raw,media=cdrom,readonly=on -nic user,model=virtio-net-pci -virtfs local,path=/home/ubuntu/qnx-host/guest/shared,mount_tag=hostshare,security_model=mapped-xattr,id=shared ",
+      "nice": 15,
+      "caps": {
+        "cpu.max": "100000 100000",
+        "memory.max": "2147483648",
+        "memory.swap.max": "0"
+      },
+      "stop_rc": 0,
+      "owner_child_rc": 0,
+      "samples": 219,
+      "peak_cgroup_bytes": 899575808,
+      "stopped_reaped": true
+    }
+  ],
+  "native_peak_bytes": [
+    921415680,
+    795086848,
+    819765248
+  ],
+  "preserved_failure": "intx-clean/receipt.json (wrong checksum assertion plus real post-detach rc139)",
+  "msix_evidence_build": "ed4ab6460cdf6e28dffd29c59a4038805d4a301b",
+  "source_files": {
+    "core/hostshare.h": "23978f97e87b4c570b062d37add9b0ade3dc3d00bb1c2f104fab7a91b399f518",
+    "core/transport.c": "ea549067c359fbb32394d0dd940410b20d4a9699ea7a3d424e978753948534f9",
+    "core/protocol.c": "a5f7d75af4fada0a377eff7157884d917d26a32cf26db62686a24080c33152c8",
+    "native/qnx_hostshare.c": "d831215da3bae6d5d86ecfe719b9bc3798cdc33c96661ea0a30123a370274116",
+    "native/mount_checksum.c": "2c2ff58fdded122ed853f33d61c16fdd068b055bdebd09fff211c312215c9e9c",
+    "native/hostshare_mount.h": "0654bd7421c2c245dc344668404a21ec71f3efb252d93e033da6ef7fb02d3dd2"
+  },
+  "elf_sha256": "84cecd6d797b1c27d5c0a8009fd6031d2ca3a37590ab72f0216013154fdbd10d",
+  "image_sha256": "764e7e9f3ffcb74e851dce896a513c85abe16589d918937f3ba5157891882a22",
+  "disk_sha256": "903598ddfcc0a3fc2f4a1907872676033f29e333cd02b5db4d5f460cd387f516",
+  "cleanup": {
+    "all_guests_stopped_reaped": true,
+    "qemu_count": 0,
+    "exclusive_lease": "FREE",
+    "handoff": "Parent owns next authorization. Wave STOPPED for review."
+  },
+  "limits": "SDK host2GiB/cache256MiB; native existing stricter1GiB/original pc accel argv; guest512MiB,CPU100,nice15,smp1,swap0,reserve64MiB. No install/login/repair/imagebuild/EDUretry/CAN/C6/public/media/PR.",
+  "scope": "Synthetic readonly fixture on historical custom image. Least-privilege observations only; INTERRUPT retained and no exhaustive ability audit. SIGKILL idle only, not active/in-flight DMA safety. Reduced cleanup verifies virtio status0/queue0 but skips PCI backend and does NOT verify bus-master disable/restore."
+}
