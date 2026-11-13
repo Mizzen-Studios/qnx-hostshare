@@ -17,7 +17,8 @@ delivered. The bounded read-only resource-manager follow-up is documented in
 Run host tests: PYTHONPATH=src python3 -m unittest discover -s tests -v
 
 Native F1 requires actual completion/IRQ evidence; F2 requires byte-exact read.
-No F3+ work or production-readiness claim. Kill gate: F1+F2 native PASS by
+No production-readiness claim. Mounted gates require their separate follow-up
+receipts. Original kill gate: F1+F2 native PASS by
 29November2026 UK, otherwise stop. No schedule created.
 
 **Nov13 bounded native F1/F2 PASS:** seven actual QNX IRQ-pulse replies and byte-exact
