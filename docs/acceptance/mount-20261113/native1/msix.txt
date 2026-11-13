@@ -1,0 +1,6 @@
+/data/home/root/hostshare --msix; echo HOSTSHARE_APP_RC=$?; echo HOSTSHARE_GATE_DONE
+HOSTSHARE NATIVE BEGIN
+HOSTSHARE NATIVE RC=1 pci=Requested Interrupt Configuration Is Invalid Or Previously Allocated Interrupts Could Not Be Released [(PCI_ERR_IRQ_CFG)] errno=2
+HOSTSHARE_APP_RC=1
+HOSTSHARE_GATE_DONE
+# 

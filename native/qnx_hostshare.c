@@ -29,13 +29,23 @@ static int exchange(struct adapter *a,uint8_t type,uint16_t tag,const uint8_t *b
  if(hs_9p_encode(tx,4096,4096,type,tag,body,len,&n))return -1;
  memset(rx,0,4096);d[0]=(struct hs_desc){(uint64_t)a->physical+8192,(uint32_t)n,1,1};d[1]=(struct hs_desc){(uint64_t)a->physical+12288,4096,2,0};
  w16(a->dma+128+4+2*(a->avail%8),0);__sync_synchronize();a->avail++;w16(a->dma+130,a->avail);__sync_synchronize();*a->doorbell=0;
- uint64_t timeout=UINT64_C(3000000000);
- if(TimerTimeout(CLOCK_MONOTONIC,_NTO_TIMEOUT_RECEIVE,NULL,&timeout,NULL)<0)return -1;
- if(MsgReceivePulse(a->channel,&pulse,sizeof pulse,NULL)<0){perror("IRQ pulse wait");return -1;}
- uint8_t isr=*a->isr;__sync_synchronize();
- if(pulse.code!=_PULSE_CODE_MINAVAIL+1||(!a->msix && !(isr&1))||r16(a->dma+4098)!=(uint16_t)(a->used+1)){fprintf(stderr,"IRQ/used mismatch code=%d isr=%u used=%u\n",pulse.code,isr,r16(a->dma+4098));return -1;}
- size_t entry=4100+8*(a->used%8);uint32_t id=r32(a->dma+entry),count=r32(a->dma+entry+4);a->used++;
- if(InterruptUnmask(a->irq,a->interrupt)<0){perror("InterruptUnmask");return -1;}
+ struct timespec now;clock_gettime(CLOCK_MONOTONIC,&now);
+ uint64_t deadline=(uint64_t)now.tv_sec*1000000000+now.tv_nsec+UINT64_C(3000000000);
+ unsigned shared_pulses=0;uint32_t id,count;
+ for(;;){
+  clock_gettime(CLOCK_MONOTONIC,&now);uint64_t current=(uint64_t)now.tv_sec*1000000000+now.tv_nsec;
+  if(current>=deadline){fprintf(stderr,"IRQ deadline shared=%u\n",shared_pulses);return -1;}
+  uint64_t timeout=deadline-current;
+  if(TimerTimeout(CLOCK_MONOTONIC,_NTO_TIMEOUT_RECEIVE,NULL,&timeout,NULL)<0)return -1;
+  if(MsgReceivePulse(a->channel,&pulse,sizeof pulse,NULL)<0){perror("IRQ pulse wait");return -1;}
+  uint8_t isr=*a->isr;__sync_synchronize();uint16_t used=r16(a->dma+4098);
+  if(InterruptUnmask(a->irq,a->interrupt)<0){perror("InterruptUnmask");return -1;}
+  if(pulse.code!=_PULSE_CODE_MINAVAIL+1)return -1;
+  if(used==a->used){shared_pulses++;continue;}
+  if(used!=(uint16_t)(a->used+1)||(!a->msix&&!(isr&1))){fprintf(stderr,"IRQ/used mismatch isr=%u used=%u\n",isr,used);return -1;}
+  size_t entry=4100+8*(a->used%8);id=r32(a->dma+entry);count=r32(a->dma+entry+4);a->used++;break;
+ }
+ if(shared_pulses)printf("HOSTSHARE SHARED_PULSES ignored=%u\n",shared_pulses);
  if(id!=0||count<7||count>4096||hs_9p_decode(rx,count,4096,tag,reply,frame))return -1;
  if(frame->kind==7){fprintf(stderr,"9P remote errno=%u\n",get32(frame->body));return -1;}
  printf("HOSTSHARE IRQ_PULSE type=%u reply=%u bytes=%u\n",type,frame->kind,count);return 0;

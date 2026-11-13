@@ -1,0 +1,5 @@
+# echo forbidden > /mnt/host/hello.txt; echo WRITE_RC=$?; echo READONLY_DONE
+ksh: cannot create /mnt/host/hello.txt: Read-only file system
+WRITE_RC=1
+READONLY_DONE
+# 

@@ -43,8 +43,9 @@ static int mount_open(resmgr_context_t *ctp,io_open_t *msg,RESMGR_HANDLE_T *hand
 }
 static int mount_read(resmgr_context_t *ctp,io_read_t *msg,iofunc_ocb_t *ocb){
  int e=iofunc_read_verify(ctp,msg,ocb,NULL);if(e)return e;
- if((msg->i.xtype&_IO_XTYPE_MASK)!=_IO_XTYPE_NONE)return ENOSYS;
- size_t limit=msg->i.nbytes;if(limit>4000)limit=4000;
+ int xtype=msg->i.xtype&_IO_XTYPE_MASK;
+ if(xtype!=_IO_XTYPE_NONE && !(S_ISDIR(ocb->attr->mode)&&xtype==_IO_XTYPE_READDIR))return ENOSYS;
+ size_t limit=_IO_READ_GET_NBYTES(msg);if(limit>4000)limit=4000;
  if(!limit){_IO_SET_READ_NBYTES(ctp,0);return EOK;}
  struct mount_attr *a=(struct mount_attr *)ocb->attr;uint8_t b[16]={0};struct hs_frame f;
  le32(b,a->fid);put64(b+4,ocb->offset);le32(b+12,S_ISDIR(a->base.mode)?4000:limit);
