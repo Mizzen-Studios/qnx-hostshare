@@ -21,6 +21,33 @@ this runner uses serial only, without login/network/platform repair.
 - Guest image has a serial root shell, /data, ksh printf, od, cat, ls and pidin.
   No CANOPY boot marker is assumed. Both authorized images are BIOS/pc.
 
+## Stock-generation prerequisite — recorded recipe, not a new run
+
+The exact generator invocation is recorded in
+[EDU JUDGES.md at a26962acd737f57bd6d3199384ccfa9cbd63f0f6](https://github.com/Mizzen-Studios/qnx-edu-kit/blob/a26962acd737f57bd6d3199384ccfa9cbd63f0f6/docs/JUDGES.md).
+Its [1GiB builder success](https://github.com/Mizzen-Studios/qnx-edu-kit/blob/a26962acd737f57bd6d3199384ccfa9cbd63f0f6/docs/acceptance/stock-retry-20261113/RESULT.md)
+and [512MiB builder failure](https://github.com/Mizzen-Studios/qnx-edu-kit/blob/a26962acd737f57bd6d3199384ccfa9cbd63f0f6/docs/acceptance/stock-20261113/NOTES.md)
+establish the observed resource boundary. Use an existing licensed SDP8.0
+builder with **at least 1GiB RAM**; target RAM remains 512MiB/one CPU. This is
+not a universal minimum guarantee or authorization to start a builder here.
+
+Inside that existing licensed environment, with HS_SDP_ENV pointing to its
+existing environment file and a fresh project directory:
+
+~~~sh
+. "$HS_SDP_ENV"
+mkdir stock-hostshare-project
+cd stock-hostshare-project
+mkqnximage --type=qemu --arch=x86_64 --ram=512M --cpu=1 --ssh-ident=none --build
+~~~
+
+Only the generator invocation is reused from EDU's recorded stock-build evidence;
+**do not add its EDU device snippet to HostShare**. This HostShare change is
+documentation only: no new build, native validation, SDK install/login or image
+claim. Stop/reap the builder before native launch. Independently pin your trusted
+stock output using --stock-pin below; existing historical artifact pins and
+acceptance bytes are unchanged.
+
 ## Cold-reader exact commands on the configured host
 
 Replace every /absolute/path/to/... placeholder with an actual local path.
