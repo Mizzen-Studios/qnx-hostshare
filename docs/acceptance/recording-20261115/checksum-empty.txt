@@ -1,0 +1,4 @@
+# /data/hostshare/hostshare --checksum '/mnt/host/empty'; echo CHECK_RC=$?; echo CHECK_DONE
+HOSTSHARE CHECKSUM 4294967295 0 /mnt/host/empty
+CHECK_RC=0
+CHECK_DONE

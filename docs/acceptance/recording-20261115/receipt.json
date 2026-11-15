@@ -1,0 +1,125 @@
+{
+  "status": "PASS_OWNER_ACCEPTED_ESRCH_CONTRACT",
+  "source_sha": "71fa9a15d69192dcc5b90caa71a8f1046d3cb509",
+  "raw_native_status": "BLOCKED_GATE",
+  "raw_EIO_only_gate_passed": false,
+  "interpretation": "Actual -1/ESRCH3 on pending read server death, then fresh remount; owner accepted contract, no errno conversion or source change. Not active-DMA crash safety.",
+  "cleanup_verified_at": 1794763799.743229,
+  "qemu_count": 0,
+  "lease": "FREE",
+  "stopped_reaped": true,
+  "source_files": {
+    "core/hostshare.h": "23978f97e87b4c570b062d37add9b0ade3dc3d00bb1c2f104fab7a91b399f518",
+    "core/transport.c": "ea549067c359fbb32394d0dd940410b20d4a9699ea7a3d424e978753948534f9",
+    "core/protocol.c": "a5f7d75af4fada0a377eff7157884d917d26a32cf26db62686a24080c33152c8",
+    "native/qnx_hostshare.c": "7856f52a115407af265e641bcfbd795978ed90feff3a51ecd9e6c236b4914d9c",
+    "native/mount_checksum.c": "5f91860052d72ecd7163d7613e6ebf2afbce16f0eeb02a1deb7f236e4bf96333",
+    "native/hostshare_mount.h": "8f5af745ead1542fff7eae5e2824225f84dcd43ad2f6baf0aca261e5571e8d03"
+  },
+  "elf_sha256": "84bb0bd51836e8e9e6f06f1abd97221974e43a3fc5429ea60c7e66493d19e959",
+  "ifs_sha256": "68bbe1b49a9b723c09d152773ee323ec6ab576eb29de933bfe3f08fdae21c753",
+  "disk_sha256": "0aee00c281f8eeb5b02c66555ed9517e317bb1503002a19dbf2b0155de336532",
+  "caps": {
+    "cpu.max": "100000 100000",
+    "memory.max": "2147483648",
+    "memory.swap.max": "0"
+  },
+  "nice": 15,
+  "native_receipt_sha256": "6b636a09c0d1bd8ab9fede374594cc3cfc5f6a7bd5e5eef7f4e3d7fa512e9280",
+  "raw_journal_sha256": "5ab11bad3fd5babcfe531b80b269e36b78c87c62f3618a16794fc67b66be3238",
+  "event_journal_sha256": "f6955908dd6218c60bc353f824a1ecc9c59e10c3c43cf3a9b649b00ff5a7b87f",
+  "memory": {
+    "samples": 154306,
+    "full_log_sha256": "e4c3daccd3feca0bfc7dfa6d0c80204498787b467f4c5fe9f8764a6a93837ec9",
+    "peak": 608628736,
+    "max_current": 608628736,
+    "reserve_violations": 0,
+    "max_oom_kill_events": 0
+  },
+  "gates": {
+    "probe": {
+      "passed": true
+    },
+    "mount": {
+      "passed": true
+    },
+    "corpus": {
+      "hello.txt": {
+        "passed": true,
+        "observed_cksum": 948244384,
+        "observed_size": 41
+      },
+      "empty": {
+        "passed": true,
+        "observed_cksum": 4294967295,
+        "observed_size": 0
+      },
+      "one": {
+        "passed": true,
+        "observed_cksum": 12738659,
+        "observed_size": 1
+      },
+      "4KiB": {
+        "passed": true,
+        "observed_cksum": 300014538,
+        "observed_size": 4096
+      },
+      "1MiB": {
+        "passed": true,
+        "observed_cksum": 2572415250,
+        "observed_size": 1048576
+      },
+      "nested/leaf.txt": {
+        "passed": true,
+        "observed_cksum": 3989433292,
+        "observed_size": 19
+      },
+      "unicode-\u03bb.txt": {
+        "passed": true,
+        "observed_cksum": 2157407375,
+        "observed_size": 13
+      }
+    },
+    "host_edit": {
+      "passed": true,
+      "elapsed_seconds": 0.15093365591019392,
+      "sha256": "6507e3dc36ef5bff95f64ffefe3b50083789815e1415a60c558e3d8c35efd12c",
+      "rebuild": false
+    },
+    "readonly": {
+      "passed": true
+    },
+    "normal_stop": {
+      "passed": true
+    },
+    "midread": {
+      "handler_pending_before_kill": true,
+      "scope": "Explicit diagnostic pause in read handler before RPC; actual blocked POSIX read. NOT active virtio DMA safety.",
+      "server_wait_rc": 137,
+      "client_wait_rc": 3,
+      "observed_read_n": -1,
+      "observed_errno": 3,
+      "EIO_constant": 5,
+      "elapsed_seconds": 1.161165,
+      "passed": false
+    },
+    "remount": {
+      "passed": true
+    }
+  },
+  "recording": {
+    "actual_new_timed_serial_stream": true,
+    "render_pending": true,
+    "audio": false,
+    "public": false
+  },
+  "no_sdk_build_or_install": true,
+  "no_project_code_changes": true,
+  "external_evidence": {
+    "base": "workspace:.openclaw/tmp/hostshare-recording-20261115/",
+    "native_receipt": "native-receipts/recording-20261115-1725/receipt.json",
+    "actual_stream": "live-20261115-1725/actual-stream.jsonl",
+    "actual_events": "live-20261115-1725/events.jsonl",
+    "memory_series": "native-receipts/recording-20261115-1725/memory.jsonl"
+  }
+}
