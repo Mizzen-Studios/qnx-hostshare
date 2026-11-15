@@ -5,6 +5,9 @@ ROOT=Path(__file__).resolve().parents[1]
 spec=importlib.util.spec_from_file_location('stock_pin',ROOT/'tools/stock_pin.py')
 module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
 class StockPinTests(unittest.TestCase):
+ @classmethod
+ def setUpClass(cls):
+  (ROOT/'.local').mkdir(exist_ok=True)
  def check_pin(self,data):
   with tempfile.TemporaryDirectory(dir=ROOT/'.local') as d:
    p=Path(d)/'pin.json';p.write_text(data);return module.load_stock_pin(p)
