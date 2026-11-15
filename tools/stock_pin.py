@@ -10,7 +10,7 @@ def _unique(pairs):
  return result
 
 def load_stock_pin(path):
- data=Path(path).read_bytes()
+ with Path(path).open('rb') as stream:data=stream.read(4097)
  if len(data)>4096: raise ValueError('stock pin too large')
  pin=json.loads(data,object_pairs_hook=_unique)
  if not isinstance(pin,dict) or set(pin)!={'ifs.bin','disk-qemu'}: raise ValueError('stock pin requires exactly ifs.bin and disk-qemu')

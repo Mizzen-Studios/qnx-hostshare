@@ -13,7 +13,8 @@ this runner uses serial only, without login/network/platform repair.
 - Existing licensed QNX8 SDP with mkqnximage for a judge-built stock BIOS/pc
   image (512MiB RAM, 1 CPU, serial root shell); stockbuild is a prerequisite,
   not performed by this launcher. Existing source rebuild also requires qcc; proprietary headers/libraries,
-  ELF, IFS and disks remain outside Git. No downloads/install/login/image build.
+  ELF, IFS and disks remain outside Git. Launcher performs no downloads,
+  installation, login or image build.
 - /absolute/path/to/shared-native-test.lock writable; no other QEMU/SDK running.
 - External hash-matching executable and raw base disk/IFS below. Missing inputs
   fail before QEMU. Source mismatch fails; do not substitute an older ELF.
