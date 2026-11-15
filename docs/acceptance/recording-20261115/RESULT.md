@@ -4,6 +4,23 @@ One new stock QNX8 run captured from source
 71fa9a15d69192dcc5b90caa71a8f1046d3cb509, clean at launch. No project code
 change, SDK build/install, IRQ workaround, MSI-X retry or second guest run.
 
+## Completed media (private owner-review draft only)
+
+**160.000 seconds,1920x1080,H.264,1280 frames/8fps,zero audio streams**;
+8,792,279 bytes. All nine final stills visually inspected; the entire 131-line
+actual displayed terminal pool passed privacy and coverage checks. The frame map
+includes1280 source-time entries, raw event IDs and1858 explicit editorial
+omissions. Seven host/guest checksum results are visible together in still-077.
+
+MP4 SHA256:9f723544c49fee11bc97be0e25d2fb172cf13bec806b954e3c29c7da6fd0a9b1.
+Server-reported uploaded asset digest and size match. Repository verified PRIVATE;
+release446242471 verified DRAFT with published_at=null, asset751804087 uploaded.
+[Private draft asset — authenticated access](https://github.com/Mizzen-Studios/qnx-hostshare/releases/download/untagged-1d313ece153dd20b42a7/demo-video.mp4).
+See private-draft-release.json and receipt.json. No existing release/asset was
+overwritten. No public publication or submission occurred. MP4 stays external to
+Git; raw timestamped capture, original receipt/memory and helpers remain private
+outside the repository with exact locations/hashes bound in the receipt.
+
 ## Actual native observations
 
 - Default-route IRQ11/INTx probe, byte-exact native ELF copy and readonly

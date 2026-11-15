@@ -132,7 +132,16 @@
     "edited_timing": true,
     "new_actual_stream_only": true,
     "screenshot_review": "All nine final stills visually inspected; full displayed-line pool privacy/coverage assertions pass",
-    "release_pending": true
+    "release_pending": false,
+    "uploaded_private_draft": true,
+    "release_id": 446242471,
+    "asset_id": 751804087,
+    "asset_url": "https://github.com/Mizzen-Studios/qnx-hostshare/releases/download/untagged-1d313ece153dd20b42a7/demo-video.mp4",
+    "release_url": "https://github.com/Mizzen-Studios/qnx-hostshare/releases/tag/untagged-1d313ece153dd20b42a7",
+    "repository_private_verified": true,
+    "release_draft_verified": true,
+    "published_at": null,
+    "remote_digest_verified": "sha256:9f723544c49fee11bc97be0e25d2fb172cf13bec806b954e3c29c7da6fd0a9b1"
   },
   "no_sdk_build_or_install": true,
   "no_project_code_changes": true,
