@@ -24,9 +24,10 @@ this runner uses serial only, without login/network/platform repair.
 ## Cold-reader exact commands on the configured host
 
 Replace every /absolute/path/to/... placeholder with an actual local path.
-The historical custom-image replay is optional; judge-built stock users may
-skip it and use the clean-stock command after setting HS_ELF, HS_BUILD_MANIFEST
-and shared HS_LOCK. From a directory without qnx-hostshare:
+### Direct judge-built stock setup — no historical image required
+
+Complete the stockbuild prerequisite and create stock-pin.json using the command
+below before launch. From a directory without qnx-hostshare:
 
 ~~~sh
 git clone https://github.com/Mizzen-Studios/qnx-hostshare.git
@@ -34,23 +35,13 @@ cd qnx-hostshare
 export HS_LOCK=/absolute/path/to/shared-native-test.lock
 export HS_ELF=/absolute/path/to/qnx_hostshare
 export HS_BUILD_MANIFEST="$PWD/docs/acceptance/stock-repeat-20261113/build-source-hashes.json"
-export HS_IFS=/absolute/path/to/optional-historical-custom/incident.ifs
-export HS_DISK=/absolute/path/to/optional-historical-custom/disk-qemu
-sh tools/run-native-suite.sh --image-kind historical --run-id cold-historical --midread
+export HS_IFS=/absolute/path/to/stock-output/ifs.bin
+export HS_DISK=/absolute/path/to/stock-output/disk-qemu
 ~~~
 
 Each run-id must be fresh. Outputs default to .local/user-runs/<run-id>; the
 corpus is new at .local/corpus-<run-id>. Optional HS_RECEIPT_BASE is an absolute
 workspace-local directory for receipts. The source checkout must be clean.
-
-After the previous command exits and its guest is stopped/reaped, repeat on the
-**new clean-stock pair** (never replace it with the historical image):
-
-~~~sh
-export HS_IFS=/absolute/path/to/stock-output/ifs.bin
-export HS_DISK=/absolute/path/to/stock-output/disk-qemu
-sh tools/run-native-suite.sh --image-kind stock --run-id cold-stock --stock-pin /absolute/path/to/stock-pin.json --midread
-~~~
 
 For judge-built stock, create /absolute/path/to/stock-pin.json independently
 from your trusted mkqnximage output BEFORE launch:
@@ -64,6 +55,12 @@ print(json.dumps(dict(zip(('ifs.bin','disk-qemu'),
 PY
 ~~~
 
+Launch stock directly after setup and pin creation; no historical run is needed:
+
+~~~sh
+sh tools/run-native-suite.sh --image-kind stock --run-id cold-stock --stock-pin /absolute/path/to/stock-pin.json --midread
+~~~
+
 Schema: exactly two keys, ifs.bin and disk-qemu, each a real lowercase 64-hex
 SHA256 string. Duplicate/extra/missing keys, malformed/placeholder digests and
 artifact mismatches fail closed before QEMU; --stock-pin is stock-only. Pins
@@ -74,6 +71,17 @@ Raw disk uses snapshot=on and hashes are checked before/after. No IFS injection.
 HS_LOCK overrides the historical installation default; all guest/SDK owners
 must agree on the SAME absolute shared lock. Parent directory must already exist.
 This portable path/pin option has host-only tests; no new native run is claimed.
+
+### Optional historical custom-image replay — not a stock prerequisite
+
+Skip unless reproducing historical evidence. Keep the common environment above;
+stop/reap any prior guest before launching this separate optional run:
+
+~~~sh
+export HS_IFS=/absolute/path/to/optional-historical-custom/incident.ifs
+export HS_DISK=/absolute/path/to/optional-historical-custom/disk-qemu
+sh tools/run-native-suite.sh --image-kind historical --run-id cold-historical --midread
+~~~
 
 ## Measured result / accepted server-death contract
 

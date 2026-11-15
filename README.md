@@ -34,23 +34,29 @@ Replace all /absolute/path/to/... placeholders with local files. Build stock
 images using licensed mkqnximage (see prerequisites). Historical custom-image
 commands below are optional replay only, not required for judge-built stock.
 Use one shared HS_LOCK across all guest/SDK owners; never run concurrently.
-In a clean checkout after SDK STOP/reap:
+### Direct clean-stock quickstart (no historical image required)
+
+After the licensed stockbuild prerequisite, create stock-pin.json as documented
+in RUN_NATIVE.md. In a clean checkout after SDK STOP/reap, run directly:
 
 ~~~sh
 export HS_LOCK=/absolute/path/to/shared-native-test.lock
 export HS_ELF=/absolute/path/to/qnx_hostshare
 export HS_BUILD_MANIFEST="$PWD/docs/acceptance/stock-repeat-20261113/build-source-hashes.json"
-export HS_IFS=/absolute/path/to/optional-historical-custom/incident.ifs
-export HS_DISK=/absolute/path/to/optional-historical-custom/disk-qemu
-sh tools/run-native-suite.sh --image-kind historical --run-id cold-historical --midread
-~~~
-
-After that guest is reaped, clean-stock repeat:
-
-~~~sh
 export HS_IFS=/absolute/path/to/stock-output/ifs.bin
 export HS_DISK=/absolute/path/to/stock-output/disk-qemu
 sh tools/run-native-suite.sh --image-kind stock --run-id cold-stock --stock-pin /absolute/path/to/stock-pin.json --midread
+~~~
+
+### Optional historical custom-image replay — not a stock prerequisite
+
+Skip this block unless reproducing the historical custom-image evidence. Set
+HS_LOCK, HS_ELF and HS_BUILD_MANIFEST as above; stop/reap any prior guest first.
+
+~~~sh
+export HS_IFS=/absolute/path/to/optional-historical-custom/incident.ifs
+export HS_DISK=/absolute/path/to/optional-historical-custom/disk-qemu
+sh tools/run-native-suite.sh --image-kind historical --run-id cold-historical --midread
 ~~~
 
 New run-id per attempt; readonly seven-file corpus, timed host edit and explicit
