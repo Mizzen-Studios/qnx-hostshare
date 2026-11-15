@@ -1,4 +1,4 @@
-# Exact bounded native launch (private, no routing rewrite)
+# Exact bounded native launch (no routing rewrite)
 
 Installation-specific QNX8/QEMU readonly feasibility suite, not a production
 filesystem or SDK installer. Historical results and failures stay immutable.
@@ -9,7 +9,7 @@ this runner uses serial only, without login/network/platform repair.
 ## Prerequisites (not provisioned by launcher)
 
 - Configured Linux host: Python3, QEMU x86_64, POSIX cksum, systemd user manager,
-  cgroupv2, nice, and authenticated read access to this private GitHub repository.
+  cgroupv2, nice, and read access to this public GitHub repository.
 - Existing licensed QNX8 SDP with mkqnximage for a judge-built stock BIOS/pc
   image (512MiB RAM, 1 CPU, serial root shell); stockbuild is a prerequisite,
   not performed by this launcher. Existing source rebuild also requires qcc; proprietary headers/libraries,
@@ -167,9 +167,8 @@ be used against changed source. Clean MSI-X-only failed PCI_ERR_IRQ_CFG and is
 not retried here. Reduced-privilege cleanup verifies virtio status0/queue0 but
 does NOT verify PCI bus-master disable/restore; trusted QEMU only. Other abilities
 not exhaustively audited. This repeat does not claim a production service,
-malicious hardware safety, broad cache coherence, video or publication.
+malicious hardware safety or broad cache coherence.
 
 MSI-X is not proven (PCI_ERR_IRQ_CFG); skip MSI-X tests. Recorded idle and
 pending-read kill/remount are scoped HA only, not active-DMA crash safety.
-Timings are observations, not latency guarantees. Demo remains written-only,
-recorded=false; no media or publication is authorized.
+Timings are observations, not latency guarantees. The [public demo](https://youtu.be/O0SA7W6gFyE) is available; publication does not broaden these native acceptance claims.

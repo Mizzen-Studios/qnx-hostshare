@@ -1,10 +1,8 @@
-# Written demo draft only
+# Demo evidence outline
 
-recorded: false
-published: false
-media_generated: false
+[Watch the public demo](https://youtu.be/O0SA7W6gFyE).
 
-Storyboard of existing evidence only, not a new run or recording plan.
+This outline describes the evidence scope, not a new native run or recording plan.
 
 1. Show [current contract](CURRENT_CONTRACT.md) and recorded source/ELF/image hashes.
 2. Distinguish historical custom and new hashed clean-stock images. Stock SSH
@@ -19,5 +17,5 @@ Storyboard of existing evidence only, not a new run or recording plan.
    crash safety. MSI-X failed PCI_ERR_IRQ_CFG: skip, never imply success.
 6. Show recorded cleanup evidence, not a claim about today's lease owner.
 
-No recording, publication, media, new native run, SDK work, contacts or spend.
+This documentation update performs no new recording, native run, SDK work, contacts or spending.
 Native observations are only the linked existing receipts.

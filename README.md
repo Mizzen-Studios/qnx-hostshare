@@ -16,7 +16,7 @@ Apache-2.0 read-only virtio-9p host-folder driver for QNX 8.0 (QNX Global Hackat
 
 Read-only, scoped HA only: idle/pending-read kill then fresh remount, **not
 active-DMA crash safety**. MSI-X is not proven (PCI_ERR_IRQ_CFG; skip MSI-X tests).
-No production-readiness or latency guarantees. Written demo only, recorded=false.
+No production-readiness or latency guarantees. [Watch the public demo](https://youtu.be/O0SA7W6gFyE).
 
 ## Proven quickstart scope
 
@@ -25,7 +25,7 @@ No production-readiness or latency guarantees. Written demo only, recorded=false
 - Not proven: MSI-X (PCI_ERR_IRQ_CFG; skip MSI-X tests), production readiness,
   active-DMA crash safety or latency guarantees. Timings are observations only.
 - Scoped HA: recorded idle-kill/remount and pending-read ESRCH/remount only.
-  Demo is written-only, recorded=false. This docs wave adds no native evidence.
+  The [public demo](https://youtu.be/O0SA7W6gFyE) illustrates the project; this documentation update adds no native evidence.
 
 ## Cold-reader launch, no IRQ routing changes
 
@@ -71,7 +71,7 @@ blocked labels/raw failures remain unchanged, not a new native failure.
 The prior [N1c/idle-N5 result](docs/acceptance/irq-restart-20261113/receipt.json)
 remains accepted in its own scope. Its old stock dependency block is preserved,
 not a claim about the newly handed-off hashed stock image.
-[Written demo draft](docs/DEMO_DRAFT.md) remains unrecorded/unpublished.
+[Watch the public demo](https://youtu.be/O0SA7W6gFyE), or read its [evidence outline](docs/DEMO_DRAFT.md).
 
 ## Historical milestones — not the current default-route result
 
