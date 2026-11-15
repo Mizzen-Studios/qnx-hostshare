@@ -1,11 +1,15 @@
 """Bounded native readonly suite; explicit image kind, no IRQ routing changes."""
 import argparse,fcntl,hashlib,json,os,re,selectors,subprocess,time
 from pathlib import Path
+from stock_pin import load_stock_pin,HISTORICAL_STOCK,verify_stock_files
 p=argparse.ArgumentParser(description=__doc__)
 p.add_argument('--run-id',required=True)
 p.add_argument('--image-kind',required=True,choices=['historical','stock'])
 p.add_argument('--midread',action='store_true',help='Explicit diagnostic pause with client blocked in read, then SIGKILL. Not in-flight DMA.')
+p.add_argument('--stock-pin',type=Path,help='Strict JSON SHA256 pins for independently built stock IFS/disk')
 o=p.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',o.run_id)
+if o.stock_pin and o.image_kind!='stock':p.error('--stock-pin requires --image-kind stock')
+stock_expected=load_stock_pin(o.stock_pin) if o.stock_pin else HISTORICAL_STOCK
 root=Path(__file__).resolve().parents[1]
 base=Path(os.environ.get('HS_RECEIPT_BASE',str(root/'.local/user-runs'))).resolve()
 base.mkdir(parents=True,exist_ok=True);out=base/o.run_id;out.mkdir(exist_ok=False)
@@ -16,9 +20,9 @@ assert h(elf)==build['elf_sha256']
 for name,digest in build['files'].items():assert h(root/name)==digest,name
 assert not subprocess.check_output(['git','status','--porcelain'],cwd=root,text=True).strip(),'Launch requires clean checkout'
 if o.image_kind=='stock':
- expected={'ifs.bin':'68bbe1b49a9b723c09d152773ee323ec6ab576eb29de933bfe3f08fdae21c753','disk-qemu':'0aee00c281f8eeb5b02c66555ed9517e317bb1503002a19dbf2b0155de336532'}
- assert h(image)==expected['ifs.bin'] and h(disk)==expected['disk-qemu'],'Wrong stock artifact'
-lock=open('/home/ubuntu/qnx-host/native-test.lock','a');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+ expected=stock_expected
+ verify_stock_files(image,disk,expected)
+lock=open(os.environ.get('HS_LOCK','/home/ubuntu/qnx-host/native-test.lock'),'a');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
 assert subprocess.run(['pgrep','-f','^qemu-system-'],stdout=subprocess.DEVNULL).returncode==1
 cg=Path('/sys/fs/cgroup')/next(x.split(':',2)[2].strip().lstrip('/') for x in Path('/proc/self/cgroup').read_text().splitlines() if x.startswith('0::'))
 caps={k:(cg/k).read_text().strip() for k in ['cpu.max','memory.max','memory.swap.max']}

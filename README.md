@@ -1,8 +1,6 @@
 # QNX HostShare
 
-Private Apache-2.0 feasibility project. No production filesystem driver is
-delivered. The bounded read-only resource-manager follow-up is documented in
-[Mount wave](docs/MOUNT_WAVE.md); only its fresh receipts establish native status.
+Apache-2.0 read-only virtio-9p host-folder driver for QNX 8.0 (QNX Global Hackathon 2026, Low-level Software). Not a production filesystem.
 
 ## Current native proof — default route, read-only
 
@@ -32,22 +30,27 @@ No production-readiness or latency guarantees. Written demo only, recorded=false
 ## Cold-reader launch, no IRQ routing changes
 
 See [exact clean-clone/prerequisite/build commands](docs/RUN_NATIVE.md).
-On the configured host, in a clean checkout after SDK STOP/reap:
+Replace all /absolute/path/to/... placeholders with local files. Build stock
+images using licensed mkqnximage (see prerequisites). Historical custom-image
+commands below are optional replay only, not required for judge-built stock.
+Use one shared HS_LOCK across all guest/SDK owners; never run concurrently.
+In a clean checkout after SDK STOP/reap:
 
 ~~~sh
-export HS_ELF=/home/ubuntu/qnx-host/guest/shared/hostshare-stock-repeat-20261113/build2/qnx_hostshare
+export HS_LOCK=/absolute/path/to/shared-native-test.lock
+export HS_ELF=/absolute/path/to/qnx_hostshare
 export HS_BUILD_MANIFEST="$PWD/docs/acceptance/stock-repeat-20261113/build-source-hashes.json"
-export HS_IFS=/home/ubuntu/qnx-host/guest/shared/incident-20261108/incident.ifs
-export HS_DISK=/home/ubuntu/qnx-host/guest/shared/qnx-native/disk-qemu
+export HS_IFS=/absolute/path/to/optional-historical-custom/incident.ifs
+export HS_DISK=/absolute/path/to/optional-historical-custom/disk-qemu
 sh tools/run-native-suite.sh --image-kind historical --run-id cold-historical --midread
 ~~~
 
 After that guest is reaped, clean-stock repeat:
 
 ~~~sh
-export HS_IFS=/home/ubuntu/qnx-host/guest/shared/edu-stock-control-1024-20261113/stock-output/ifs.bin
-export HS_DISK=/home/ubuntu/qnx-host/guest/shared/edu-stock-control-1024-20261113/stock-output/disk-qemu
-sh tools/run-native-suite.sh --image-kind stock --run-id cold-stock --midread
+export HS_IFS=/absolute/path/to/stock-output/ifs.bin
+export HS_DISK=/absolute/path/to/stock-output/disk-qemu
+sh tools/run-native-suite.sh --image-kind stock --run-id cold-stock --stock-pin /absolute/path/to/stock-pin.json --midread
 ~~~
 
 New run-id per attempt; readonly seven-file corpus, timed host edit and explicit

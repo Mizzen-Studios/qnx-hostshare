@@ -10,9 +10,11 @@ this runner uses serial only, without login/network/platform repair.
 
 - Configured Linux host: Python3, QEMU x86_64, POSIX cksum, systemd user manager,
   cgroupv2, nice, and authenticated read access to this private GitHub repository.
-- Existing licensed QNX8 SDP only if rebuilding; proprietary headers/libraries,
+- Existing licensed QNX8 SDP with mkqnximage for a judge-built stock BIOS/pc
+  image (512MiB RAM, 1 CPU, serial root shell); stockbuild is a prerequisite,
+  not performed by this launcher. Existing source rebuild also requires qcc; proprietary headers/libraries,
   ELF, IFS and disks remain outside Git. No downloads/install/login/image build.
-- /home/ubuntu/qnx-host/native-test.lock writable; no other QEMU/SDK running.
+- /absolute/path/to/shared-native-test.lock writable; no other QEMU/SDK running.
 - External hash-matching executable and raw base disk/IFS below. Missing inputs
   fail before QEMU. Source mismatch fails; do not substitute an older ELF.
 - Guest image has a serial root shell, /data, ksh printf, od, cat, ls and pidin.
@@ -20,15 +22,19 @@ this runner uses serial only, without login/network/platform repair.
 
 ## Cold-reader exact commands on the configured host
 
-From a directory that does not already contain qnx-hostshare:
+Replace every /absolute/path/to/... placeholder with an actual local path.
+The historical custom-image replay is optional; judge-built stock users may
+skip it and use the clean-stock command after setting HS_ELF, HS_BUILD_MANIFEST
+and shared HS_LOCK. From a directory without qnx-hostshare:
 
 ~~~sh
 git clone https://github.com/Mizzen-Studios/qnx-hostshare.git
 cd qnx-hostshare
-export HS_ELF=/home/ubuntu/qnx-host/guest/shared/hostshare-stock-repeat-20261113/build2/qnx_hostshare
+export HS_LOCK=/absolute/path/to/shared-native-test.lock
+export HS_ELF=/absolute/path/to/qnx_hostshare
 export HS_BUILD_MANIFEST="$PWD/docs/acceptance/stock-repeat-20261113/build-source-hashes.json"
-export HS_IFS=/home/ubuntu/qnx-host/guest/shared/incident-20261108/incident.ifs
-export HS_DISK=/home/ubuntu/qnx-host/guest/shared/qnx-native/disk-qemu
+export HS_IFS=/absolute/path/to/optional-historical-custom/incident.ifs
+export HS_DISK=/absolute/path/to/optional-historical-custom/disk-qemu
 sh tools/run-native-suite.sh --image-kind historical --run-id cold-historical --midread
 ~~~
 
@@ -40,14 +46,33 @@ After the previous command exits and its guest is stopped/reaped, repeat on the
 **new clean-stock pair** (never replace it with the historical image):
 
 ~~~sh
-export HS_IFS=/home/ubuntu/qnx-host/guest/shared/edu-stock-control-1024-20261113/stock-output/ifs.bin
-export HS_DISK=/home/ubuntu/qnx-host/guest/shared/edu-stock-control-1024-20261113/stock-output/disk-qemu
-sh tools/run-native-suite.sh --image-kind stock --run-id cold-stock --midread
+export HS_IFS=/absolute/path/to/stock-output/ifs.bin
+export HS_DISK=/absolute/path/to/stock-output/disk-qemu
+sh tools/run-native-suite.sh --image-kind stock --run-id cold-stock --stock-pin /absolute/path/to/stock-pin.json --midread
 ~~~
 
-The stock preflight hard-checks IFS68bbe1b4.../disk0aee00c2... full hashes from
-upstream-handoff.json. The raw disk is snapshot=on; baseline hashes are checked
-before and after. No lesson ELF or modifications are injected into an IFS.
+For judge-built stock, create /absolute/path/to/stock-pin.json independently
+from your trusted mkqnximage output BEFORE launch:
+
+~~~sh
+python3 - /absolute/path/to/stock-output/ifs.bin /absolute/path/to/stock-output/disk-qemu > /absolute/path/to/stock-pin.json <<'PY'
+import hashlib,json,sys
+from pathlib import Path
+print(json.dumps(dict(zip(('ifs.bin','disk-qemu'),
+    (hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in sys.argv[1:])))))
+PY
+~~~
+
+Schema: exactly two keys, ifs.bin and disk-qemu, each a real lowercase 64-hex
+SHA256 string. Duplicate/extra/missing keys, malformed/placeholder digests and
+artifact mismatches fail closed before QEMU; --stock-pin is stock-only. Pins
+establish byte identity, not artifact trust; do not regenerate them from an
+untrusted replacement merely to bypass a mismatch. With no --stock-pin, the
+original recorded stock hashes remain mandatory, NOT an unchecked fallback.
+Raw disk uses snapshot=on and hashes are checked before/after. No IFS injection.
+HS_LOCK overrides the historical installation default; all guest/SDK owners
+must agree on the SAME absolute shared lock. Parent directory must already exist.
+This portable path/pin option has host-only tests; no new native run is claimed.
 
 ## Measured result / accepted server-death contract
 
