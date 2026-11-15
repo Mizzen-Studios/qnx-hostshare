@@ -109,9 +109,30 @@
   },
   "recording": {
     "actual_new_timed_serial_stream": true,
-    "render_pending": true,
+    "render_pending": false,
     "audio": false,
-    "public": false
+    "public": false,
+    "recorded": true,
+    "published_publicly": false,
+    "duration_seconds": 160,
+    "frames": 1280,
+    "fps": 8,
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "audio_streams": 0,
+    "codec": "h264",
+    "video_sha256": "9f723544c49fee11bc97be0e25d2fb172cf13bec806b954e3c29c7da6fd0a9b1",
+    "video_bytes": 8792279,
+    "external_video": "workspace:.openclaw/tmp/hostshare-recording-20261115/final/demo-video.mp4",
+    "frame_map": "frame-map.json",
+    "displayed_line_pool": "displayed-event-lines.json",
+    "raw_mapping": "Per-frame source wall/elapsed time plus source-event IDs, raw journal hashes, explicit omitted-event list",
+    "edited_timing": true,
+    "new_actual_stream_only": true,
+    "screenshot_review": "All nine final stills visually inspected; full displayed-line pool privacy/coverage assertions pass",
+    "release_pending": true
   },
   "no_sdk_build_or_install": true,
   "no_project_code_changes": true,
@@ -121,5 +142,45 @@
     "actual_stream": "live-20261115-1725/actual-stream.jsonl",
     "actual_events": "live-20261115-1725/events.jsonl",
     "memory_series": "native-receipts/recording-20261115-1725/memory.jsonl"
+  },
+  "runtime": {
+    "guest_mib": 512,
+    "tcg_mib": 256,
+    "smp": 1,
+    "machine": "pc",
+    "network": "none",
+    "readonly_export": true,
+    "snapshot": true,
+    "qtest": false,
+    "irq_routing_mutated": false,
+    "qemu_exit_rc": 0,
+    "shutdown": "Unchanged suite terminate()/wait; no second boot"
+  },
+  "helpers_sha256": {
+    "tap.py": "b6c134711116d6863a893a276b3fde8f75ec7e6f895ef722859aed736eb204a9",
+    "render_recorded.py": "581d45f8bb5c8816447a779962a26f5b5aaba7fc97b35619671273d8b8c49066",
+    "validate_capture.py": "a0fdac1a41f72d3841e4761b3466ef51d5fb3cc23653d93e7539ad23656286b2"
+  },
+  "media_checks": {
+    "ffprobe": "ffprobe.json",
+    "displayed_lines": 131,
+    "actual_checksum_outputs": 8,
+    "privacy_or_transfer_omissions": 1858,
+    "stills": [
+      "still-012.png",
+      "still-034.png",
+      "still-051.png",
+      "still-077.png",
+      "still-091.png",
+      "still-102.png",
+      "still-129.png",
+      "still-149.png",
+      "still-157.png"
+    ],
+    "all_7_host_guest_checksums_visible_together": "still-077.png",
+    "host_edit": "still-091.png",
+    "denied_write": "still-102.png",
+    "midread_ESRCH3": "still-129.png",
+    "remount_checksum": "still-149.png"
   }
 }

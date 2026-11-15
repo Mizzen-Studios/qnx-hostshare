@@ -41,7 +41,12 @@ Title/source context and captions are separately labelled. Later faithful
 terminal rendering is allowed; video is prominently labelled EDITED TIMING /
 IDLE CUTS, not realtime. Holds and time compression map to raw event timestamps
 in the frame map. The own-ELF transfer interval and its console octal/hex echoes
-are omitted from displayed footage. No licensed binary, raw transfer bytes,
+are omitted from displayed footage. Repetitive IRQ debug and checksum command
+echo/completion-marker lines are also omitted, explicitly labelled in the video
+and individually indexed by raw event ID in the frame map; actual checksum and
+error/result lines remain unchanged. A 1.4x source-clock traversal within each
+segment then holds its final view; the exact per-frame clock is retained.
+No licensed binary, raw transfer bytes,
 large memory log or MP4 is committed to Git. Personal host paths, addresses and
 hostnames are redacted from displayed text; original private streams stay
 external and are SHA256-bound for inspection.
