@@ -61,7 +61,7 @@ git clone https://github.com/Mizzen-Studios/qnx-hostshare.git
 cd qnx-hostshare
 export HS_LOCK=/absolute/path/to/shared-native-test.lock
 export HS_ELF=/absolute/path/to/qnx_hostshare
-export HS_BUILD_MANIFEST="$PWD/docs/acceptance/stock-repeat-20261113/build-source-hashes.json"
+export HS_BUILD_MANIFEST=/absolute/path/to/fresh-build-source-hashes.json
 export HS_IFS=/absolute/path/to/stock-output/ifs.bin
 export HS_DISK=/absolute/path/to/stock-output/disk-qemu
 ~~~
@@ -82,10 +82,12 @@ print(json.dumps(dict(zip(('ifs.bin','disk-qemu'),
 PY
 ~~~
 
-Launch stock directly after setup and pin creation; no historical run is needed:
+Launch stock directly after setup, fresh ELF/source binding (recipe below), and
+pin creation; no historical run is needed. This ordinary route checks data,
+host-edit visibility, denied writes and cooperative stop, **not server death**:
 
 ~~~sh
-sh tools/run-native-suite.sh --image-kind stock --run-id cold-stock --stock-pin /absolute/path/to/stock-pin.json --midread
+sh tools/run-native-suite.sh --image-kind stock --run-id cold-stock --stock-pin /absolute/path/to/stock-pin.json
 ~~~
 
 Schema: exactly two keys, ifs.bin and disk-qemu, each a real lowercase 64-hex
@@ -107,17 +109,20 @@ stop/reap any prior guest before launching this separate optional run:
 ~~~sh
 export HS_IFS=/absolute/path/to/optional-historical-custom/incident.ifs
 export HS_DISK=/absolute/path/to/optional-historical-custom/disk-qemu
-sh tools/run-native-suite.sh --image-kind historical --run-id cold-historical --midread
+sh tools/run-native-suite.sh --image-kind historical --run-id cold-historical
 ~~~
 
 ## Measured result / accepted server-death contract
 
-Both commands ran from the fresh clean clone at source
+The historical runs with --midread, not the ordinary commands above, ran
+from the fresh clean clone at source
 44a2ffc3fdcd9a6de035d10f6bff134504826b1d. Data, seven-file corpus, host-edit and
 post-kill remount passed on both images; N7 clean-stock mount passed.
 Owner review on Nov13 accepted observed native read -1/ESRCH (errno3) as correct
 QNX MsgSend server-death behavior. Keep it unchanged; never map to EIO5.
-Historical --midread still exits1 against its old EIO-only assertion. Receipts
+**Historical diagnostic only:** append --midread to a separate run with a fresh
+run-id to inspect the unchanged EIO-only assertion. The known accepted ESRCH3
+result still exits1; this is not a successful quickstart gate. Receipts
 and raw failures remain byte-identical; this docs review changes no code,
 runs no native test and does not relabel original machine status.
 See [current contract and exact evidence](CURRENT_CONTRACT.md).
@@ -153,6 +158,39 @@ qcc -Vgcc_ntox86_64 -std=gnu11 -O0 -g0 -Wall -Wextra -Werror \
   native/mount_checksum.c core/transport.c core/protocol.c \
   -o /absolute/external/output/qnx_hostshare -lpci
 ~~~
+
+### Bind a fresh build (host-only manifest recipe)
+
+After copying the completed executable out of the licensed build environment,
+run this from the matching, unchanged source checkout on the host. Set HS_ELF
+and HS_BUILD_MANIFEST as above; keep output outside tracked files. Python3's
+standard library is sufficient; this starts no SDK or guest. Hash the actual
+artifact: rebuilding the same source is **not** assumed to give a historical
+ELF hash. Do not use an old build manifest with a newly built executable.
+
+~~~sh
+python3 - "$HS_ELF" "$HS_BUILD_MANIFEST" <<'PYMANIFEST'
+import hashlib, json, sys
+from pathlib import Path
+root = Path.cwd()
+elf, output = map(Path, sys.argv[1:])
+files = sorted(p for folder in ('core', 'native')
+               for p in (root / folder).glob('*.[ch]'))
+assert files and elf.is_file(), 'Need matching source and completed ELF'
+digest = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+manifest = {'files': {str(p.relative_to(root)): digest(p) for p in files},
+            'elf_sha256': digest(elf)}
+with output.open('x') as stream:
+    stream.write(json.dumps(manifest, indent=2) + '\n')
+PYMANIFEST
+~~~
+
+The exclusive create refuses to overwrite an existing manifest. This records
+byte identity, **not proof that the ELF was compiled from that source**: retain
+your build command/log and ensure staged build sources match this checkout
+before recording it. Never regenerate a manifest just to silence a mismatch.
+The launcher verifies these source/ELF hashes before QEMU. A source or ELF
+change requires a reviewed rebuild/binding, not changed historical pins.
 
 A rebuild needs a fresh manifest binding every core/native C/header and the ELF;
 this suite does not start an SDK. Existing owner helper scripts are bounded

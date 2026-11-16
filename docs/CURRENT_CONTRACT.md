@@ -42,8 +42,19 @@ describes the earlier EIO requirement; this review supersedes only that contract
   and [remount](acceptance/stock-repeat-20261113/cold-stock/remount.txt).
 - [Prior idle-N5 scope](acceptance/irq-restart-20261113/receipt.json) is not rerun or expanded.
 
-Licensed binaries/images remain external. Historical failures and all acceptance
-bytes remain unchanged. No QEMU/controller/SDK/EDU interaction in this docs wave;
-EDU owns the current lease. £0, private only, CAN frozen, C6 off.
-[Demo](DEMO_DRAFT.md) remains written-only: recorded=false, published=false,
-media_generated=false. No recording, contacts, publication or installation.
+## Current inspection and media pointers — updated 16 November 2026
+
+Licensed binaries/images remain external. Historical failures, all acceptance
+bytes and the exact pins above remain unchanged. [Judge inspection](JUDGES.md)
+is host-only; [ordinary native quickstart](RUN_NATIVE.md) omits the obsolete
+EIO-only diagnostic and does not test server death.
+
+[Public demo](https://youtu.be/O0SA7W6gFyE) is linked in the living
+[evidence outline](DEMO_DRAFT.md). Public playback/narration was not revalidated
+here. The separate [15 November recording result](acceptance/recording-20261115/RESULT.md)
+and [private draft receipt](acceptance/recording-20261115/private-draft-release.json)
+document existing silent footage; a private draft is not a public release.
+The former written-only/unpublished footer was stale current prose, not an
+immutable receipt. This update makes no new recording or native acceptance
+claim and says nothing about the current global lease owner. No native/QEMU,
+SDK/licence, visibility, outreach or spending changes; C6 untouched.

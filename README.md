@@ -2,6 +2,20 @@
 
 Apache-2.0 read-only virtio-9p host-folder driver for QNX 8.0 (QNX Global Hackathon 2026, Low-level Software). Not a production filesystem.
 
+## Edit on the host, read in QNX — no image rebuild
+
+Keep development inputs on the host and read updated bytes through a read-only
+QNX mount, without rebuilding or transferring a guest image for every edit.
+QEMU supplies the host export; this project supplies the bounded QNX 8
+integration, not a general-purpose writable filesystem.
+
+1. **Watch:** [public demo](https://youtu.be/O0SA7W6gFyE) (external media; not revalidated here).
+2. **Inspect without QNX:** [judge path](docs/JUDGES.md) links actual edit/read,
+   checksum and denied-write receipts. Host-only checks need Python and a C
+   compiler, not an SDK, guest image or QEMU.
+3. **Reproduce with an existing licensed setup:** [prerequisites and ordinary
+   data route](docs/RUN_NATIVE.md). Host tests are not native acceptance.
+
 ## Current native proof — default route, read-only
 
 - [N1c/default-routing and idle-N5 receipt](docs/acceptance/irq-restart-20261113/receipt.json)
@@ -36,16 +50,17 @@ commands below are optional replay only, not required for judge-built stock.
 Use one shared HS_LOCK across all guest/SDK owners; never run concurrently.
 ### Direct clean-stock quickstart (no historical image required)
 
-After the licensed stockbuild prerequisite, create stock-pin.json as documented
+After the licensed stockbuild prerequisite, bind your own ELF and source with a
+fresh manifest, then create stock-pin.json as documented
 in RUN_NATIVE.md. In a clean checkout after SDK STOP/reap, run directly:
 
 ~~~sh
 export HS_LOCK=/absolute/path/to/shared-native-test.lock
 export HS_ELF=/absolute/path/to/qnx_hostshare
-export HS_BUILD_MANIFEST="$PWD/docs/acceptance/stock-repeat-20261113/build-source-hashes.json"
+export HS_BUILD_MANIFEST=/absolute/path/to/fresh-build-source-hashes.json
 export HS_IFS=/absolute/path/to/stock-output/ifs.bin
 export HS_DISK=/absolute/path/to/stock-output/disk-qemu
-sh tools/run-native-suite.sh --image-kind stock --run-id cold-stock --stock-pin /absolute/path/to/stock-pin.json --midread
+sh tools/run-native-suite.sh --image-kind stock --run-id cold-stock --stock-pin /absolute/path/to/stock-pin.json
 ~~~
 
 ### Optional historical custom-image replay — not a stock prerequisite
@@ -56,11 +71,14 @@ HS_LOCK, HS_ELF and HS_BUILD_MANIFEST as above; stop/reap any prior guest first.
 ~~~sh
 export HS_IFS=/absolute/path/to/optional-historical-custom/incident.ifs
 export HS_DISK=/absolute/path/to/optional-historical-custom/disk-qemu
-sh tools/run-native-suite.sh --image-kind historical --run-id cold-historical --midread
+sh tools/run-native-suite.sh --image-kind historical --run-id cold-historical
 ~~~
 
-New run-id per attempt; readonly seven-file corpus, timed host edit and explicit
-pending-read kill/error observation. No qtest, PIRQ writes, fallback or MSI-X retry.
+New run-id per attempt; the ordinary route checks the readonly seven-file corpus,
+timed host edit and cooperative stop. It does not test server death or remount.
+**Historical diagnostic only:** adding --midread enables the unchanged EIO-only
+gate, known to exit1 for accepted ESRCH3; do not add it to the ordinary quickstart.
+No qtest, PIRQ writes, fallback or MSI-X retry.
 Fresh [stock-repeat result](docs/acceptance/stock-repeat-20261113/RESULT.md): both
 images pass seven-file checksums, timed host edit, readonly mount and post-kill
 remount. N7 clean-stock mount PASS. **Owner-accepted midread contract:** native
