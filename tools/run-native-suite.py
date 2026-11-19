@@ -112,7 +112,7 @@ try:
  text=save('probe',command(app+' --tag '+o.tag+' --pci-line; echo APP_RC=$?; echo PROBE_DONE','PROBE_DONE'))
  report['probe']={'passed':rc(text,'APP_RC')==0 and 'HOSTSHARE F2 READONLY BYTE_EXACT PASS' in text}
  if not report['probe']['passed']:raise RuntimeError('default-route probe failed; no routing fallback')
- text=save('mount',command(app+' --tag '+o.tag+' --mountpoint '+o.mountpoint+' --pci-line --mount > '+guest+'/mount.log 2>&1 & HS_PID=$!; sleep 10; cat '+guest+'/mount.log; cat /mnt/host/hello.txt; echo CAT_RC=$?; ls -1 /mnt/host; echo LS_RC=$?; echo MOUNT_DONE','MOUNT_DONE'))
+ text=save('mount',command(app+' --tag '+o.tag+' --mountpoint '+o.mountpoint+' --pci-line --mount > '+guest+'/mount.log 2>&1 & HS_PID=$!; sleep 10; pidin ar; cat '+guest+'/mount.log; cat /mnt/host/hello.txt; echo CAT_RC=$?; ls -1 /mnt/host; echo LS_RC=$?; echo MOUNT_DONE','MOUNT_DONE'))
  listing=re.sub(rb'\\([0-7]{3})',lambda m:bytes([int(m[1],8)]),text.encode()).decode('utf-8')
  report['mount']={'passed':rc(text,'CAT_RC')==0 and rc(text,'LS_RC')==0 and 'HOSTSHARE MOUNT READY' in text and all(name in listing.splitlines() for name in ['hello.txt','empty','one','4KiB','1MiB','nested','unicode-λ.txt'])}
  if not report['mount']['passed']:raise RuntimeError('mount/list gate failed')
