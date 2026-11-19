@@ -29,3 +29,13 @@ Historical evidence/raw failures/pins unchanged. Legacy --midread remains EIO-on
 no failure-lane extension or errno mapping, no active-DMA kill. C6 stopped; no
 CAN/EDU edits, install/login/licence, spend, media, upload or external submission.
 Owner draft: OWNER_DEVPOST_DRAFT.md (local only).
+
+## Actual fresh SDK build
+
+Corrected owner build2 completed rc0 with installed licensed qcc, guest1GiB,
+CPU100%, host2GiB/no swap, nice15, smp1/TCG256. 361 monitored samples; maximum
+cgroup memory.peak 990400512 bytes, below2GiB minus reserve64. No OOM events.
+Fresh ELF SHA256 b7787467609ed75570ba791fb41e0ea440dba2459420e1f3d418922a5cebcc3c.
+See sdk-owner.json, sdk-memory.jsonl and sdk-stop.txt: ACPI shutdown completed,
+owner rc0, stopped/reaped=true, remaining QEMU empty before native launch.
+Original queue job1795115002311520643 completed; no queue timeout/retry occurred.

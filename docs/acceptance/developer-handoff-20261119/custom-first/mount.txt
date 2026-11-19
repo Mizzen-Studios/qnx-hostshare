@@ -1,0 +1,7 @@
+# /data/hostshare/hostshare --tag dev-inputs --mountpoint /mnt/dev-inputs --pci-line --mount > /data/hostshare/mount.log 2>&1 & HS_PID=$!; sleep 2; cat /data/hostshare/mount.log; cat /mnt/dev-inputs/hello.txt; echo CAT_RC=$?; ls -1 /mnt/dev-inputs; echo LS_RC=$?; echo MOUNT_DONE
+[1] 3657730
+cat: /mnt/dev-inputs/hello.txt: No such file or directory
+CAT_RC=1
+ls: /mnt/dev-inputs: No such file or directory
+LS_RC=1
+MOUNT_DONE

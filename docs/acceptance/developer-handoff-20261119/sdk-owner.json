@@ -1,0 +1,36 @@
+{
+  "schema": "hostshare.handoff-build.v1",
+  "native_accepted": false,
+  "reserve_bytes": 67108864,
+  "status": "BUILD_PASS",
+  "foreign_qemu": "",
+  "pending_queue": [],
+  "running_markers": [
+    "1794051073335110237.sh.running",
+    "1794152680867379744.sh.running",
+    "1794051322047121253.sh.running",
+    "1794156243898046099.sh.running",
+    "1794085837344024336.sh.running",
+    "1794054337137259048.sh.running",
+    "1795113265349792925.sh.running",
+    "1794019578373249903.sh.running",
+    "1794050862297040209.sh.running",
+    "1794064875425973340.sh.running",
+    "1794053841409211697.sh.running",
+    "1794043134201416946.sh.running"
+  ],
+  "host_memavailable_kib": 19340492,
+  "caps": {
+    "cpu.max": "100000 100000",
+    "memory.max": "2147483648",
+    "memory.swap.max": "0"
+  },
+  "nice": 15,
+  "qemu_command": "qemu-system-x86_64 -machine q35 -accel tcg,tb-size=256 -cpu max -smp 1 -m 1024 -display none -no-reboot -serial stdio -monitor none -qmp unix:/home/ubuntu/qnx-host/guest/qmp.sock,server=on,wait=off -drive file=/home/ubuntu/qnx-host/guest/guest.qcow2,format=qcow2,if=virtio -drive file=/home/ubuntu/qnx-host/guest/seed.iso,format=raw,media=cdrom,readonly=on -nic user,model=virtio-net-pci -virtfs local,path=/home/ubuntu/qnx-host/guest/shared,mount_tag=hostshare,security_model=mapped-xattr,id=shared ",
+  "compile_rc": 0,
+  "elf_sha256": "b7787467609ed75570ba791fb41e0ea440dba2459420e1f3d418922a5cebcc3c",
+  "stop_rc": 0,
+  "owner_rc": 0,
+  "stopped_reaped": true,
+  "remaining_qemu": ""
+}
