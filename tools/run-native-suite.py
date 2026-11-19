@@ -2,7 +2,7 @@
 import argparse,fcntl,hashlib,json,os,re,selectors,subprocess,time
 from pathlib import Path
 from handoff_oracle import verify as verify_conformance
-from handoff_preflight import config,export_directory,binding
+from handoff_preflight import config
 from stock_pin import load_stock_pin,HISTORICAL_STOCK,verify_stock_files
 p=argparse.ArgumentParser(description=__doc__)
 p.add_argument('--conformance',action='store_true')
@@ -26,11 +26,14 @@ assert h(elf)==build['elf_sha256']
 assert set(build['files'])=={str(q.relative_to(root)) for folder in ('core','native') for q in (root/folder).glob('*.[ch]')}
 for name,digest in build['files'].items():assert h(root/name)==digest,name
 assert not subprocess.check_output(['git','status','--porcelain'],cwd=root,text=True).strip(),'Launch requires clean checkout'
+assert all(q.is_file() and not q.is_symlink() for q in (elf,image,disk)),'regular artifact files required'
 if o.image_kind=='stock':
  expected=stock_expected
  verify_stock_files(image,disk,expected)
 lock=open(os.environ.get('HS_LOCK','/home/ubuntu/qnx-host/native-test.lock'),'a');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
 assert subprocess.run(['pgrep','-f','^qemu-system-'],stdout=subprocess.DEVNULL).returncode==1
+queue=Path('/home/ubuntu/qnx-host/guest/shared/queue')
+assert not list(queue.glob('*.sh')),'pending SDK jobs'
 cg=Path('/sys/fs/cgroup')/next(x.split(':',2)[2].strip().lstrip('/') for x in Path('/proc/self/cgroup').read_text().splitlines() if x.startswith('0::'))
 caps={k:(cg/k).read_text().strip() for k in ['cpu.max','memory.max','memory.swap.max']}
 assert caps=={'cpu.max':'100000 100000','memory.max':'2147483648','memory.swap.max':'0'} and os.getpriority(os.PRIO_PROCESS,0)>=15

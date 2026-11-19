@@ -26,6 +26,9 @@ class Handoff(unittest.TestCase):
    (p/'escape').symlink_to('/etc/passwd')
    with self.assertRaises(ValueError):export_directory(p)
    with self.assertRaises(ValueError):export_directory(p/'missing')
+   with self.assertRaises(ValueError):export_directory(p/'..'/p.name)
+   (p/'escape').unlink();(p/'name,unsafe').mkdir()
+   with self.assertRaises(ValueError):export_directory(p/'name,unsafe')
  def test_binding(self):
   with tempfile.TemporaryDirectory() as tmp:
    p=Path(tmp);(p/'core').mkdir();(p/'native').mkdir();(p/'core/a.h').write_text('a');elf=p/'elf';elf.write_bytes(b'new elf')

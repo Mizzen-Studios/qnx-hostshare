@@ -13,7 +13,7 @@ def config(tag,mountpoint):
 
 def export_directory(path):
     path=Path(path)
-    if not path.is_absolute() or ',' in str(path) or any(c.isspace() for c in str(path)):
+    if not path.is_absolute() or any(part in ('.','..') for part in path.parts) or not re.fullmatch(r'/[A-Za-z0-9_./-]+',str(path)):
         raise ValueError('export needs absolute QEMU-safe path')
     for p in (path,*path.parents):
         if p.is_symlink(): raise ValueError('symlink export ancestor')
