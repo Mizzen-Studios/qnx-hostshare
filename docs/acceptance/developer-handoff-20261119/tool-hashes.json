@@ -1,6 +1,6 @@
 {
   "tools/handoff-sdk-owner.py": "53fa57eaa49f8a8a569f7fe5743991336673b1394fd11aff06f4a3e45488fed6",
-  "tools/run-native-suite.py": "d978f6ef4116678a25fe8ca9e6c091505c2c0c1c723569c636614eb7163e982c",
+  "tools/run-native-suite.py": "5161b98f0d85aafd303e610c922e9b6f3e4ebc1988f2ef354d39c1420c9e797a",
   "tools/run-native-suite.sh": "1cdd0658fac92d3efb9dbd284e36a3c339db7e417c1922600daf0bd2f029a8c0",
   "tools/handoff_oracle.py": "95a647a5d2f8cef699042c3613fc15c8f2bbc7df7976592fd1a5f49d328831f3",
   "tools/handoff_preflight.py": "ba8181021af315650793046271eb4d8c5993ce9e833e4df2833f27805f034fca",

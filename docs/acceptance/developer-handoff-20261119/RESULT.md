@@ -51,3 +51,25 @@ IFS/disk hashes unchanged. Raw per-drain memory retained privately with hash in
 custom-first/memory-summary.json; original failure receipt unchanged.
 A separate fresh attempt uses bounded10s startup allowance; no cap increase,
 reserve bypass, new ELF, image build or failure-lane extension.
+
+Second custom attempt (custom-second) again passed actual nondefault-tag probe
+but mount log stayed empty/path absent after10s. Peak599982080; clean cleanup,
+no cap/OOM events, artifacts unchanged. This disproves assuming a2s-only issue.
+Native conformance and custom mounted host-edit remain NOT_ACCEPTED. A separate
+default-route compatibility attempt captures pidin state to identify whether the
+mount process runs; no SDK/image/resource retry is involved.
+
+## Final native status: NOT_ACCEPTED / blocked
+
+Default compatibility attempt default-first failed serial transfer at COPY_7040
+(timeout20s), before ELF byte verification, probe or mount. Peak438329344;
+QEMU stopped/reaped rc0, no OOM/cap events, reviewed image hashes unchanged.
+No default native compatibility claim and no third custom retry.
+
+Fresh current-source compilation and two real nondefault-tag byte-exact probes
+are proven. Mounted custom/default paths, all288 offset cases, four pagination/
+rewind scans, five denials and host-edit visibility on the NEW ELF are NOT_RUN
+or blocked by native mount/transfer failures, NOT native PASS. Prior Nov13/15
+read-only mount/checksum/edit/ESRCH evidence remains valid only for its exact old
+source/ELF pins. Do not proceed to item5 recording on this new implementation
+until the parent reviews these blockers; do not imply acceptance from host CI.
