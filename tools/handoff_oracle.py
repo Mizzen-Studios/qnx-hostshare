@@ -3,6 +3,9 @@ import re
 
 def verify(text,corpus):
     cases={}
+    normalized=text.replace('\r','')
+    if any(line.startswith('HS_CASE ') and not re.fullmatch(r'HS_CASE [01] (empty|one|4KiB|1MiB) \d+ \d+ \d+ [0-9a-f]*-',line) for line in normalized.splitlines()):raise ValueError('malformed byte case')
+    text=normalized
     for m in re.finditer(r'^HS_CASE ([01]) (empty|one|4KiB|1MiB) (\d+) (\d+) (\d+) ([0-9a-f]*)-$',text,re.M):
         client,name,offset,count,n,hexbytes=m.groups()
         key=(int(client),name,int(offset),int(count))

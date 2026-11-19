@@ -51,7 +51,7 @@ class Handoff(unittest.TestCase):
      rows.extend('HS_DIR %d %d %s'%(c,rewind,p.name) for p in corpus.iterdir());rows.append('HS_DIR_END %d %d'%(c,rewind))
    rows.extend('HS_DENY %s -1 30'%n for n in ('open0','open1','open2','open3','create'));rows.append('HS_CONFORMANCE_COMPLETE')
    text='\n'.join(rows);self.assertEqual(verify(text,corpus)['byte_cases'],288)
-   for bad in [text.replace(' 78-',' 79-',1),text.replace(rows[0],'',1),text+'\n'+rows[0],text.replace('HS_DENY create -1 30','HS_DENY create 4 0'),text.replace('HS_CONFORMANCE_COMPLETE','')]:
+   for bad in [text.replace(' 78-',' 79-',1),text.replace(rows[0],'',1),text+'\n'+rows[0],text.replace('HS_DENY create -1 30','HS_DENY create 4 0'),text.replace('HS_CONFORMANCE_COMPLETE',''),text+'\nHS_CASE malformed']:
     with self.assertRaises(ValueError):verify(bad,corpus)
 
  def test_actual_host_client_rejects_writable_directory(self):
