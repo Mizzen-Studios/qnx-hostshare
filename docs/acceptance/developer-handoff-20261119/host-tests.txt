@@ -1,0 +1,42 @@
+test_current_local_links_exist (test_docs.DocumentationContract.test_current_local_links_exist) ... ok
+test_fresh_manifest_recipe_and_existing_runner_binding (test_docs.DocumentationContract.test_fresh_manifest_recipe_and_existing_runner_binding) ... ok
+test_living_contract_media_not_written_only (test_docs.DocumentationContract.test_living_contract_media_not_written_only) ... ok
+test_quickstart_commands_omit_obsolete_midread_gate (test_docs.DocumentationContract.test_quickstart_commands_omit_obsolete_midread_gate) ... ok
+test_actual_host_client_rejects_writable_directory (test_handoff.Handoff.test_actual_host_client_rejects_writable_directory) ... ok
+test_binding (test_handoff.Handoff.test_binding) ... ok
+test_command_never_launches_on_missing_inputs (test_handoff.Handoff.test_command_never_launches_on_missing_inputs) ... ok
+test_export (test_handoff.Handoff.test_export) ... ok
+test_independent_oracle_negative_controls (test_handoff.Handoff.test_independent_oracle_negative_controls) ... ok
+test_strict_c (test_handoff.Handoff.test_strict_c) ... HANDOFF_CONFIG_PASS HOST_ONLY
+ok
+test_all_truncations (test_host.ProtocolTests.test_all_truncations) ... ok
+test_fid_count_bounds (test_host.ProtocolTests.test_fid_count_bounds) ... ok
+test_inconsistent_read_count (test_host.ProtocolTests.test_inconsistent_read_count) ... ok
+test_independent_version_vector (test_host.ProtocolTests.test_independent_version_vector) ... ok
+test_mock_queue_exchange (test_host.ProtocolTests.test_mock_queue_exchange) ... ok
+test_roundtrips (test_host.ProtocolTests.test_roundtrips) ... ok
+test_seeded_malformed_frames (test_host.ProtocolTests.test_seeded_malformed_frames) ... ok
+test_tags_types (test_host.ProtocolTests.test_tags_types) ... ok
+test_trailing_data (test_host.ProtocolTests.test_trailing_data) ... ok
+test_alignment (test_host.TransportTests.test_alignment) ... ok
+test_cycle (test_host.TransportTests.test_cycle) ... ok
+test_features (test_host.TransportTests.test_features) ... ok
+test_modern_capabilities (test_host.TransportTests.test_modern_capabilities) ... ok
+test_mount_tag (test_host.TransportTests.test_mount_tag) ... ok
+test_queue_pulse (test_host.TransportTests.test_queue_pulse) ... ok
+test_short_bar (test_host.TransportTests.test_short_bar) ... ok
+test_truncated_vendor (test_host.TransportTests.test_truncated_vendor) ... ok
+test_exact_public_corpus (test_native_suite.NativeSuiteContract.test_exact_public_corpus) ... ok
+test_launcher_help_without_credentials_or_guest (test_native_suite.NativeSuiteContract.test_launcher_help_without_credentials_or_guest) ... ok
+test_native_read_errno_is_not_translated (test_native_suite.NativeSuiteContract.test_native_read_errno_is_not_translated) ... ok
+test_bad_schemas_fail_closed (test_stock_pin.StockPinTests.test_bad_schemas_fail_closed) ... ok
+test_invalid_pin_exits_before_guest_prerequisites (test_stock_pin.StockPinTests.test_invalid_pin_exits_before_guest_prerequisites) ... ok
+test_real_file_hashes_and_mismatch (test_stock_pin.StockPinTests.test_real_file_hashes_and_mismatch) ... ok
+test_shell_absolute_lock_validation_without_systemd (test_stock_pin.StockPinTests.test_shell_absolute_lock_validation_without_systemd) ... ok
+test_stock_only_option (test_stock_pin.StockPinTests.test_stock_only_option) ... ok
+test_valid_exact_schema (test_stock_pin.StockPinTests.test_valid_exact_schema) ... ok
+
+----------------------------------------------------------------------
+Ran 36 tests in 1.240s
+
+OK

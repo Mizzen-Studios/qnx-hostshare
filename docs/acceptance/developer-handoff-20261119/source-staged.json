@@ -1,0 +1,14 @@
+{
+  "source_files": {
+    "core/hostshare.h": "23978f97e87b4c570b062d37add9b0ade3dc3d00bb1c2f104fab7a91b399f518",
+    "core/transport.c": "ea549067c359fbb32394d0dd940410b20d4a9699ea7a3d424e978753948534f9",
+    "core/handoff_config.h": "080f6bb3999a18aed47e6243371249460f17080f60067e9bbd55cfd65469721e",
+    "core/protocol.c": "a5f7d75af4fada0a377eff7157884d917d26a32cf26db62686a24080c33152c8",
+    "native/qnx_hostshare.c": "28f8ab4b3959f8078371638121602b6d1702856890504b4ce4bf08e83f8fddf1",
+    "native/conformance.c": "231421b3f3cdb7ce910e173d13eaf3d4c5f76f8c014f5307f3befb9756a4d255",
+    "native/mount_checksum.c": "5f91860052d72ecd7163d7613e6ebf2afbce16f0eeb02a1deb7f236e4bf96333",
+    "native/hostshare_mount.h": "a6b75cd5912ad52f22b0e839c7f4447571ef96c3e1ebf7d922374b7f152aaa9d"
+  },
+  "staged_exact": true,
+  "elf_bound": false
+}

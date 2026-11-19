@@ -1,0 +1,14 @@
+{
+  "reused_reviewed_stock": true,
+  "new_image_build": false,
+  "files": {
+    "ifs.bin": {
+      "sha256": "68bbe1b49a9b723c09d152773ee323ec6ab576eb29de933bfe3f08fdae21c753",
+      "bytes": 10910404
+    },
+    "disk-qemu": {
+      "sha256": "0aee00c281f8eeb5b02c66555ed9517e317bb1503002a19dbf2b0155de336532",
+      "bytes": 154345984
+    }
+  }
+}
