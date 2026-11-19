@@ -68,7 +68,7 @@ class Handoff(unittest.TestCase):
   run=subprocess.run([sys.executable,str(ROOT/'tools/handoff-command.py'),'--export','/missing-export','--elf','/missing-elf','--manifest','/missing-manifest','--ifs','/missing-ifs','--disk','/missing-disk','--stock-pin','/missing-pin'],capture_output=True,text=True)
   self.assertNotEqual(run.returncode,0);self.assertNotIn('-fsdev',run.stdout)
 
- def test_actual_mount_preflight_missing_parent_diagnostic(self):
+ def test_actual_mount_preflight_synthetic_ancestors(self):
   # Compile the ACTUAL adapter preflight function, substituting only lstat.
   source=(ROOT/'native/hostshare_mount.h').read_text()
   function=source.split('static int mountpoint_available(',1)[1].split('static int serve_mount(',1)[0]
@@ -81,19 +81,21 @@ class Handoff(unittest.TestCase):
 static int mode;
 static int fake_lstat(const char *p,struct stat *s){
  memset(s,0,sizeof *s);
- if(!strcmp(p,"/mnt/dev-inputs")){if(mode==3){s->st_mode=S_IFDIR;return 0;}errno=ENOENT;return -1;}
+ if(!strcmp(p,"/mnt/dev-inputs")){if(mode==6){errno=EACCES;return -1;}if(mode==3){s->st_mode=S_IFDIR;return 0;}errno=ENOENT;return -1;}
  if(mode==0){errno=ENOENT;return -1;}
+ if(mode==4){errno=EACCES;return -1;}
+ if(mode==5){s->st_mode=S_IFREG;return 0;}
  s->st_mode=mode==2?S_IFLNK:S_IFDIR;return 0;
 }
 #define lstat fake_lstat
 '''
-  main='int main(void){mode=0;if(!mountpoint_available("/mnt/dev-inputs"))return 1;mode=1;if(mountpoint_available("/mnt/dev-inputs"))return 2;mode=2;if(!mountpoint_available("/mnt/dev-inputs"))return 3;mode=3;if(!mountpoint_available("/mnt/dev-inputs"))return 4;return 0;}'
+  main='int main(void){mode=0;if(mountpoint_available("/mnt/dev-inputs"))return 1;mode=1;if(mountpoint_available("/mnt/dev-inputs"))return 2;mode=2;if(!mountpoint_available("/mnt/dev-inputs"))return 3;mode=3;if(!mountpoint_available("/mnt/dev-inputs"))return 4;mode=4;if(!mountpoint_available("/mnt/dev-inputs"))return 5;mode=5;if(!mountpoint_available("/mnt/dev-inputs"))return 6;mode=6;if(!mountpoint_available("/mnt/dev-inputs"))return 7;return 0;}'
   with tempfile.TemporaryDirectory() as tmp:
    p=Path(tmp);(p/'test.c').write_text(harness+function+main)
    subprocess.run(['cc','-D_DEFAULT_SOURCE','-std=c11','-Wall','-Wextra','-Werror','-pedantic',str(p/'test.c'),'-o',str(p/'test')],check=True)
    run=subprocess.run([str(p/'test')],capture_output=True,text=True)
    self.assertEqual(run.returncode,0);self.assertIn('parent=/mnt errno=',run.stderr);self.assertIn('not-ordinary-directory',run.stderr)
- def test_runner_prepares_parent_before_copy_and_mount(self):
+ def test_runner_does_not_mkdir_synthetic_root(self):
   source=(ROOT/'tools/run-native-suite.py').read_text()
-  self.assertLess(source.index("save('mount-parent'"),source.index("command(': > '+app"))
-  self.assertIn("if rc(text,'PARENT_RC')!=0",source)
+  self.assertNotIn("save('mount-parent'",source)
+  self.assertNotIn("'mkdir -p '+parent",source)

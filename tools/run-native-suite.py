@@ -105,11 +105,6 @@ try:
   if b'HS_SUITE_BOOT_READY' in bytes(serial).replace(b'\r',b'').split(b'\n'):break
  else:raise TimeoutError('serial shell not ready180s')
  save('boot',command('uname -a; mkdir -p '+guest+'; stty -echo; echo HS_PREPARED','HS_PREPARED'))
- # A resource-manager attachment can synthesize absent path prefixes; lstat cannot.
- # Our stricter mount preflight requires real parent directories on stock images.
- parent=str(Path(o.mountpoint).parent)
- text=save('mount-parent',command('mkdir -p '+parent+'; echo PARENT_RC=$?; ls -ld /mnt '+parent+'; echo PARENT_DONE','PARENT_DONE'))
- if rc(text,'PARENT_RC')!=0:raise RuntimeError('mount parent preparation failed')
  command(': > '+app+'; echo COPY_READY','COPY_READY')
  data=elf.read_bytes()
  for i in range(0,len(data),128):

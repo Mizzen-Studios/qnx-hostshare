@@ -2,9 +2,9 @@
 import fcntl,hashlib,json,os,shutil,subprocess,time
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]
-out=root/'.local/developer-handoff-20261119-build3';out.mkdir(parents=True,exist_ok=False)
+out=root/'.local/developer-handoff-20261119-build4';out.mkdir(parents=True,exist_ok=False)
 guest=Path('/home/ubuntu/qnx-host/guest');ctl=guest/'guestctl-capped.py'
-shared=guest/'shared/hostshare-handoff-20261119-build3'
+shared=guest/'shared/hostshare-handoff-20261119-build4'
 r={'schema':'hostshare.handoff-build.v1','native_accepted':False,'reserve_bytes':67108864,'status':'PREFLIGHT'}
 lock=open('/home/ubuntu/qnx-host/native-test.lock','a');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
 child=None;pid=None;cg=None;job=None
@@ -19,7 +19,7 @@ try:
  shared.mkdir(exist_ok=False)
  for folder in ('core','native'):shutil.copytree(root/folder,shared/'source'/folder)
  script=out/'compile.sh'
- script.write_text('#!/bin/bash\nset -eo pipefail\nexport HOME=/home/qnx\nsource /home/qnx/qnx800/qnxsdp-env.sh >/dev/null\ns=/mnt/host/hostshare-handoff-20261119-build3/source\no=/mnt/host/hostshare-handoff-20261119-build3/build\nmkdir "$o"\nqcc -Vgcc_ntox86_64 -std=gnu11 -O0 -g0 -Wall -Wextra -Werror -Wno-misleading-indentation -I"$s/core" "$s/native/qnx_hostshare.c" "$s/native/mount_checksum.c" "$s/native/conformance.c" "$s/core/transport.c" "$s/core/protocol.c" -o "$o/qnx_hostshare" -lpci\nsha256sum "$o/qnx_hostshare"\n')
+ script.write_text('#!/bin/bash\nset -eo pipefail\nexport HOME=/home/qnx\nsource /home/qnx/qnx800/qnxsdp-env.sh >/dev/null\ns=/mnt/host/hostshare-handoff-20261119-build4/source\no=/mnt/host/hostshare-handoff-20261119-build4/build\nmkdir "$o"\nqcc -Vgcc_ntox86_64 -std=gnu11 -O0 -g0 -Wall -Wextra -Werror -Wno-misleading-indentation -I"$s/core" "$s/native/qnx_hostshare.c" "$s/native/mount_checksum.c" "$s/native/conformance.c" "$s/core/transport.c" "$s/core/protocol.c" -o "$o/qnx_hostshare" -lpci\nsha256sum "$o/qnx_hostshare"\n')
  env=os.environ.copy();env['EDU_SDK_MEMORY_MIB']='1024'
  child=subprocess.Popen(['python3',str(ctl),'start'],env=env,stdout=open(out/'launch.txt','w'),stderr=subprocess.STDOUT)
  start=time.monotonic()
@@ -71,7 +71,7 @@ finally:
    # systemd scopes do not retain arbitrary descriptors: run inside an explicit
    # bounded scope while the parent continues owning the exclusive lease.
    env.pop('HS_LOCK_FD',None);env['HS_PARENT_LEASE_PID']=str(os.getpid())
-   command=['sh',str(root/'tools/run-native-suite.sh'),'--image-kind','stock','--run-id','handoff-build3-'+label+'-20261119','--conformance',*extra]
+   command=['sh',str(root/'tools/run-native-suite.sh'),'--image-kind','stock','--run-id','handoff-build4-'+label+'-20261119','--conformance',*extra]
    result=subprocess.run(command,env=env,stdout=open(out/(label+'-owner.txt'),'w'),stderr=subprocess.STDOUT)
    r[label+'_rc']=result.returncode
    if result.returncode:break

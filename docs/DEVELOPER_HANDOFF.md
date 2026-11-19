@@ -32,7 +32,7 @@ Add its printed -fsdev/-device arguments to the existing bounded stock QEMU
 command, replacing any prior HostShare export (one 9p device only, unique
 fsdev id). Keep readonly=on, snapshot=on for the base disk and no qtest/PIRQ
 changes. Transfer the verified ELF to /data/hostshare in QNX using the documented
-serial route. Parent /mnt must exist; target /mnt/dev-inputs must NOT exist:
+serial route. Synthetic parents such as /mnt may be absent; target /mnt/dev-inputs must NOT exist:
 
 ~~~sh
 /data/hostshare --pci-line --mount --tag dev-inputs --mountpoint /mnt/dev-inputs
@@ -50,7 +50,7 @@ not dot/dotdot. Mountpoints: absolute /mnt/... only, <=255 bytes, components
 1..63 ASCII characters as above, no empty/dot/dotdot components. Duplicate,
 unknown or missing options fail before device access. Mismatched device tag
 fails before queue setup. Mount collisions and symlink ancestors fail rather
-than shadowing an existing path. Use trusted, quiescent parent directories;
+than shadowing an existing path. Absent prefixes are supported by QNX resource-manager attachment; existing ancestors must be ordinary directories. Use trusted, quiescent parent namespaces;
 validation is not protection against malicious concurrent namespace replacement.
 Export preflight rejects symlinks, special files, whitespace/comma paths.
 Do not add symlinks or special files after validation; no adversarial-host claim.
