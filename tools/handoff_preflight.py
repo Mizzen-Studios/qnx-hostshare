@@ -12,6 +12,8 @@ def config(tag,mountpoint):
     return tag,mountpoint
 
 def export_directory(path):
+    raw=str(path)
+    if any(part in ('.','..') for part in raw.split('/')):raise ValueError('export traversal')
     path=Path(path)
     if not path.is_absolute() or any(part in ('.','..') for part in path.parts) or not re.fullmatch(r'/[A-Za-z0-9_./-]+',str(path)):
         raise ValueError('export needs absolute QEMU-safe path')

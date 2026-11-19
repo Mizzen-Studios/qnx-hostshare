@@ -18,6 +18,7 @@ if o.stock_pin and o.image_kind!='stock':p.error('--stock-pin requires --image-k
 stock_expected=load_stock_pin(o.stock_pin) if o.stock_pin else HISTORICAL_STOCK
 root=Path(__file__).resolve().parents[1]
 base=Path(os.environ.get('HS_RECEIPT_BASE',str(root/'.local/user-runs'))).resolve()
+assert base==root or root in base.parents,'receipts must remain workspace-local'
 base.mkdir(parents=True,exist_ok=True);out=base/o.run_id;out.mkdir(exist_ok=False)
 h=lambda q:hashlib.sha256(q.read_bytes()).hexdigest()
 elf=Path(os.environ['HS_ELF']);image=Path(os.environ['HS_IFS']);disk=Path(os.environ['HS_DISK'])
