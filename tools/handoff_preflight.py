@@ -29,8 +29,9 @@ def binding(root,elf,manifest):
     digest=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
     data=json.loads(Path(manifest).read_text())
     expected={str(p.relative_to(root)) for folder in ('core','native') for p in (root/folder).glob('*.[ch]')}
-    if set(data['files'])!=expected: raise ValueError('incomplete source binding')
-    if digest(elf)!=data['elf_sha256']: raise ValueError('ELF mismatch')
+    if not isinstance(data,dict) or not isinstance(data.get('files'),dict) or set(data['files'])!=expected: raise ValueError('incomplete source binding')
+    if not elf.is_file() or elf.is_symlink():raise ValueError('regular ELF required')
+    if digest(elf)!=data.get('elf_sha256'): raise ValueError('ELF mismatch')
     for name in expected:
         if digest(root/name)!=data['files'][name]: raise ValueError('source mismatch: '+name)
     return data

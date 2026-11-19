@@ -50,6 +50,7 @@ static void protocol(void){
  memset(body,0,sizeof body);body[0]=1;assert(hs_9p_encode(wire,sizeof wire,512,117,12,body,4,&n));
  assert(hs_9p_encode(wire,sizeof wire,512,121,HS_NOTAG,body,0,&n));
  assert(!hs_9p_encode(wire,sizeof wire,512,121,12,NULL,0,&n));assert(hs_9p_decode(wire,n,512,12,117,&f));
+ for(i=0;i<256;i++){if(i==118||i==72||i==74||i==76)assert(hs_9p_encode(wire,sizeof wire,512,(uint8_t)i,12,body,16,&n));} /* write/mkdir/renameat/unlinkat unsupported */
  /* Deterministic malformed inputs; zero payloads are not live traffic. */
  for(i=0;i<512;i++){memset(wire,0,sizeof wire);assert(hs_9p_decode(wire,i,512,12,117,&f));}
 }
