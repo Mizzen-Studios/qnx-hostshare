@@ -39,3 +39,15 @@ Fresh ELF SHA256 b7787467609ed75570ba791fb41e0ea440dba2459420e1f3d418922a5cebcc3
 See sdk-owner.json, sdk-memory.jsonl and sdk-stop.txt: ACPI shutdown completed,
 owner rc0, stopped/reaped=true, remaining QEMU empty before native launch.
 Original queue job1795115002311520643 completed; no queue timeout/retry occurred.
+
+## First current-source native attempt (retained failure)
+
+custom-first/probe.txt: actual QNX rc0, nondefault dev-inputs device tag,
+default IRQ11/no routing rewrite, seven replies and byte-exact41-byte probe.
+custom-first/mount.txt: after the old fixed2s delay, mount log was still empty
+and path absent. Runner failed the mount/list gate and stopped/reaped QEMU;
+no conformance case or host-edit PASS claimed. Peak601235456, no OOM/cap events,
+IFS/disk hashes unchanged. Raw per-drain memory retained privately with hash in
+custom-first/memory-summary.json; original failure receipt unchanged.
+A separate fresh attempt uses bounded10s startup allowance; no cap increase,
+reserve bypass, new ELF, image build or failure-lane extension.

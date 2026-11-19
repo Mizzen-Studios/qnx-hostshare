@@ -1,0 +1,20 @@
+{
+  "schema": "hostshare.memory-summary.v1",
+  "raw_private_path": ".local/user-runs/handoff-custom-20261119/memory.jsonl",
+  "raw_sha256": "bf8612fb8d1418e6ab52b6865de0b43ca60d4026fd8fd1446c8410cc73d59155",
+  "samples": 192851,
+  "peak": 601235456,
+  "max_current": 601235456,
+  "first": {
+    "time": 1795115215.9491966,
+    "current": 23298048,
+    "peak": 177668096,
+    "events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\n"
+  },
+  "last": {
+    "time": 1795115366.9112074,
+    "current": 591704064,
+    "peak": 601235456,
+    "events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\n"
+  }
+}
