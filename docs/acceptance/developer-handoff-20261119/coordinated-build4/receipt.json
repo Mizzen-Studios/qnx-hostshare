@@ -1,0 +1,20 @@
+{
+  "schema": "hostshare.handoff-result.v2",
+  "source_sha": "a57bd240a7575397caa3f0021b6ca2e11043c225",
+  "host_tests": 38,
+  "fresh_sdk_build": true,
+  "custom_native_accepted": true,
+  "full_item4_accepted": false,
+  "default_native": "BLOCKED_SERIAL_COPY_6912",
+  "custom_coverage": {
+    "byte_cases": 288,
+    "directory_scans": 4,
+    "root_entries": 187,
+    "denied_opens": 5,
+    "checksums": 7,
+    "host_edit_visible_readonly": true,
+    "denial_corpus_unchanged": true
+  },
+  "cleanup": "ALL_OWN_QEMU_REAPED_LEASE_FREE_ZERO_PENDING",
+  "new_image_build": false
+}

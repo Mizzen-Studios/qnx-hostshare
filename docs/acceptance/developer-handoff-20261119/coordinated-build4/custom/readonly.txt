@@ -1,0 +1,5 @@
+# echo forbidden > /mnt/dev-inputs/hello.txt; echo WRITE_RC=$?; echo WRITE_DONE
+ksh: cannot create /mnt/dev-inputs/hello.txt: Read-only file system
+WRITE_RC=1
+WRITE_DONE
+# 

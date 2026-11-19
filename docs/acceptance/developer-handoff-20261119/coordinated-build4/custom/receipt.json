@@ -1,0 +1,154 @@
+{
+  "status": "PASS_READONLY_SUITE",
+  "source_sha": "a57bd240a7575397caa3f0021b6ca2e11043c225",
+  "clean_checkout": true,
+  "caps": {
+    "cpu.max": "100000 100000",
+    "memory.max": "2147483648",
+    "memory.swap.max": "0"
+  },
+  "nice": 15,
+  "command": [
+    "qemu-system-x86_64",
+    "-machine",
+    "pc",
+    "-accel",
+    "tcg,tb-size=256",
+    "-cpu",
+    "max",
+    "-smp",
+    "1",
+    "-m",
+    "512",
+    "-display",
+    "none",
+    "-serial",
+    "stdio",
+    "-monitor",
+    "none",
+    "-no-reboot",
+    "-kernel",
+    "/home/ubuntu/qnx-host/guest/shared/edu-stock-control-1024-20261113/stock-output/ifs.bin",
+    "-drive",
+    "file=/home/ubuntu/qnx-host/guest/shared/edu-stock-control-1024-20261113/stock-output/disk-qemu,format=raw,if=ide,snapshot=on",
+    "-nic",
+    "none",
+    "-device",
+    "virtio-rng-pci",
+    "-fsdev",
+    "local,id=f0,path=/home/ubuntu/.openclaw/workspace/apps/qnx-hostshare/.local/corpus-handoff-build4-custom-20261119,security_model=none,readonly=on",
+    "-device",
+    "virtio-9p-pci,fsdev=f0,mount_tag=dev-inputs,disable-legacy=on"
+  ],
+  "image_kind": "stock",
+  "image_sha256": "68bbe1b49a9b723c09d152773ee323ec6ab576eb29de933bfe3f08fdae21c753",
+  "disk_sha256": "0aee00c281f8eeb5b02c66555ed9517e317bb1503002a19dbf2b0155de336532",
+  "elf_sha256": "36478be069978986271cad824d2c2799fd94c6124bd67346b09b270e92534d75",
+  "source_files": {
+    "core/hostshare.h": "23978f97e87b4c570b062d37add9b0ade3dc3d00bb1c2f104fab7a91b399f518",
+    "core/transport.c": "ea549067c359fbb32394d0dd940410b20d4a9699ea7a3d424e978753948534f9",
+    "core/handoff_config.h": "080f6bb3999a18aed47e6243371249460f17080f60067e9bbd55cfd65469721e",
+    "core/protocol.c": "a5f7d75af4fada0a377eff7157884d917d26a32cf26db62686a24080c33152c8",
+    "native/qnx_hostshare.c": "b7df9942e26b29517ef961cc5dd18f86a357dbd73b41dea0c16b6215226b290d",
+    "native/conformance.c": "231421b3f3cdb7ce910e173d13eaf3d4c5f76f8c014f5307f3befb9756a4d255",
+    "native/mount_checksum.c": "5f91860052d72ecd7163d7613e6ebf2afbce16f0eeb02a1deb7f236e4bf96333",
+    "native/hostshare_mount.h": "8bb3f226e189663e39224fb63d083d8daec66502811a9874027d6f969b60b2bb"
+  },
+  "qtest": false,
+  "irq_routing_mutated": false,
+  "commands": [
+    "uname -a; mkdir -p /data/hostshare; stty -echo; echo HS_PREPARED",
+    ": > /data/hostshare/hostshare; echo COPY_READY",
+    "chmod 700 /data/hostshare/hostshare; echo HS_BYTES_BEGIN; od -An -v -tx1 /data/hostshare/hostshare; echo HS_BYTES_END",
+    "/data/hostshare/hostshare --tag dev-inputs --pci-line; echo APP_RC=$?; echo PROBE_DONE",
+    "/data/hostshare/hostshare --tag dev-inputs --mountpoint /mnt/dev-inputs --pci-line --mount > /data/hostshare/mount.log 2>&1 & HS_PID=$!; sleep 10; pidin ar; cat /data/hostshare/mount.log; cat /mnt/dev-inputs/hello.txt; echo CAT_RC=$?; ls -1 /mnt/dev-inputs; echo LS_RC=$?; echo MOUNT_DONE",
+    "/data/hostshare/hostshare --checksum '/mnt/dev-inputs/hello.txt'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "/data/hostshare/hostshare --checksum '/mnt/dev-inputs/empty'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "/data/hostshare/hostshare --checksum '/mnt/dev-inputs/one'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "/data/hostshare/hostshare --checksum '/mnt/dev-inputs/4KiB'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "/data/hostshare/hostshare --checksum '/mnt/dev-inputs/1MiB'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "/data/hostshare/hostshare --checksum '/mnt/dev-inputs/nested/leaf.txt'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "/data/hostshare/hostshare --checksum '/mnt/dev-inputs/unicode-\u03bb.txt'; echo CHECK_RC=$?; echo CHECK_DONE",
+    "/data/hostshare/hostshare --conformance /mnt/dev-inputs; echo CONFORMANCE_RC=$?; echo CONFORMANCE_DONE",
+    "cat /mnt/dev-inputs/hello.txt; echo EDIT_RC=$?; echo EDIT_DONE",
+    "echo forbidden > /mnt/dev-inputs/hello.txt; echo WRITE_RC=$?; echo WRITE_DONE",
+    "kill -TERM $HS_PID; wait $HS_PID; echo STOP_RC=$?; cat /data/hostshare/mount.log; echo NORMAL_STOP_DONE"
+  ],
+  "handoff": {
+    "tag": "dev-inputs",
+    "mountpoint": "/mnt/dev-inputs",
+    "conformance_requested": true
+  },
+  "reserve_bytes": 67108864,
+  "native_copy_byte_exact": true,
+  "copy_bytes": 51528,
+  "transfer_route": "serial builtin printf octal128; exact od hex readback",
+  "probe": {
+    "passed": true
+  },
+  "mount": {
+    "passed": true
+  },
+  "corpus": {
+    "hello.txt": {
+      "passed": true,
+      "observed_cksum": 948244384,
+      "observed_size": 41
+    },
+    "empty": {
+      "passed": true,
+      "observed_cksum": 4294967295,
+      "observed_size": 0
+    },
+    "one": {
+      "passed": true,
+      "observed_cksum": 12738659,
+      "observed_size": 1
+    },
+    "4KiB": {
+      "passed": true,
+      "observed_cksum": 300014538,
+      "observed_size": 4096
+    },
+    "1MiB": {
+      "passed": true,
+      "observed_cksum": 2572415250,
+      "observed_size": 1048576
+    },
+    "nested/leaf.txt": {
+      "passed": true,
+      "observed_cksum": 3989433292,
+      "observed_size": 19
+    },
+    "unicode-\u03bb.txt": {
+      "passed": true,
+      "observed_cksum": 2157407375,
+      "observed_size": 13
+    }
+  },
+  "conformance": {
+    "byte_cases": 288,
+    "directory_passes": 4,
+    "denied_opens": 5,
+    "host_corpus_unchanged": true,
+    "pagination_corpus_entries": 187
+  },
+  "host_edit": {
+    "passed": true,
+    "elapsed_seconds": 0.14399698097258806,
+    "sha256": "6507e3dc36ef5bff95f64ffefe3b50083789815e1415a60c558e3d8c35efd12c",
+    "rebuild": false
+  },
+  "readonly": {
+    "passed": true
+  },
+  "normal_stop": {
+    "passed": true
+  },
+  "qemu_exit_rc": 0,
+  "stopped_reaped": true,
+  "memory_events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\n",
+  "memory_peak": 603156480,
+  "disk_sha256_after": "0aee00c281f8eeb5b02c66555ed9517e317bb1503002a19dbf2b0155de336532",
+  "image_sha256_after": "68bbe1b49a9b723c09d152773ee323ec6ab576eb29de933bfe3f08fdae21c753"
+}

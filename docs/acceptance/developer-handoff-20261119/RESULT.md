@@ -1,3 +1,5 @@
+> Latest22:43UTC: [Build4 custom native conformance PASS; default serial transfer BLOCKED](coordinated-build4/RESULT.md). Earlier failures below are preserved historical attempts, not the latest custom status.
+
 # Developer handoff — 19 November 2026
 
 Implementation and HOST checks delivered. Native outcome will be recorded below

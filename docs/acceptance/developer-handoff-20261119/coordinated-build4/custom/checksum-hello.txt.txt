@@ -1,0 +1,4 @@
+# /data/hostshare/hostshare --checksum '/mnt/dev-inputs/hello.txt'; echo CHECK_RC=$?; echo CHECK_DONE
+HOSTSHARE CHECKSUM 948244384 41 /mnt/dev-inputs/hello.txt
+CHECK_RC=0
+CHECK_DONE

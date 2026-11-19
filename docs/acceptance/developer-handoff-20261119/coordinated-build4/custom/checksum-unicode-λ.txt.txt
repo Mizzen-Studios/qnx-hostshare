@@ -1,0 +1,4 @@
+# /data/hostshare/hostshare --checksum '/mnt/dev-inputs/unicode-λ.txt'; echo CHECK_RC=$?; echo CHECK_DONE
+HOSTSHARE CHECKSUM 2157407375 13 /mnt/dev-inputs/unicode-λ.txt
+CHECK_RC=0
+CHECK_DONE

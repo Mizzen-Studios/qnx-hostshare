@@ -1,0 +1,220 @@
+# /data/hostshare/hostshare --tag dev-inputs --mountpoint /mnt/dev-inputs --pci-line --mount > /data/hostshare/mount.log 2>&1 & HS_PID=$!; sleep 10; pidin ar; cat /data/hostshare/mount.log; cat /mnt/dev-inputs/hello.txt; echo CAT_RC=$?; ls -1 /mnt/dev-inputs; echo LS_RC=$?; echo MOUNT_DONE
+[1] 3657730
+     pid Arguments
+       1 procnto-smp-instr -mr -d 0777 -u 0777 
+   16387 slogger2 -U 21:21 
+   28676 pci-server --aspace-enable --config=/proc/boot/pci_server.cfg 
+   49157 devc-ser8250 -e 
+   57351 ksh ksh 
+   61446 fsevmgr 
+   65544 devb-eide cam user=20:20 blk cache=64M,auto=partition,vnode=2000,ncache=2000,commit=low 
+  131081 random -U 22:22 -s /data/var/random/rnd-seed 
+  143370 pipe -U 24:24 
+  155659 devc-pty -U 37:37 
+  159756 dumper -U 30:30 -d /data/var/dumper -M 1000 -D cores 
+  163853 io-sock -m phy -m pci -m usb -d vtnet_pci 
+  667665 dhcpcd: [manager] [ip4] [ip6] -bq -f /system/etc/dhcpcd/dhcpcd.conf -c /system/etc/dhcpcd/dhcpcd-run-hooks 
+  704526 qconn 
+  708623 mqueue 
+  733202 io-usb-otg -d hcd-uhci -d hcd-ehci -d hcd-xhci 
+ 3657730 /data/hostshare/hostshare --tag dev-inputs --mountpoint /mnt/dev-inputs --pci-line --mount 
+ 3670032 pidin ar 
+HOSTSHARE MOUNT_PREFLIGHT BEGIN
+HOSTSHARE MOUNT_PREFLIGHT PASS
+HOSTSHARE NATIVE BEGIN
+HOSTSHARE IRQ api=10 config=11
+HOSTSHARE F1 READY tag=dev-inputs features=100000001 irq=11 dma=1f519000
+HOSTSHARE IRQ_PULSE type=100 reply=101 bytes=21
+HOSTSHARE IRQ_PULSE type=104 reply=105 bytes=20
+HOSTSHARE MOUNT READY /mnt/dev-inputs READONLY
+HostShare F0 public synthetic test only.
+CAT_RC=0
+1MiB
+4KiB
+empty
+hello.txt
+nested
+one
+page-000.txt
+page-001.txt
+page-002.txt
+page-003.txt
+page-004.txt
+page-005.txt
+page-006.txt
+page-007.txt
+page-008.txt
+page-009.txt
+page-010.txt
+page-011.txt
+page-012.txt
+page-013.txt
+page-014.txt
+page-015.txt
+page-016.txt
+page-017.txt
+page-018.txt
+page-019.txt
+page-020.txt
+page-021.txt
+page-022.txt
+page-023.txt
+page-024.txt
+page-025.txt
+page-026.txt
+page-027.txt
+page-028.txt
+page-029.txt
+page-030.txt
+page-031.txt
+page-032.txt
+page-033.txt
+page-034.txt
+page-035.txt
+page-036.txt
+page-037.txt
+page-038.txt
+page-039.txt
+page-040.txt
+page-041.txt
+page-042.txt
+page-043.txt
+page-044.txt
+page-045.txt
+page-046.txt
+page-047.txt
+page-048.txt
+page-049.txt
+page-050.txt
+page-051.txt
+page-052.txt
+page-053.txt
+page-054.txt
+page-055.txt
+page-056.txt
+page-057.txt
+page-058.txt
+page-059.txt
+page-060.txt
+page-061.txt
+page-062.txt
+page-063.txt
+page-064.txt
+page-065.txt
+page-066.txt
+page-067.txt
+page-068.txt
+page-069.txt
+page-070.txt
+page-071.txt
+page-072.txt
+page-073.txt
+page-074.txt
+page-075.txt
+page-076.txt
+page-077.txt
+page-078.txt
+page-079.txt
+page-080.txt
+page-081.txt
+page-082.txt
+page-083.txt
+page-084.txt
+page-085.txt
+page-086.txt
+page-087.txt
+page-088.txt
+page-089.txt
+page-090.txt
+page-091.txt
+page-092.txt
+page-093.txt
+page-094.txt
+page-095.txt
+page-096.txt
+page-097.txt
+page-098.txt
+page-099.txt
+page-100.txt
+page-101.txt
+page-102.txt
+page-103.txt
+page-104.txt
+page-105.txt
+page-106.txt
+page-107.txt
+page-108.txt
+page-109.txt
+page-110.txt
+page-111.txt
+page-112.txt
+page-113.txt
+page-114.txt
+page-115.txt
+page-116.txt
+page-117.txt
+page-118.txt
+page-119.txt
+page-120.txt
+page-121.txt
+page-122.txt
+page-123.txt
+page-124.txt
+page-125.txt
+page-126.txt
+page-127.txt
+page-128.txt
+page-129.txt
+page-130.txt
+page-131.txt
+page-132.txt
+page-133.txt
+page-134.txt
+page-135.txt
+page-136.txt
+page-137.txt
+page-138.txt
+page-139.txt
+page-140.txt
+page-141.txt
+page-142.txt
+page-143.txt
+page-144.txt
+page-145.txt
+page-146.txt
+page-147.txt
+page-148.txt
+page-149.txt
+page-150.txt
+page-151.txt
+page-152.txt
+page-153.txt
+page-154.txt
+page-155.txt
+page-156.txt
+page-157.txt
+page-158.txt
+page-159.txt
+page-160.txt
+page-161.txt
+page-162.txt
+page-163.txt
+page-164.txt
+page-165.txt
+page-166.txt
+page-167.txt
+page-168.txt
+page-169.txt
+page-170.txt
+page-171.txt
+page-172.txt
+page-173.txt
+page-174.txt
+page-175.txt
+page-176.txt
+page-177.txt
+page-178.txt
+page-179.txt
+unicode-\316\273.txt
+LS_RC=0
+MOUNT_DONE

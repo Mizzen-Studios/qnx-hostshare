@@ -1,0 +1,12 @@
+{
+  "raw_private_path": ".local/user-runs/handoff-build4-default-20261119/memory.jsonl",
+  "raw_sha256": "24c889c663114ccf6181668cfda5acfe8265f23b97385005029e89f468114b14",
+  "samples": 27035,
+  "peak": 438194176,
+  "last": {
+    "time": 1795127984.9461257,
+    "current": 438022144,
+    "peak": 438194176,
+    "events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\n"
+  }
+}
