@@ -90,11 +90,15 @@ static int mount_drop_privileges(void){
 }
 static volatile sig_atomic_t mount_stop;
 static void mount_signal(int signo){(void)signo;mount_stop=1;}
-static int serve_mount(struct adapter *a,int drop,const char *mountpoint){
+static int mountpoint_available(const char *mountpoint){
  struct stat existing;
  if(lstat(mountpoint,&existing)==0||errno!=ENOENT){fprintf(stderr,"Mountpoint collision or inaccessible\n");return 1;}
  char prefix[256];strcpy(prefix,mountpoint);
  for(char *p=prefix+1;*p;p++)if(*p=='/'){*p=0;if(lstat(prefix,&existing)||!S_ISDIR(existing.st_mode)||S_ISLNK(existing.st_mode))return 1;*p='/';}
+ return 0;
+}
+static int serve_mount(struct adapter *a,int drop,const char *mountpoint){
+ if(mountpoint_available(mountpoint))return 1;
  mount_adapter=a;dispatch_t *dpp=dispatch_create();if(!dpp){perror("dispatch_create");return 1;}
  resmgr_connect_funcs_t connect;resmgr_io_funcs_t io;resmgr_attr_t r={0};iofunc_attr_t root;
  iofunc_func_init(_RESMGR_CONNECT_NFUNCS,&connect,_RESMGR_IO_NFUNCS,&io);
