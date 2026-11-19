@@ -68,7 +68,7 @@ int main(int argc,char **argv){
  struct adapter a={.dma=MAP_FAILED,.channel=-1,.connection=-1,.interrupt=-1,.irq=-1};
  pci_ba_t bars[6]={{0}};int_t nb=6;uint8_t config[256],body[256];uint64_t sizes[6]={0};void *maps[6]={0};size_t maplen[6]={0};struct hs_region regions[4];struct hs_frame frame;
  pci_err_t error=PCI_ERR_OK;pci_devhdl_t h=NULL;pci_cap_t mcap=NULL;int menabled=0;pci_cmd_t original=0,current=0;int changed=0,rc=1;size_t contiguous=0;uint64_t selected;uint16_t taglen;const uint8_t *tag;
- setvbuf(stdout,NULL,_IONBF,0);puts("HOSTSHARE NATIVE BEGIN");
+ puts("HOSTSHARE NATIVE BEGIN");
  if(ThreadCtl(_NTO_TCTL_IO_LEVEL,(void *)(uintptr_t)_NTO_IO_LEVEL_1)<0){perror("IO_LEVEL");return 1;}
  pci_bdf_t bdf=pci_device_find(0,0x1af4,0x1049,PCI_CCODE_ANY);
  if(bdf==PCI_BDF_NONE)bdf=pci_device_find(0,0x1af4,0x1009,PCI_CCODE_ANY);
