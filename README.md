@@ -2,6 +2,19 @@
 
 Apache-2.0 read-only virtio-9p host-folder driver for QNX 8.0 (QNX Global Hackathon 2026, Low-level Software). Not a production filesystem.
 
+## Latest current-source acceptance — 19 November
+
+**Partial item4 acceptance:** fresh QNX conformance passes with export tag
+
+dev-inputs and mount /mnt/dev-inputs. This includes288 independent byte cases,
+four directory pagination/rewind scans, five denied mutation opens, seven
+checksums and host-edit visibility while QEMU exports readonly. **Current-source
+default f0test,/mnt/host native compatibility remains BLOCKED:** serial ELF
+transfer timed out at COPY_6912 before probe/mount. Host tests do not close that
+gate. See [exact current evidence](docs/acceptance/developer-handoff-20261119/coordinated-build4/RESULT.md).
+Older default-route/HA receipts below apply only to their historical source/ELF
+pins, not automatically to current sources. No speed or latency claim.
+
 ## Edit on the host, read in QNX — no image rebuild
 
 Keep development inputs on the host and read updated bytes through a read-only
@@ -16,7 +29,7 @@ integration, not a general-purpose writable filesystem.
 3. **Reproduce with an existing licensed setup:** [prerequisites and ordinary
    data route](docs/RUN_NATIVE.md). Host tests are not native acceptance.
 
-## Current native proof — default route, read-only
+## Historical native proof — pinned default route, read-only
 
 - [N1c/default-routing and idle-N5 receipt](docs/acceptance/irq-restart-20261113/receipt.json)
   establishes its recorded default-route and idle-kill/remount scope.

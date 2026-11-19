@@ -1,3 +1,8 @@
+> Latest19November: current-source custom tag/path native conformance PASS;
+> default native compatibility BLOCKED at serial COPY_6912, not full item4
+> acceptance. [Exact scope/evidence](acceptance/developer-handoff-20261119/coordinated-build4/RESULT.md).
+> Historical native claims below retain their original source/ELF scope.
+
 # Inspect HostShare without QNX
 
 **Problem:** editing a host-side test input should not require rebuilding and

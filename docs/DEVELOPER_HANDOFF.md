@@ -1,5 +1,10 @@
 # Read-only developer handoff (19 November)
 
+Current status: fresh custom dev-inputs,/mnt/dev-inputs native conformance PASS;
+current default f0test,/mnt/host native compatibility BLOCKED by serial ELF
+transfer timeout COPY_6912 before probe/mount. Full item4 remains incomplete.
+HOST38 tests pass; no speed or latency claim. See the dated result below.
+
 Purpose: edit development inputs on Linux and read them from QNX without
 rebuilding an image. This is a bounded diagnostic resource manager, not a
 writable or production filesystem. Current-source native acceptance is reported

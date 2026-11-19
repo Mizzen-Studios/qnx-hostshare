@@ -1,4 +1,20 @@
-# Current reviewed contract — 13 November 2026
+# Current acceptance index — 19 November 2026
+
+Current-source custom-tag read-only handoff conformance **PASS**; full item4
+acceptance is **incomplete** because default-native compatibility is blocked by
+serial transfer timeout COPY_6912 before probe/mount. The tested current source
+is a57bd240a7575397caa3f0021b6ca2e11043c225; its fresh ELF is
+36478be069978986271cad824d2c2799fd94c6124bd67346b09b270e92534d75.
+[Build4 result and raw receipts](acceptance/developer-handoff-20261119/coordinated-build4/RESULT.md)
+prove tag dev-inputs,/mnt/dev-inputs,288 byte cases,four pagination/rewind scans,
+five denied opens,seven checksums and host-edit visibility with readonly export.
+HOST38 tests cover configuration and namespace guard negatives; they do not
+establish native default compatibility. No speed/latency claim. No current-source
+server-death test was added; old HA evidence remains source/ELF-specific.
+
+The reviewed ESRCH contract and immutable historical pins below remain intact.
+
+## Historical reviewed death contract — 13 November 2026
 
 Owner review at 12:08 UTC accepts native ESRCH (errno3) on QNX MsgSend server
 death. No mapping to EIO5. This is a docs-only interpretation of existing
