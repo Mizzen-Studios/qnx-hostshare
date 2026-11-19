@@ -53,3 +53,13 @@ class Handoff(unittest.TestCase):
    text='\n'.join(rows);self.assertEqual(verify(text,corpus)['byte_cases'],288)
    for bad in [text.replace(' 78-',' 79-',1),text.replace(rows[0],'',1),text+'\n'+rows[0],text.replace('HS_DENY create -1 30','HS_DENY create 4 0'),text.replace('HS_CONFORMANCE_COMPLETE','')]:
     with self.assertRaises(ValueError):verify(bad,corpus)
+
+ def test_actual_host_client_rejects_writable_directory(self):
+  with tempfile.TemporaryDirectory() as tmp:
+   p=Path(tmp);main=p/'main.c';main.write_text('int mount_conformance(const char *);int main(int argc,char **argv){return argc==2?mount_conformance(argv[1]):2;}')
+   binary=p/'client';subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror','-pedantic',str(ROOT/'native/conformance.c'),str(main),'-o',str(binary)],check=True)
+   corpus=p/'corpus';corpus.mkdir()
+   for n,b in {'empty':b'','one':b'x','4KiB':bytes(range(256))*16,'1MiB':bytes(range(256))*4096}.items():(corpus/n).write_bytes(b)
+   run=subprocess.run([str(binary),str(corpus)],capture_output=True,text=True)
+   self.assertEqual(run.returncode,7)
+   with self.assertRaises(ValueError):verify(run.stdout,corpus)

@@ -14,6 +14,7 @@ try:
  r['running_markers']=[p.name for p in (guest/'shared/queue').glob('*.running')]
  # running markers survive dead SDK jobs; preserve, do not requeue/delete them.
  r['host_memavailable_kib']=next(int(s.split()[1]) for s in Path('/proc/meminfo').read_text().splitlines() if s.startswith('MemAvailable:'))
+ if r['host_memavailable_kib']<2162688:raise MemoryError('host headroom below2GiB+reserve64')
  if r['foreign_qemu'] or r['pending_queue']:raise RuntimeError('foreign QEMU or pending queue')
  shared.mkdir(exist_ok=False)
  for folder in ('core','native'):shutil.copytree(root/folder,shared/'source'/folder)
