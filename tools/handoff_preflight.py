@@ -18,6 +18,7 @@ def export_directory(path):
     for p in (path,*path.parents):
         if p.is_symlink(): raise ValueError('symlink export ancestor')
     if not path.is_dir(): raise ValueError('missing export directory')
+    if path==Path('/'):raise ValueError('root export forbidden')
     for p in path.rglob('*'):
         mode=p.lstat().st_mode
         if not (stat.S_ISREG(mode) or stat.S_ISDIR(mode)):

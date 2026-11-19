@@ -63,3 +63,7 @@ class Handoff(unittest.TestCase):
    run=subprocess.run([str(binary),str(corpus)],capture_output=True,text=True)
    self.assertEqual(run.returncode,7)
    with self.assertRaises(ValueError):verify(run.stdout,corpus)
+
+ def test_command_never_launches_on_missing_inputs(self):
+  run=subprocess.run([sys.executable,str(ROOT/'tools/handoff-command.py'),'--export','/missing-export','--elf','/missing-elf','--manifest','/missing-manifest','--ifs','/missing-ifs','--disk','/missing-disk','--stock-pin','/missing-pin'],capture_output=True,text=True)
+  self.assertNotEqual(run.returncode,0);self.assertNotIn('-fsdev',run.stdout)

@@ -1,5 +1,5 @@
 """Validate existing artifacts/export and print a read-only QEMU add-on. Never launches."""
-import argparse,json,shlex
+import argparse,shlex
 from pathlib import Path
 from handoff_preflight import config,export_directory,binding
 from stock_pin import load_stock_pin,verify_stock_files
