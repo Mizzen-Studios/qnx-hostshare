@@ -63,7 +63,8 @@ int main(int argc,char **argv){
  if(argc==3 && !strcmp(argv[1],"--read-once"))return mount_read_once(argv[2]);
  struct hs_options options;
  if(hs_options_parse(argc,argv,&options)){fprintf(stderr,"Invalid arguments/tag/mountpoint\n");return 2;}
- if(options.mount&&mountpoint_available(options.mountpoint))return 2;
+ setvbuf(stdout,NULL,_IONBF,0);
+ if(options.mount){puts("HOSTSHARE MOUNT_PREFLIGHT BEGIN");if(mountpoint_available(options.mountpoint))return 2;puts("HOSTSHARE MOUNT_PREFLIGHT PASS");}
  struct adapter a={.dma=MAP_FAILED,.channel=-1,.connection=-1,.interrupt=-1,.irq=-1};
  pci_ba_t bars[6]={{0}};int_t nb=6;uint8_t config[256],body[256];uint64_t sizes[6]={0};void *maps[6]={0};size_t maplen[6]={0};struct hs_region regions[4];struct hs_frame frame;
  pci_err_t error=PCI_ERR_OK;pci_devhdl_t h=NULL;pci_cap_t mcap=NULL;int menabled=0;pci_cmd_t original=0,current=0;int changed=0,rc=1;size_t contiguous=0;uint64_t selected;uint16_t taglen;const uint8_t *tag;

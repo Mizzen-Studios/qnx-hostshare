@@ -94,7 +94,7 @@ static int mountpoint_available(const char *mountpoint){
  struct stat existing;
  if(lstat(mountpoint,&existing)==0||errno!=ENOENT){fprintf(stderr,"Mountpoint collision or inaccessible\n");return 1;}
  char prefix[256];strcpy(prefix,mountpoint);
- for(char *p=prefix+1;*p;p++)if(*p=='/'){*p=0;if(lstat(prefix,&existing)||!S_ISDIR(existing.st_mode)||S_ISLNK(existing.st_mode))return 1;*p='/';}
+ for(char *p=prefix+1;*p;p++)if(*p=='/'){*p=0;if(lstat(prefix,&existing)){fprintf(stderr,"HOSTSHARE MOUNT_PREFLIGHT parent=%s errno=%d\n",prefix,errno);return 1;}if(!S_ISDIR(existing.st_mode)||S_ISLNK(existing.st_mode)){fprintf(stderr,"HOSTSHARE MOUNT_PREFLIGHT parent=%s not-ordinary-directory\n",prefix);return 1;}*p='/';}
  return 0;
 }
 static int serve_mount(struct adapter *a,int drop,const char *mountpoint){
