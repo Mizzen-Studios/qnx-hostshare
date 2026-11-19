@@ -14,6 +14,7 @@ p.add_argument('--midread',action='store_true',help='Explicit diagnostic pause w
 p.add_argument('--stock-pin',type=Path,help='Strict JSON SHA256 pins for independently built stock IFS/disk')
 o=p.parse_args();config(o.tag,o.mountpoint)
 assert re.fullmatch(r'[A-Za-z0-9_-]+',o.run_id)
+if o.conformance and o.midread:p.error('--conformance is independent of the legacy death diagnostic')
 if o.stock_pin and o.image_kind!='stock':p.error('--stock-pin requires --image-kind stock')
 stock_expected=load_stock_pin(o.stock_pin) if o.stock_pin else HISTORICAL_STOCK
 root=Path(__file__).resolve().parents[1]
