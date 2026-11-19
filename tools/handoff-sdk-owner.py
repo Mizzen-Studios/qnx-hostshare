@@ -2,9 +2,9 @@
 import fcntl,hashlib,json,os,shutil,subprocess,time
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]
-out=root/'.local/developer-handoff-20261119-build2';out.mkdir(parents=True,exist_ok=False)
+out=root/'.local/developer-handoff-20261119-build3';out.mkdir(parents=True,exist_ok=False)
 guest=Path('/home/ubuntu/qnx-host/guest');ctl=guest/'guestctl-capped.py'
-shared=guest/'shared/hostshare-handoff-20261119-build2'
+shared=guest/'shared/hostshare-handoff-20261119-build3'
 r={'schema':'hostshare.handoff-build.v1','native_accepted':False,'reserve_bytes':67108864,'status':'PREFLIGHT'}
 lock=open('/home/ubuntu/qnx-host/native-test.lock','a');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
 child=None;pid=None;cg=None;job=None
@@ -19,7 +19,7 @@ try:
  shared.mkdir(exist_ok=False)
  for folder in ('core','native'):shutil.copytree(root/folder,shared/'source'/folder)
  script=out/'compile.sh'
- script.write_text('#!/bin/bash\nset -eo pipefail\nexport HOME=/home/qnx\nsource /home/qnx/qnx800/qnxsdp-env.sh >/dev/null\ns=/mnt/host/hostshare-handoff-20261119-build2/source\no=/mnt/host/hostshare-handoff-20261119-build2/build\nmkdir "$o"\nqcc -Vgcc_ntox86_64 -std=gnu11 -O0 -g0 -Wall -Wextra -Werror -Wno-misleading-indentation -I"$s/core" "$s/native/qnx_hostshare.c" "$s/native/mount_checksum.c" "$s/native/conformance.c" "$s/core/transport.c" "$s/core/protocol.c" -o "$o/qnx_hostshare" -lpci\nsha256sum "$o/qnx_hostshare"\n')
+ script.write_text('#!/bin/bash\nset -eo pipefail\nexport HOME=/home/qnx\nsource /home/qnx/qnx800/qnxsdp-env.sh >/dev/null\ns=/mnt/host/hostshare-handoff-20261119-build3/source\no=/mnt/host/hostshare-handoff-20261119-build3/build\nmkdir "$o"\nqcc -Vgcc_ntox86_64 -std=gnu11 -O0 -g0 -Wall -Wextra -Werror -Wno-misleading-indentation -I"$s/core" "$s/native/qnx_hostshare.c" "$s/native/mount_checksum.c" "$s/native/conformance.c" "$s/core/transport.c" "$s/core/protocol.c" -o "$o/qnx_hostshare" -lpci\nsha256sum "$o/qnx_hostshare"\n')
  env=os.environ.copy();env['EDU_SDK_MEMORY_MIB']='1024'
  child=subprocess.Popen(['python3',str(ctl),'start'],env=env,stdout=open(out/'launch.txt','w'),stderr=subprocess.STDOUT)
  start=time.monotonic()
@@ -65,5 +65,16 @@ finally:
  r['stopped_reaped']=child is None or child.poll() is not None
  r['remaining_qemu']=subprocess.run(['pgrep','-af','^qemu-system-'],capture_output=True,text=True).stdout
  (out/'receipt.json').write_text(json.dumps(r,indent=2)+'\n')
+ if r['status']=='BUILD_PASS' and r['stopped_reaped'] and not r['remaining_qemu']:
+  env=os.environ.copy();env.update(HS_LOCK_FD=str(lock.fileno()),HS_LOCK='/home/ubuntu/qnx-host/native-test.lock',HS_ELF=str(shared/'build/qnx_hostshare'),HS_BUILD_MANIFEST=str(out/'build-source-hashes.json'),HS_IFS='/home/ubuntu/qnx-host/guest/shared/edu-stock-control-1024-20261113/stock-output/ifs.bin',HS_DISK='/home/ubuntu/qnx-host/guest/shared/edu-stock-control-1024-20261113/stock-output/disk-qemu')
+  for label,extra in [('custom',['--tag','dev-inputs','--mountpoint','/mnt/dev-inputs']),('default',[])]:
+   # systemd scopes do not retain arbitrary descriptors: run inside an explicit
+   # bounded scope while the parent continues owning the exclusive lease.
+   env.pop('HS_LOCK_FD',None);env['HS_PARENT_LEASE_PID']=str(os.getpid())
+   command=['sh',str(root/'tools/run-native-suite.sh'),'--image-kind','stock','--run-id','handoff-build3-'+label+'-20261119','--conformance',*extra]
+   result=subprocess.run(command,env=env,stdout=open(out/(label+'-owner.txt'),'w'),stderr=subprocess.STDOUT)
+   r[label+'_rc']=result.returncode
+   if result.returncode:break
+  (out/'receipt.json').write_text(json.dumps(r,indent=2)+'\n')
  fcntl.flock(lock,fcntl.LOCK_UN);lock.close()
 print(json.dumps(r),flush=True)

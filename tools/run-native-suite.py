@@ -32,7 +32,15 @@ assert all(q.is_file() and not q.is_symlink() for q in (elf,image,disk)),'regula
 if o.image_kind=='stock':
  expected=stock_expected
  verify_stock_files(image,disk,expected)
-lock=open(os.environ.get('HS_LOCK','/home/ubuntu/qnx-host/native-test.lock'),'a');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+lock=open(os.environ.get('HS_LOCK','/home/ubuntu/qnx-host/native-test.lock'),'a')
+if os.environ.get('HS_PARENT_LEASE_PID'):
+ owner=int(os.environ['HS_PARENT_LEASE_PID'])
+ assert Path('/proc/%d/cmdline'%owner).read_bytes().split(b'\0')[1:2]==[str(root/'tools/handoff-sdk-owner.py').encode()] or Path('/proc/%d/cmdline'%owner).read_bytes().split(b'\0')[1:2]==[b'tools/handoff-sdk-owner.py'],'unexpected lease owner'
+ # Prove a live exclusive lease still exists; never silently bypass a free lock.
+ try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+ except BlockingIOError:pass
+ else:raise RuntimeError('parent lease not held')
+else:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
 assert subprocess.run(['pgrep','-f','^qemu-system-'],stdout=subprocess.DEVNULL).returncode==1
 queue=Path('/home/ubuntu/qnx-host/guest/shared/queue')
 assert not list(queue.glob('*.sh')),'pending SDK jobs'
