@@ -1,0 +1,6 @@
+# mkdir -p /mnt; echo PARENT_RC=$?; ls -ld /mnt /mnt; echo PARENT_DONE
+mkdir: '/mnt': Function not implemented
+PARENT_RC=1
+ls: /mnt: No such file or directory
+ls: /mnt: No such file or directory
+PARENT_DONE

@@ -1,0 +1,29 @@
+
+non UEFI or UEFI+CSM boot
+ACPI table not found (0x4746434d)
+System behaves poorly without PCID support.
+overriding mask for controller 2, vector_base 0
+---> Starting slogger2
+---> Starting PCI Services
+---> Starting fsevmgr
+#  HS_SUITE_BOOT_READY
+ksh: HS_SUITE_BOOT_READY: cannot execute - No such file or directory
+# ---> Starting devb
+---> Mounting file systems
+Path=0 - Intel 82371SB
+ target=0 lun=0     Direct-Access(0) -          QEMU HARDDISK    Rev: 2.5+
+Path=1 - Intel 82371SB
+ target=0 lun=0            CD-ROM(5) - QEMU     QEMU DVD-ROM     Rev: 2.5+
+---> Mounting file systems
+---> Starting Networking
+echo HS_SUITE_BOOT_READY
+HS_SUITE_BOOT_READY
+# uname -a; mkdir -p /data/hostshare; stty -echo; echo HS_PREPARED
+QNX localhost 8.0.0 2026/06/05-16:26:03EDT x86pc x86_64
+HS_PREPARED
+# mkdir -p /mnt; echo PARENT_RC=$?; ls -ld /mnt /mnt; echo PARENT_DONE
+mkdir: '/mnt': Function not implemented
+PARENT_RC=1
+ls: /mnt: No such file or directory
+ls: /mnt: No such file or directory
+PARENT_DONE
