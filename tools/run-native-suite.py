@@ -1,13 +1,19 @@
 """Bounded native readonly suite; explicit image kind, no IRQ routing changes."""
 import argparse,fcntl,hashlib,json,os,re,selectors,subprocess,time
 from pathlib import Path
+from handoff_oracle import verify as verify_conformance
+from handoff_preflight import config,export_directory,binding
 from stock_pin import load_stock_pin,HISTORICAL_STOCK,verify_stock_files
 p=argparse.ArgumentParser(description=__doc__)
+p.add_argument('--conformance',action='store_true')
+p.add_argument('--tag',default='f0test')
+p.add_argument('--mountpoint',default='/mnt/host')
 p.add_argument('--run-id',required=True)
 p.add_argument('--image-kind',required=True,choices=['historical','stock'])
 p.add_argument('--midread',action='store_true',help='Explicit diagnostic pause with client blocked in read, then SIGKILL. Not in-flight DMA.')
 p.add_argument('--stock-pin',type=Path,help='Strict JSON SHA256 pins for independently built stock IFS/disk')
-o=p.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',o.run_id)
+o=p.parse_args();config(o.tag,o.mountpoint)
+assert re.fullmatch(r'[A-Za-z0-9_-]+',o.run_id)
 if o.stock_pin and o.image_kind!='stock':p.error('--stock-pin requires --image-kind stock')
 stock_expected=load_stock_pin(o.stock_pin) if o.stock_pin else HISTORICAL_STOCK
 root=Path(__file__).resolve().parents[1]
@@ -17,6 +23,7 @@ h=lambda q:hashlib.sha256(q.read_bytes()).hexdigest()
 elf=Path(os.environ['HS_ELF']);image=Path(os.environ['HS_IFS']);disk=Path(os.environ['HS_DISK'])
 build=json.loads(Path(os.environ['HS_BUILD_MANIFEST']).read_text())
 assert h(elf)==build['elf_sha256']
+assert set(build['files'])=={str(q.relative_to(root)) for folder in ('core','native') for q in (root/folder).glob('*.[ch]')}
 for name,digest in build['files'].items():assert h(root/name)==digest,name
 assert not subprocess.check_output(['git','status','--porcelain'],cwd=root,text=True).strip(),'Launch requires clean checkout'
 if o.image_kind=='stock':
@@ -36,12 +43,14 @@ for name,data in contents.items():
  q=corpus/name;q.parent.mkdir(parents=True,exist_ok=True);q.write_bytes(data)
 manifest={name:{'sha256':h(corpus/name),'size':(corpus/name).stat().st_size,'posix_cksum':int(subprocess.check_output(['cksum',str(corpus/name)],text=True).split()[0])} for name in contents}
 assert manifest==record,('synthetic corpus differs',manifest)
+if o.conformance:
+ for i in range(180):(corpus/('page-%03d.txt'%i)).write_bytes(('page %d\n'%i).encode())
 (out/'corpus-before.json').write_text(json.dumps(manifest,indent=2)+'\n')
 args=['qemu-system-x86_64','-machine','pc','-accel','tcg,tb-size=256','-cpu','max','-smp','1','-m','512','-display','none','-serial','stdio','-monitor','none','-no-reboot','-kernel',str(image),'-drive','file='+str(disk)+',format=raw,if=ide,snapshot=on']
 # Explicit documented device topology, not a mid-run rerouting/fallback.
 args+=['-nic','none','-device','virtio-rng-pci'] if o.image_kind=='stock' else ['-nic','user,model=virtio-net-pci']
-args+=['-fsdev','local,id=f0,path='+str(corpus)+',security_model=none,readonly=on','-device','virtio-9p-pci,fsdev=f0,mount_tag=f0test,disable-legacy=on']
-report={'status':'FAIL','source_sha':subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),'clean_checkout':True,'caps':caps,'nice':os.getpriority(os.PRIO_PROCESS,0),'command':args,'image_kind':o.image_kind,'image_sha256':h(image),'disk_sha256':h(disk),'elf_sha256':h(elf),'source_files':build['files'],'qtest':False,'irq_routing_mutated':False,'commands':[],'reserve_bytes':67108864}
+args+=['-fsdev','local,id=f0,path='+str(corpus)+',security_model=none,readonly=on','-device','virtio-9p-pci,fsdev=f0,mount_tag='+o.tag+',disable-legacy=on']
+report={'status':'FAIL','source_sha':subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),'clean_checkout':True,'caps':caps,'nice':os.getpriority(os.PRIO_PROCESS,0),'command':args,'image_kind':o.image_kind,'image_sha256':h(image),'disk_sha256':h(disk),'elf_sha256':h(elf),'source_files':build['files'],'qtest':False,'irq_routing_mutated':False,'commands':[],'handoff':{'tag':o.tag,'mountpoint':o.mountpoint,'conformance_requested':o.conformance},'reserve_bytes':67108864}
 (out/'started.json').write_text(json.dumps(report,indent=2)+'\n')
 r=subprocess.Popen(args,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.STDOUT);sel=selectors.DefaultSelector();sel.register(r.stdout,selectors.EVENT_READ);serial=bytearray();samples=[];binary_window=None
 rawpath=root/'.local'/('suite-'+o.run_id+'-raw.bin')
@@ -60,6 +69,7 @@ def until(marker,timeout=60,start=0):
   if marker in bytes(serial[start:]).replace(b'\r',b'').split(b'\n'):return bytes(serial[start:]).decode(errors='replace')
  raise TimeoutError(marker.decode())
 def command(cmd,marker,timeout=60,record=True):
+ cmd=cmd.replace('/mnt/host',o.mountpoint)
  start=len(serial)
  if record:report['commands'].append(cmd)
  payload=(cmd+'\n').encode()
@@ -94,10 +104,10 @@ try:
  observed=bytes.fromhex(' '.join(lines[begin+1:end]));assert observed==data,'ELF byte mismatch'
  report['native_copy_byte_exact']=True;report['copy_bytes']=len(data);report['transfer_route']='serial builtin printf octal128; exact od hex readback'
  del serial[start:];serial.extend(b'[OWN ELF READBACK REDACTED; exact comparison PASS]\n');binary_window=None
- text=save('probe',command(app+' --pci-line; echo APP_RC=$?; echo PROBE_DONE','PROBE_DONE'))
+ text=save('probe',command(app+' --tag '+o.tag+' --pci-line; echo APP_RC=$?; echo PROBE_DONE','PROBE_DONE'))
  report['probe']={'passed':rc(text,'APP_RC')==0 and 'HOSTSHARE F2 READONLY BYTE_EXACT PASS' in text}
  if not report['probe']['passed']:raise RuntimeError('default-route probe failed; no routing fallback')
- text=save('mount',command(app+' --pci-line --mount > '+guest+'/mount.log 2>&1 & HS_PID=$!; sleep 2; cat '+guest+'/mount.log; cat /mnt/host/hello.txt; echo CAT_RC=$?; ls -1 /mnt/host; echo LS_RC=$?; echo MOUNT_DONE','MOUNT_DONE'))
+ text=save('mount',command(app+' --tag '+o.tag+' --mountpoint '+o.mountpoint+' --pci-line --mount > '+guest+'/mount.log 2>&1 & HS_PID=$!; sleep 2; cat '+guest+'/mount.log; cat /mnt/host/hello.txt; echo CAT_RC=$?; ls -1 /mnt/host; echo LS_RC=$?; echo MOUNT_DONE','MOUNT_DONE'))
  listing=re.sub(rb'\\([0-7]{3})',lambda m:bytes([int(m[1],8)]),text.encode()).decode('utf-8')
  report['mount']={'passed':rc(text,'CAT_RC')==0 and rc(text,'LS_RC')==0 and 'HOSTSHARE MOUNT READY' in text and all(name in listing.splitlines() for name in ['hello.txt','empty','one','4KiB','1MiB','nested','unicode-λ.txt'])}
  if not report['mount']['passed']:raise RuntimeError('mount/list gate failed')
@@ -106,6 +116,14 @@ try:
   text=save('checksum-'+name.replace('/','_'),command(app+" --checksum '/mnt/host/"+name+"'; echo CHECK_RC=$?; echo CHECK_DONE",'CHECK_DONE',240))
   m=re.search(r'^HOSTSHARE CHECKSUM (\d+) (\d+) ',text,re.M)
   report['corpus'][name]={'passed':bool(m and int(m[1])==expected['posix_cksum'] and int(m[2])==expected['size'] and rc(text,'CHECK_RC')==0),'observed_cksum':int(m[1]) if m else None,'observed_size':int(m[2]) if m else None}
+ if o.conformance:
+  before={str(q.relative_to(corpus)):h(q) for q in corpus.rglob('*') if q.is_file()}
+  text=save('conformance',command(app+' --conformance '+o.mountpoint+'; echo CONFORMANCE_RC=$?; echo CONFORMANCE_DONE','CONFORMANCE_DONE',240))
+  report['conformance']=verify_conformance(text,corpus)
+  assert rc(text,'CONFORMANCE_RC')==0
+  assert before=={str(q.relative_to(corpus)):h(q) for q in corpus.rglob('*') if q.is_file()},'mutation changed host corpus'
+  report['conformance']['host_corpus_unchanged']=True
+  report['conformance']['pagination_corpus_entries']=len(list(corpus.iterdir()))
  changed=b'HostShare host edit observed without rebuild.\n';(corpus/'hello.txt').write_bytes(changed);start_edit=time.monotonic()
  text=save('host-edit',command('cat /mnt/host/hello.txt; echo EDIT_RC=$?; echo EDIT_DONE','EDIT_DONE'))
  report['host_edit']={'passed':changed.decode().strip() in text.splitlines() and rc(text,'EDIT_RC')==0,'elapsed_seconds':time.monotonic()-start_edit,'sha256':h(corpus/'hello.txt'),'rebuild':False}
@@ -126,7 +144,7 @@ try:
   else:
    report['midread']['passed']=False
    save('midread-abort',command('kill -KILL $PAUSE_PID $CLIENT_PID; wait $PAUSE_PID; wait $CLIENT_PID; echo MIDREAD_ABORTED','MIDREAD_ABORTED'))
-  text=save('remount',command(app+' --pci-line --mount > '+guest+'/remount.log 2>&1 & AGAIN_PID=$!; sleep 2; cat '+guest+'/remount.log; cat /mnt/host/hello.txt; echo REMOUNT_CAT_RC=$?; '+app+' --checksum /mnt/host/1MiB; echo REMOUNT_CHECK_RC=$?; kill -TERM $AGAIN_PID; wait $AGAIN_PID; echo REMOUNT_STOP_RC=$?; cat '+guest+'/remount.log; echo REMOUNT_DONE','REMOUNT_DONE',240))
+  text=save('remount',command(app+' --tag '+o.tag+' --mountpoint '+o.mountpoint+' --pci-line --mount > '+guest+'/remount.log 2>&1 & AGAIN_PID=$!; sleep 2; cat '+guest+'/remount.log; cat /mnt/host/hello.txt; echo REMOUNT_CAT_RC=$?; '+app+' --checksum /mnt/host/1MiB; echo REMOUNT_CHECK_RC=$?; kill -TERM $AGAIN_PID; wait $AGAIN_PID; echo REMOUNT_STOP_RC=$?; cat '+guest+'/remount.log; echo REMOUNT_DONE','REMOUNT_DONE',240))
   report['remount']={'passed':rc(text,'REMOUNT_CAT_RC')==0 and rc(text,'REMOUNT_CHECK_RC')==0 and rc(text,'REMOUNT_STOP_RC')==0 and 'HOSTSHARE CHECKSUM 2572415250 1048576 /mnt/host/1MiB' in text}
  gates=[report['probe']['passed'],report['mount']['passed'],len(report['corpus'])==7,all(v['passed'] for v in report['corpus'].values()),report['host_edit']['passed'],report['readonly']['passed'],report['normal_stop']['passed']]
  if o.midread:gates += [report['midread']['passed'],report['remount']['passed']]

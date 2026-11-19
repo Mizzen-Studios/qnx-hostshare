@@ -155,7 +155,7 @@ Omitting --midread selects data gates only, not a server-death test.
 source /home/qnx/qnx800/qnxsdp-env.sh
 qcc -Vgcc_ntox86_64 -std=gnu11 -O0 -g0 -Wall -Wextra -Werror \
   -Wno-misleading-indentation -Icore native/qnx_hostshare.c \
-  native/mount_checksum.c core/transport.c core/protocol.c \
+  native/mount_checksum.c native/conformance.c core/transport.c core/protocol.c \
   -o /absolute/external/output/qnx_hostshare -lpci
 ~~~
 

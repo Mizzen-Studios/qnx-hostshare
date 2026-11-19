@@ -122,3 +122,8 @@ Not default-routing, production filesystem or hardware-support acceptance.
 with explicitly documented IRQ10 workaround: real read-only resource manager,
 seven mounted-file checksums, host edit observed without rebuild. See
 [result and limitations](docs/acceptance/mount-20261113/RESULT.md).
+
+## Configurable read-only handoff — 19 November
+
+See [operator recipe and current-source conformance status](docs/DEVELOPER_HANDOFF.md).
+Host checks are not native acceptance; historical pins and receipts stay unchanged.

@@ -90,18 +90,22 @@ static int mount_drop_privileges(void){
 }
 static volatile sig_atomic_t mount_stop;
 static void mount_signal(int signo){(void)signo;mount_stop=1;}
-static int serve_mount(struct adapter *a,int drop){
+static int serve_mount(struct adapter *a,int drop,const char *mountpoint){
+ struct stat existing;
+ if(lstat(mountpoint,&existing)==0||errno!=ENOENT){fprintf(stderr,"Mountpoint collision or inaccessible\n");return 1;}
+ char prefix[256];strcpy(prefix,mountpoint);
+ for(char *p=prefix+1;*p;p++)if(*p=='/'){*p=0;if(lstat(prefix,&existing)||!S_ISDIR(existing.st_mode)||S_ISLNK(existing.st_mode))return 1;*p='/';}
  mount_adapter=a;dispatch_t *dpp=dispatch_create();if(!dpp){perror("dispatch_create");return 1;}
  resmgr_connect_funcs_t connect;resmgr_io_funcs_t io;resmgr_attr_t r={0};iofunc_attr_t root;
  iofunc_func_init(_RESMGR_CONNECT_NFUNCS,&connect,_RESMGR_IO_NFUNCS,&io);
  connect.open=mount_open;io.chmod=NULL;io.chown=NULL;io.utime=NULL;io.read=mount_read;io.write=mount_write;io.close_ocb=mount_close;
  iofunc_attr_init(&root,S_IFDIR|0555,NULL,NULL);r.nparts_max=1;r.msg_max_size=8192;
  int attach_id;
- if((attach_id=resmgr_attach(dpp,&r,"/mnt/host",_FTYPE_ANY,_RESMGR_FLAG_DIR,&connect,&io,&root))<0){perror("resmgr_attach");return 1;}
+ if((attach_id=resmgr_attach(dpp,&r,mountpoint,_FTYPE_ANY,_RESMGR_FLAG_DIR,&connect,&io,&root))<0){perror("resmgr_attach");return 1;}
  dispatch_context_t *ctp=dispatch_context_alloc(dpp);if(!ctp)return 1;
  struct sigaction sa={0};sa.sa_handler=mount_signal;sigemptyset(&sa.sa_mask);sigaction(SIGTERM,&sa,NULL);sigaction(SIGINT,&sa,NULL);
  if(drop){a->privileges_reduced=1;if(mount_drop_privileges())return 1;}
- puts("HOSTSHARE MOUNT READY /mnt/host READONLY");
+ printf("HOSTSHARE MOUNT READY %s READONLY\n",mountpoint);
  while(!mount_stop){
   uint64_t timeout=UINT64_C(500000000);if(TimerTimeout(CLOCK_MONOTONIC,_NTO_TIMEOUT_RECEIVE,NULL,&timeout,NULL)<0)return 1;
   dispatch_context_t *next=dispatch_block(ctp);

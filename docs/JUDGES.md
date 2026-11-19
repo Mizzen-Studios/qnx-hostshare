@@ -51,3 +51,8 @@ not server death. The unchanged historical --midread diagnostic knowingly
 exits1 on the accepted ESRCH3 observation; keep it separate from first use.
 
 No new native execution, media or acceptance claim is made by this judge path.
+
+## Configurable read-only handoff — 19 November
+
+See [operator recipe and current-source conformance status](DEVELOPER_HANDOFF.md).
+Host checks are not native acceptance; historical pins and receipts stay unchanged.

@@ -1,5 +1,6 @@
 /* Original QNX8/QEMU-only bounded read-only diagnostic; no SDK source. */
 #include "hostshare.h"
+#include "handoff_config.h"
 #include <pci/pci.h>
 #include <pci/cap_msix.h>
 #include <sys/neutrino.h>
@@ -53,11 +54,15 @@ static int exchange(struct adapter *a,uint8_t type,uint16_t tag,const uint8_t *b
 }
 #include "hostshare_mount.h"
 
+int mount_conformance(const char *path);
 int mount_checksum(const char *path);
 int mount_read_once(const char *path);
 int main(int argc,char **argv){
+ if(argc==3 && !strcmp(argv[1],"--conformance"))return mount_conformance(argv[2]);
  if(argc==3 && !strcmp(argv[1],"--checksum"))return mount_checksum(argv[2]);
  if(argc==3 && !strcmp(argv[1],"--read-once"))return mount_read_once(argv[2]);
+ struct hs_options options;
+ if(hs_options_parse(argc,argv,&options)){fprintf(stderr,"Invalid arguments/tag/mountpoint\n");return 2;}
  struct adapter a={.dma=MAP_FAILED,.channel=-1,.connection=-1,.interrupt=-1,.irq=-1};
  pci_ba_t bars[6]={{0}};int_t nb=6;uint8_t config[256],body[256];uint64_t sizes[6]={0};void *maps[6]={0};size_t maplen[6]={0};struct hs_region regions[4];struct hs_frame frame;
  pci_err_t error=PCI_ERR_OK;pci_devhdl_t h=NULL;pci_cap_t mcap=NULL;int menabled=0;pci_cmd_t original=0,current=0;int changed=0,rc=1;size_t contiguous=0;uint64_t selected;uint16_t taglen;const uint8_t *tag;
@@ -87,7 +92,7 @@ int main(int argc,char **argv){
  volatile uint8_t *device=(volatile uint8_t *)maps[regions[3].bar]+regions[3].offset;
  uint8_t device_config[257]={0};size_t dn=regions[3].length<sizeof device_config?regions[3].length:sizeof device_config;
  for(size_t i=0;i<dn;i++)device_config[i]=device[i];
- if(hs_mount_tag(device_config,dn,&tag,&taglen)||taglen!=6||memcmp(tag,"f0test",6))goto done;
+ if(hs_mount_tag(device_config,dn,&tag,&taglen)||taglen!=strlen(options.tag)||memcmp(tag,options.tag,taglen))goto done;
  a.common[20]=0;for(int i=0;a.common[20]&&i<100;i++)usleep(1000);if(a.common[20])goto done;
  a.common[20]=1;a.common[20]=3;w32(a.common,0);uint64_t offered=r32(a.common+4);w32(a.common,1);offered|=(uint64_t)r32(a.common+4)<<32;
  if(hs_features(offered,&selected))goto done;
@@ -100,7 +105,7 @@ int main(int argc,char **argv){
  uint64_t no=(uint64_t)r16(a.common+30)*a.multiplier;if(no+2>regions[1].length||no%2)goto done;a.doorbell=(volatile uint16_t *)(a.notify+no);
  if(pci_device_read_cmd(bdf,&original)!=PCI_ERR_OK)goto done;changed=1;
  if(pci_device_write_cmd(h,original|2,&current)!=PCI_ERR_OK||!(current&2))goto done;
- if(argc>1 && !strcmp(argv[1],"--msix")){
+ if(options.msix){
   int_t idx=pci_device_find_capid(bdf,CAPID_MSIX);
   if(idx<0){puts("HOSTSHARE MSIX absent");goto done;}
   if((error=pci_device_read_cap(bdf,&mcap,idx))!=PCI_ERR_OK)goto done;
@@ -108,17 +113,17 @@ int main(int argc,char **argv){
   if((error=pci_device_cfg_cap_enable(h,pci_reqType_e_UNSPECIFIED,mcap))!=PCI_ERR_OK){puts("HOSTSHARE MSIX cap_enable FAIL");goto done;}
   menabled=1;a.msix=1;w16(a.common+26,0);if(r16(a.common+26)!=0){puts("HOSTSHARE MSIX queue vector rejected");goto done;}
  }
- pci_irq_t irq=-1;int_t ni=1;if(pci_device_read_irq(h,&ni,&irq)!=PCI_ERR_OK||ni!=1||irq<0)goto done;printf("HOSTSHARE IRQ api=%d config=%u\n",irq,config[0x3c]); if(argc>1 && !strcmp(argv[1],"--pci-line"))irq=config[0x3c]; a.irq=irq;
+ pci_irq_t irq=-1;int_t ni=1;if(pci_device_read_irq(h,&ni,&irq)!=PCI_ERR_OK||ni!=1||irq<0)goto done;printf("HOSTSHARE IRQ api=%d config=%u\n",irq,config[0x3c]); if(options.pci_line)irq=config[0x3c]; a.irq=irq;
  a.channel=ChannelCreate(0);if(a.channel<0)goto done;a.connection=ConnectAttach(0,0,a.channel,_NTO_SIDE_CHANNEL,0);if(a.connection<0)goto done;
  struct sigevent ev;SIGEV_PULSE_INIT(&ev,a.connection,10,_PULSE_CODE_MINAVAIL+1,0);
  a.interrupt=InterruptAttachEvent(irq,&ev,_NTO_INTR_FLAGS_TRK_MSK);if(a.interrupt<0){perror("InterruptAttachEvent");goto done;}
  if(pci_device_write_cmd(h,(original|6)&~0x400,&current)!=PCI_ERR_OK||(current&6)!=6)goto done;
- w16(a.common+28,1);a.common[20]=15;__sync_synchronize();printf("HOSTSHARE F1 READY tag=f0test features=%llx irq=%d dma=%llx\n",(unsigned long long)selected,irq,(unsigned long long)a.physical);
+ w16(a.common+28,1);a.common[20]=15;__sync_synchronize();printf("HOSTSHARE F1 READY tag=%s features=%llx irq=%d dma=%llx\n",options.tag,(unsigned long long)selected,irq,(unsigned long long)a.physical);
  memset(body,0,sizeof body);le32(body,4096);body[4]=8;memcpy(body+6,"9P2000.L",8);
  if(exchange(&a,100,HS_NOTAG,body,14,101,&frame)||get32(frame.body)!=4096)goto done;
  memset(body,0,sizeof body);le32(body,1);le32(body+4,HS_NOFID);body[8]=4;memcpy(body+10,"root",4); /* uname, empty aname, n_uname0 */
  if(exchange(&a,104,1,body,20,105,&frame))goto done;
- if(argc>2 && (!strcmp(argv[2],"--mount")||!strcmp(argv[2],"--mount-drop")||!strcmp(argv[2],"--mount-pause-read"))){mount_pause_read=!strcmp(argv[2],"--mount-pause-read");rc=serve_mount(&a,!strcmp(argv[2],"--mount-drop"));goto done;}
+ if(options.mount){mount_pause_read=options.pause;rc=serve_mount(&a,options.drop,options.mountpoint);goto done;}
  memset(body,0,sizeof body);le32(body,1);le32(body+4,2);body[8]=1;body[10]=9;memcpy(body+12,"hello.txt",9);
  if(exchange(&a,110,2,body,21,111,&frame)||frame.body_length!=15||frame.body[0]!=1)goto done;
  memset(body,0,sizeof body);le32(body,2);if(exchange(&a,12,3,body,8,13,&frame))goto done;

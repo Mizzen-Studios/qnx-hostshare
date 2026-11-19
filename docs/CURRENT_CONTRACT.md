@@ -58,3 +58,8 @@ The former written-only/unpublished footer was stale current prose, not an
 immutable receipt. This update makes no new recording or native acceptance
 claim and says nothing about the current global lease owner. No native/QEMU,
 SDK/licence, visibility, outreach or spending changes; C6 untouched.
+
+## Configurable read-only handoff — 19 November
+
+See [operator recipe and current-source conformance status](DEVELOPER_HANDOFF.md).
+Host checks are not native acceptance; historical pins and receipts stay unchanged.
