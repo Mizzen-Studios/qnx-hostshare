@@ -152,4 +152,4 @@ other repositories, artifacts/releases or external LFS/submodule payloads.
 All locally stored blobs (including unreachable objects present) were scanned;
 objects absent from this clone cannot be audited. Zero current submodules.
 This audit is not an entitlement/license review or a guarantee of no secrets.
-Repository remains PRIVATE pending owner review, not ready-to-publish certification.
+Historical PRIVATE status — STALE: repository is now PUBLIC, not ready-to-publish certification.

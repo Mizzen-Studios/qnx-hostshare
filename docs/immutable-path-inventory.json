@@ -1,0 +1,561 @@
+{
+  "date": "2026-11-20",
+  "scope": "Tracked residual historical host/guest home prefixes; generated site projections excluded; values intentionally not repeated. No raw receipt or log bytes changed.",
+  "files": [
+    {
+      "path": "docs/RUN_NATIVE.md",
+      "sha256": "bd9c2da8789a2007deff63886991bcfe5bf63a7ae4309abc1c15ff5586c8c2ae",
+      "classification": "historical lab record or native implementation constraint; not HOST quickstart"
+    },
+    {
+      "path": "docs/acceptance/developer-handoff-20261119/build-recipe.sh",
+      "sha256": "abaa5f77f0eab518b93d5f36d2fed851813298ec48515100a6fa5803f8739445",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/developer-handoff-20261119/build2-recipe.sh",
+      "sha256": "9322c977f6e3ff7a023285e733131d2bfbb76be536be4bef83e04037b825b350",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/developer-handoff-20261119/coordinated-build3/build-recipe.sh",
+      "sha256": "d6a120aafa445ada2d73b6695fe0b3393448772e6e4fece9dc743909022e6b05",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/developer-handoff-20261119/coordinated-build3/native-receipt.json",
+      "sha256": "e0c4552d93bb597eb17daf23324603fdc6e0b13c1e9bd248003a97b5506accbf",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/developer-handoff-20261119/coordinated-build3/sdk-owner.json",
+      "sha256": "372310609636ee8c6887041201a67b3f7e74d108a141a34a94347021b2ad78b5",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/developer-handoff-20261119/coordinated-build4/build-recipe.sh",
+      "sha256": "a011c9bd371af1f4b3f4b7a64cdb41c47347cd1628f6070fe877a50eb19554db",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/developer-handoff-20261119/coordinated-build4/custom/receipt.json",
+      "sha256": "5305ec456ec9423c2d9f1fe43cde0cc0da09a4992c54fe24270d2b08e22e61dc",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/developer-handoff-20261119/coordinated-build4/custom/started.json",
+      "sha256": "a24ea6ccf165ccc23e520bfa703c7a9535f0c45245604e0f028c7a6c5bd28d69",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/developer-handoff-20261119/coordinated-build4/default/receipt.json",
+      "sha256": "9a8413bed8cab7f5ad77c1e805c364b426bf57e56436d9d01e7d238984993eb6",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/developer-handoff-20261119/coordinated-build4/default/started.json",
+      "sha256": "2428f663fe9778d9e9f9df3fa216a95aa138d105917947eed8c971d5c04fa301",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/developer-handoff-20261119/coordinated-build4/sdk-owner.json",
+      "sha256": "264a4f6199f48c48681c0c161114c167edd570be8dfb9c53e049a5b9202c319d",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/developer-handoff-20261119/custom-first/receipt.json",
+      "sha256": "ef4880737c5125f48c46fad679661ea48439df5dfe6d4d44f80b9eb7ce67a226",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/developer-handoff-20261119/custom-second/receipt.json",
+      "sha256": "c6dcb79ddab15aa4f147fd23e565a401d3933f732d4e97ffd9548f5a85db39a2",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/developer-handoff-20261119/default-first/receipt.json",
+      "sha256": "5b7ed1c2b85d30e84c4559268e91ec038b71eadd311158c78565fdb868b9faf1",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/developer-handoff-20261119/sdk-owner.json",
+      "sha256": "1f528e43a89585af41061d56d33040be1d90b74a7ac4f463e3ed775c2f3afc08",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/f0/native.json",
+      "sha256": "e705f8a6787aeefdc315249be2bf6763e1cbc31cdab3b909645d4fd94f9cc82d",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/f0/receipt.json",
+      "sha256": "eee078057db0b0bc02e142a7cbb30e620e0d6acde0cf56012c9c2c9ac3c1a261",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/f0/sdk-inventory-not-run.sh",
+      "sha256": "0df954861679c9c8ecad1fb0cbc838f0dae7db4bf1860890cf9e302b0c20e363",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/f0/sdk-journal.log",
+      "sha256": "4d80a8e1c9158e1bd1c063957a75ac46e7e37bf35aae555165fd8f98fab6bdb1",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/f0/sdk-stop.log",
+      "sha256": "3770436c861c502563671c2cf5a1312ad8ba57ae16d1dbdc554ff4c130d3d3e6",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/irq-restart-20261113/intx-clean/receipt.json",
+      "sha256": "f9123017588ced802013b486b5e499dc0504c7bc118da4db31d7b81518ffd773",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/irq-restart-20261113/intx-fixed/receipt.json",
+      "sha256": "b0f5eec19cd45e0ebc71e65a29e5f139acb63762c8e944e13abedd86acffe907",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/irq-restart-20261113/msix-clean/receipt.json",
+      "sha256": "541f3a2c41cc13b0d53ba3777f69545a34a3fbf697b71b614fe7d18acad13786",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/irq-restart-20261113/receipt.json",
+      "sha256": "546e47f9522360099e5e00a994b2ec67ca25fe0d3b12f1510642e7c04baefff6",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/irq-restart-20261113/sdk-owner.json",
+      "sha256": "0f4ea7ae02b157d90c5b1caf07913b40a3bdf3b85930d5bc1e0f5d93ddac5d19",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/irq-restart-20261113/sdk2/sdk-owner.json",
+      "sha256": "3640a1e4154f454bb8d558cf2d4be19cc604ef02d82d7c125c7ae1a1a6ae6f3e",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/mount-20261113/command-comparison.json",
+      "sha256": "999ccb739c5f5966acc189c7d16dc2c1d711709863ede7aa3126d1678486c39b",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/mount-20261113/native1/live-samples.jsonl",
+      "sha256": "7c802e5e8c703f65d55b5c9948e344110ea70afa30296f6bc328b7915fab929d",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/mount-20261113/native1/receipt.json",
+      "sha256": "3f9526e3c278a284c24a1a1ca20324b2d4d6baddfbfd0d353c2d9f8bb3750d0d",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/mount-20261113/native2/receipt.json",
+      "sha256": "a9bbef4f41be2a20854f67f2d55ef0a76dae23e541ef261d20114c57cd3871fa",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/mount-20261113/native3/receipt.json",
+      "sha256": "3160be8c4a86be23a7e8d2f17c0c59a4c0e2ef9ce3f7f1731a647fd665ff6cc3",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/mount-20261113/sdk-owner.json",
+      "sha256": "f7296cab93c8050d42e66a98f517ef6940de629fda75349fea349339735c5fc6",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/mount-20261113/sdk2/sdk-owner.json",
+      "sha256": "c54e1bd23156a2fd262e826588d04e19ebe8fa7d0db8403c48ba07a7a48e3634",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/native-20261113/INSTALLED-METADATA.md",
+      "sha256": "e918bff98d67d80393cb1418a8f66872f3f5b6f3fddc0f662ae1426aa2ef9f5c",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/native-20261113/STOCK-RELAY.md",
+      "sha256": "33e86f68e36c3424c67d296cde850096fc446a62df651f7c73fe19d861ff426f",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/native-20261113/attempt1/receipt.json",
+      "sha256": "de377ce3c20f655473b1d7506b25eb6112a055079e3f7287e9cf023b9efa28e6",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/native-20261113/attempt2/receipt.json",
+      "sha256": "72087f0529548b93e4b8bc2e0d735e06f23ee1d2ae12ccddc4eb6df2cb740349",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/native-20261113/attempt3/receipt.json",
+      "sha256": "ad20b18ba7538d27b3def0d4dfa414e32710d13b8656166d84e743fc3552c420",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/native-20261113/controller.diff",
+      "sha256": "45738ad724b0e50981e4660d548cf827e2b5b036424b6fa332adf4a44f3627a5",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/native-20261113/edu-compile.log",
+      "sha256": "ae72c0a4e80bac2c7eacdbf2e0f712fdb19bf03ad4327785807eeb929303d7ce",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/native-20261113/edu-handoff-verified.json",
+      "sha256": "e12d018db3a41f3db9b07224502087f77f153cc23b0f01894330246eb045847d",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/native-20261113/installed-api-hashes.txt",
+      "sha256": "5e5032f7a53fcee843ebd90b93d8f8aa4caea54383b3a6dd9badaa48138ccb47",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/native-20261113/receipt.json",
+      "sha256": "5d530a20bfb3ca0077b0227d22f9c8fa22ca6e233fd4757dc97b9634ccc83f9e",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/native-20261113/sdk-owner.json",
+      "sha256": "bd54d32ca9d98b5cab278ab3dd1e72394e8752e841555b330bcb9307f85578bc",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/native-20261113/serial-preservation.json",
+      "sha256": "b71466f5c297d4e7f36e419f46e82e30008bfa193ccbc35d871ad0fdebbddd9f",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/sdk-gate-20261112/controller-SHA256SUMS",
+      "sha256": "ce47f7fa45c8242e2937043afbef9d20e1b6cf47fa0e4a20ff1c447ae6e86d00",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/sdk-gate-20261112/controller.diff",
+      "sha256": "b1573dbebf841b8f3246822e6da87d98e9a53ba87d4100eae0654898666d0c75",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/sdk-gate-20261112/memory-series.jsonl",
+      "sha256": "31af7bf28d342101da5e6fe7baaf94be42895d9926f080166c1a53ed00569439",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/sdk-gate-20261112/owner-raw-receipt.json",
+      "sha256": "c3a3e2bdb9ce7faf6efdbbaa16147b115fdfdf1838746bd839fc034609f0006a",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/sdk-gate-20261112/receipt.json",
+      "sha256": "e31771e298b61fd773dfd5823ca9b31e2ae69055428911539718ac4a718b3366",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/stock-repeat-20261113/cold-historical/memory-summary.json",
+      "sha256": "650581d1cef8e169b5593a6290c19eaef7b9d1e0dc2ca820078b157b60d8610e",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/stock-repeat-20261113/cold-historical/receipt.json",
+      "sha256": "706c6177435c1d04333dbd2f3814cb013c05c5cbaddef544369b7f14cca0bdb0",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/stock-repeat-20261113/cold-historical/started.json",
+      "sha256": "00503fb789fc647f39a393b321c778e693a44674eb72f8347857ff880b91d908",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/stock-repeat-20261113/cold-reader.json",
+      "sha256": "c723aff1a77545b644470bdae2c79ff4102db5ba9ceb53af200db9ad24dd2987",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/stock-repeat-20261113/cold-stock/memory-summary.json",
+      "sha256": "382e89e35427c75766fa944827d2efcf9922dc8fdfb6efa38b618c3a68b7f836",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/stock-repeat-20261113/cold-stock/receipt.json",
+      "sha256": "61ea50eeea3e4f82a3c05780b002b13c294d21e0dea9c8d5bc64ce935a584b01",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/stock-repeat-20261113/cold-stock/started.json",
+      "sha256": "0635197fda937aefa68cfa70280ff76c099c75d2844fb04937155093818940da",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/stock-repeat-20261113/receipt.json",
+      "sha256": "f33eccd95ce17100bf9669f0bf33b726d38060eff3e0bcb0e369027669c0923c",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/stock-repeat-20261113/sdk/sdk-owner.json",
+      "sha256": "7d079c97c948bfba70aedfe5426341e3eaa5e12cc60088c89e603d9912b50d79",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/stock-repeat-20261113/stock-hashes-before.txt",
+      "sha256": "3629959d84ccaa5d8073e3881641717d13a2639a66bbfcde4c6239c281918ec5",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "docs/acceptance/stock-repeat-20261113/upstream-handoff.json",
+      "sha256": "110fe8c50bda480e74de52aa95000a642f58a91ecf1ad201e300b4f27e6a7d36",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/edu-compile-relay.sh",
+      "sha256": "cb6c747ea264d99047f7c84d20543138df939f709ef874b9fb42906eb52afaf4",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/finalize-irq-wave.py",
+      "sha256": "cc916cdae654afa7564daa517ade21a3865802bb3c85a7e78f5ac92244770ccd",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/finalize-mount-wave.py",
+      "sha256": "351b7265ee4b2c88e02a9ec4be3ad6a421348cf5088dbca3a3c7a59cad7b4ca6",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/finalize-stock-repeat.py",
+      "sha256": "0b32fbbc4a9b292b661f16e25653787e5bea2fccf8a7b173418bc9a543b0cb26",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/handoff-sdk-owner.py",
+      "sha256": "745f741154eea20b6e08a689ffe4c2154f06ae15a3dc2465ef04401657081382",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/irq-bind-build.py",
+      "sha256": "8461ace5a03b75a49bf053caf41a49364a2a16a0141b31c3fd5e58368a1100fe",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/irq-bind-build2.py",
+      "sha256": "7a8e58363e24f1debcd15c879b918de9eac5e9f733bc47461bd50535b9f9e587",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/irq-sdk-build.sh",
+      "sha256": "cf84dd6998fe7b2e2290044abea040470bc7fbe38d6cd12a14a3c266128007b5",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/irq-sdk-build2.sh",
+      "sha256": "9565ef03641cff597102c021e42e554f6e7862fab80404168a851b1d54c9297b",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/irq-sdk-inventory.sh",
+      "sha256": "20e38e81befae1bd6a84397ceace21a1d26377604d750215578bbaa636b5438e",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/irq-sdk-owner.py",
+      "sha256": "3b2bd545f80c41571417d668a9220c0e430cd117218f5cd778997f16600e22fa",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/irq-sdk-owner2.py",
+      "sha256": "692df5929b16b18b780c7cf9ee5bbc8a225bbd140cf88cb579ff4f5094cc0a85",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/mount-sdk-build.sh",
+      "sha256": "829d2fb859930b0df99912c5d646664f1eff5d5fb0080d4061526beaba43ed98",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/mount-sdk-build2.sh",
+      "sha256": "ba5b1cf5071fe2abc73fafa1487339a5073a237059d4ae2de75713db10af7ea1",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/mount-sdk-inventory.sh",
+      "sha256": "a3b3ea3e2d81efd3e2cf853cdb1dcb23b00def0677bde5b57c68193996424460",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/mount-sdk-owner.py",
+      "sha256": "2e0d906993ad9c6c31748ba5e970be71363c2787f848336e564e002634f401f4",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/mount-sdk-owner2.py",
+      "sha256": "1aff9892d554b13f2388e738c7eccdc608eb4c1ee976e3bd589050fb774ff923",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/native-f0.py",
+      "sha256": "83a5b444bf14739f6c1d413460c3a246cc29a1e93c2e089d2982f79d73a33848",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/native-sdk-build.sh",
+      "sha256": "248e28a2071e52888e7d4bb84cb9adf326e0809e71d28a3c26b6694a27c04f42",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/native-sdk-build2.sh",
+      "sha256": "ae05de6aa3e8b15b77a8306f3d1c403db0b295b5aa23bdcdaf3e907dc381d9b2",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/native-sdk-inventory.sh",
+      "sha256": "f55fee899013bb35d711a143e8a29354b16225ec9d9862e06d1ea81e48f741a4",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/native-sdk-owner.py",
+      "sha256": "09a0440c5df2c6ff81a88c5408af06a7321ce3ab7a63cbf6d59f9a14bf848175",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/native-sdk-stock-metadata.sh",
+      "sha256": "ba8c52b5a1207c3be718c8d0b4f9cba1618da217c4ff1d3bcaf8ca4424f2da34",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/native-stock-final.sh",
+      "sha256": "17201f4bdbf8a00ddc356d261a713660462a324b12a42d7771b4e6d76ea0834e",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/prepare-sdk-native-wave.py",
+      "sha256": "03df91c2ea35c1068d814a822d489968ee6999002383af45e4129e781b992b26",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/queue-irq-build2.py",
+      "sha256": "902535b61e10149dc0d4c20485b659540b659a60474a208b4ee62707f5416d26",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/queue-irq-inventory.py",
+      "sha256": "993e3434468adfb931adbe4e7f49c795815342df5cd78aefd9b642e818d1dd06",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/queue-mount-build2.py",
+      "sha256": "223bb655d5e846b510203e0fd7f0a86ae8167a22a79565431de8603651247afa",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/queue-mount-inventory.py",
+      "sha256": "6609ace83ae750802c0b594135459ff74b04aa0b5adc8ce6fd2c7b07ddd27e85",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/queue-native-inventory.py",
+      "sha256": "8be21408020050d534bd35c65ee63c66751e04493ee4d153dbe9ddcd31a8c10b",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/queue-stock-build.py",
+      "sha256": "80ef6dc99af72c005949171b2fec578bab2203c8f426b09cb4d5527cd2bcbedc",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/run-hostshare-mount.py",
+      "sha256": "9d44d9581cad115d2ff6aff2c347bbe717e0f4f8fe76e0d755bfcdaaf0e2206d",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/run-hostshare-mount2.py",
+      "sha256": "101640cfdfbd25cbe3a028b8c301833b409138a346cdc0e21de6a2d9a70148cb",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/run-hostshare-mount3.py",
+      "sha256": "2d7128a3d9852e81e17e4bc68e2e6732a4e4d613d4b10b7161c785a5ff7da16e",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/run-hostshare-native.py",
+      "sha256": "fe10d14fd37acf0029a5b02ecb4650f3f14234c0f600197687963bf4327a7ae2",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/run-hostshare-native2.py",
+      "sha256": "85fb7837755078358158feb5fd47e9e764f67ed61894e47ac9d996262afdcce3",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/run-hostshare-native3.py",
+      "sha256": "ebfa1ba728fbb418156e003cff647df6a6e34fb85032a00cec2722be4d8ae742",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/run-native-readonly.py",
+      "sha256": "359d6cbc207dbc9e1cb29b2848f7c95a22e96c3addf5e1a07d41248eb3d8dc75",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/run-native-suite.py",
+      "sha256": "f8b564c2504d6d11eb3d6ad5c325b71e2223fc9220666d6f2053c4e6dd145063",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/run-native-suite.sh",
+      "sha256": "1cdd0658fac92d3efb9dbd284e36a3c339db7e417c1922600daf0bd2f029a8c0",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/sdk-gate-owner.py",
+      "sha256": "9971d0a291b927e78038941bf720db59cc84aa300ee6c99b188771fec7db8a4d",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/sdk-gate-qmp.py",
+      "sha256": "c2cd168b95aa3b1d55347876feb512a2059a74d28de67765ce53b60756fff864",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/sdk-inventory.sh",
+      "sha256": "0df954861679c9c8ecad1fb0cbc838f0dae7db4bf1860890cf9e302b0c20e363",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/sdk-owner.py",
+      "sha256": "8fb12be95a9bc8811b4ec773e5c0072a78761319e289fe3cf36fae355bdb5899",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/stage-edu-handoff.py",
+      "sha256": "081318ef30707ddeef603b86a4b9d6100155b050101796d79d6a0ab42b81f359",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/stock-bind-build.py",
+      "sha256": "c7ccf252ca5933d6d508dec396457e9ed42e53be1669a0e45bab4dd73b4bc0f8",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/stock-sdk-build.sh",
+      "sha256": "e0dd35a3fd13fd9117ff07a459cff76b657b9bbcb648834a66115fbde9b0520e",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/stock-sdk-build2.sh",
+      "sha256": "a8dad4b58aaa07955f331186108ca37605c39026973a264506c7a4fc24507069",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    },
+    {
+      "path": "tools/stock-sdk-owner.py",
+      "sha256": "8517b506f16ab2fbb7aa9353409b1c63ef2dad9eab918f4bf2bc811356bf88c8",
+      "classification": "preserved historical evidence / pinned diagnostic"
+    }
+  ]
+}
