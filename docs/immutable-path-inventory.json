@@ -1,6 +1,6 @@
 {
   "date": "2026-11-20",
-  "scope": "Tracked residual historical host/guest home prefixes; generated site projections excluded; values intentionally not repeated. No raw receipt or log bytes changed.",
+  "scope": "Tracked residual historical host/guest home prefixes; generated site/review projections excluded; values intentionally not repeated. No raw receipt or log bytes changed.",
   "files": [
     {
       "path": "docs/RUN_NATIVE.md",

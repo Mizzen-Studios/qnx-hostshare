@@ -24,7 +24,8 @@ class DocumentationContract(unittest.TestCase):
                         self.assertTrue((page.parent / target.split('#')[0]).exists())
 
     def test_quickstart_commands_omit_obsolete_midread_gate(self):
-        for name in ('README.md', 'docs/RUN_NATIVE.md'):
+        # Native recipes moved out of the HOST-only README; keep both recipe gates.
+        for name in ('docs/HISTORY.md', 'docs/RUN_NATIVE.md'):
             source = (ROOT / name).read_text()
             commands = [line for line in source.splitlines()
                         if line.startswith('sh tools/run-native-suite.sh ')]

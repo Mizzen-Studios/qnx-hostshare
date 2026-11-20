@@ -18,17 +18,21 @@ cc -std=c11 -Wall -Wextra -Werror -pedantic -Icore core/transport.c core/protoco
 
 These exercise HOST models, not QNX PCI interrupts, mounted I/O or native crash recovery.
 
-## Status — 20 November 2026
+## Evidence at a glance
 
-| Area | Evidence-backed state |
+| Evidence route | State |
 |---|---|
-| Repository | PUBLIC; older private/visibility-pending wording is stale. No visibility change performed here. |
-| HOST regression | 39 Python tests passed; portable C checks are separate, not native proof. |
-| Current-source native | Partial acceptance at 3a338a03: custom dev-inputs / /mnt/dev-inputs conformance PASS. |
-| Default native compatibility | BLOCKED at serial COPY_6912 before verified ELF/mount; not full item4 acceptance. |
-| Historical HA contract | Pending-read server death returns ESRCH3, then fresh remount; never translate to EIO5. Not active-DMA crash safety. |
-| Limits | MSI-X unproven; no production-readiness, safety or latency guarantee. |
-
-[Current exact contract](docs/CURRENT_CONTRACT.md) · [Custom conformance evidence](docs/acceptance/developer-handoff-20261119/coordinated-build4/RESULT.md) · [Tool contracts](tools/README.md) · [Dated history](docs/HISTORY.md) · [Path preservation policy](docs/PATHS.md).
+| Recorded journey | Bounded source-bound observations; not current live health. |
+| HOST checks | 39 Python tests passed; portable C separate; not native acceptance. |
+| Native / reproduction scope | [Complete current status and limits](STATUS.md); separate licensed setup required. |
+| Repository | PUBLIC; earlier private-state wording is stale. |
 
 **Demo in QEMU; not a safety or latency claim.** Historical default-route receipts retain their original source/ELF pins, not current-source default acceptance. [Licensed reproduction](docs/RUN_NATIVE.md) is separate and not authorized by this HOST path. No SDK, secret, image or binary is distributed.
+
+## Why QNX
+
+The QNX resource manager exposes read-only host files via virtio-9p, PCI and interrupt/pulse completion. Per-open read state and explicit denied mutations turn an exported development folder into bounded ordinary QNX I/O.
+
+## How we used AI
+
+Developed with an AI coding agent under human direction: implementation, tests, documentation and evidence review were AI-assisted. HOST checks and recorded native receipts support only their stated scope; AI output is not independent human learner validation, attestation or QNX acceptance.
