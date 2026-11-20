@@ -12,20 +12,23 @@ the host, not certified by a guest-generated hash. Host edits became visible
 through the same QEMU readonly export without an image rebuild; denied guest
 mutations preserved the host corpus. Normal detach also passed.
 
-HOST38 tests separately validate configuration bounds, source/artifact bindings,
+The historical HOST38-test checkpoint separately validate configuration bounds, source/artifact bindings,
 namespace safety guards and negative controls. Existing symlink/non-directory
 ancestors, collisions and permission errors remain denied; absent QNX synthetic
-namespace prefixes are supported. Host CI is not native acceptance.
+namespace prefixes are supported. Current65 HOST tests pass. Host CI is not native acceptance.
 
 Acceptance is partial: original f0test,/mnt/host defaults remain in the code and
 host compatibility tests, but CURRENT-SOURCE DEFAULT NATIVE COMPATIBILITY IS
-BLOCKED by serial ELF-transfer timeout COPY_6912, before probe or mount. We do
+BLOCKED: the single20Nov default run acknowledged all806 data chunks but guest
+toybox lacks sha256sum. Final guest size/hash remained unverified, so the ELF
+was not executed and no default conformance ran. The earlier COPY_6912 failure
+remains preserved; it is not the latest blocker. We do
 not claim full item4 acceptance. Historical default-route and ESRCH3 server-death
 receipts apply only to their exact old source/ELF pins; all failures remain
 preserved. No speed/latency, active-DMA safety, MSI-X or production-readiness claim.
 
 Fresh build used the existing licensed SDK and reused reviewed stock artifacts;
 no new guest image was built. Exact current proof and remaining blocker:
-coordinated-build4/RESULT.md.
+coordinated-build4/RESULT.md and ../default-final-20261120/RESULT.md.
 
 No Devpost, YouTube, visibility, upload or outreach action taken. £0.

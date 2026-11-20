@@ -1,8 +1,9 @@
 # Read-only developer handoff (19 November)
 
 Current status: fresh custom dev-inputs,/mnt/dev-inputs native conformance PASS;
-current default shared-folder label and /mnt/host native compatibility BLOCKED by serial ELF
-transfer timeout while copying the executable before probe/mount. Complete current-source native remains incomplete.
+current default shared-folder label and /mnt/host native compatibility BLOCKED by missing guest toybox sha256sum in the single20Nov run.
+All806 data chunks acknowledged; final guest size/hash unverified, ELF not executed.
+[Latest failure/cleanup](acceptance/default-final-20261120/RESULT.md). Complete current-source native remains incomplete.
 The historical 38-test HOST checkpoint passed; no speed or latency claim. See the dated result below.
 
 Purpose: edit development inputs on Linux and read them from QNX without

@@ -2,7 +2,10 @@
 
 Current-source custom-tag read-only handoff conformance **PASS**; complete current-source native
 acceptance is **incomplete** because default-native compatibility is blocked by
-serial transfer timeout while copying the executable before probe/mount. The tested current source
+the missing guest toybox sha256sum applet in the single20Nov default attempt.
+All806 data chunks were acknowledged, but final guest size/hash and ELF execution
+were NOT verified/performed; no default conformance PASS.
+[Latest raw failure and cleanup](acceptance/default-final-20261120/RESULT.md). The tested current source
 is a57bd240a7575397caa3f0021b6ca2e11043c225; its fresh ELF is
 36478be069978986271cad824d2c2799fd94c6124bd67346b09b270e92534d75.
 [Build4 result and raw receipts](acceptance/developer-handoff-20261119/coordinated-build4/RESULT.md)

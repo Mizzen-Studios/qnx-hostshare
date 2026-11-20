@@ -7,11 +7,11 @@
 | Repository | PUBLIC; older private/visibility-pending wording is stale. No visibility change performed here. |
 | HOST regression | 65 Python tests passed; portable C checks are separate, not native proof. |
 | Current-source native | Partial acceptance at 3a338a03: custom dev-inputs / /mnt/dev-inputs conformance PASS. |
-| Default native compatibility | BLOCKED at serial executable-transfer timeout (before mount) before verified ELF/mount; not complete current-source native acceptance. |
+| Default native compatibility | BLOCKED: final20Nov run acknowledged all806 data chunks, but guest toybox has no sha256sum; integrity/ELF execution/default conformance did not run. No complete native acceptance. |
 | Historical HA contract | Pending-read server death returns ESRCH3, then fresh remount; never translate to EIO5. Not active-DMA crash safety. |
 | Limits | MSI-X unproven; no production-readiness, safety or latency guarantee. |
 
-[Current exact contract](docs/CURRENT_CONTRACT.md) · [Custom conformance evidence](docs/acceptance/developer-handoff-20261119/coordinated-build4/RESULT.md) · [Tool contracts](tools/README.md) · [Dated history](docs/HISTORY.md) · [Path preservation policy](docs/PATHS.md).
+[Current exact contract](docs/CURRENT_CONTRACT.md) · [Custom conformance evidence](docs/acceptance/developer-handoff-20261119/coordinated-build4/RESULT.md) · [Latest single default-run failure](docs/acceptance/default-final-20261120/RESULT.md) · [Tool contracts](tools/README.md) · [Dated history](docs/HISTORY.md) · [Path preservation policy](docs/PATHS.md).
 
 
 Earlier status narrative follows; dated receipts retain their original scope.

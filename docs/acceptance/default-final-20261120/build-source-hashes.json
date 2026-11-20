@@ -1,0 +1,13 @@
+{
+  "files": {
+    "core/hostshare.h": "23978f97e87b4c570b062d37add9b0ade3dc3d00bb1c2f104fab7a91b399f518",
+    "core/transport.c": "ea549067c359fbb32394d0dd940410b20d4a9699ea7a3d424e978753948534f9",
+    "core/handoff_config.h": "080f6bb3999a18aed47e6243371249460f17080f60067e9bbd55cfd65469721e",
+    "core/protocol.c": "a5f7d75af4fada0a377eff7157884d917d26a32cf26db62686a24080c33152c8",
+    "native/qnx_hostshare.c": "b7df9942e26b29517ef961cc5dd18f86a357dbd73b41dea0c16b6215226b290d",
+    "native/conformance.c": "231421b3f3cdb7ce910e173d13eaf3d4c5f76f8c014f5307f3befb9756a4d255",
+    "native/mount_checksum.c": "5f91860052d72ecd7163d7613e6ebf2afbce16f0eeb02a1deb7f236e4bf96333",
+    "native/hostshare_mount.h": "8bb3f226e189663e39224fb63d083d8daec66502811a9874027d6f969b60b2bb"
+  },
+  "elf_sha256": "36478be069978986271cad824d2c2799fd94c6124bd67346b09b270e92534d75"
+}

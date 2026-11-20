@@ -1,6 +1,7 @@
-> Latest19November: current-source custom tag/path native conformance PASS;
-> default native compatibility BLOCKED at serial executable-transfer timeout (before mount), not complete current-source native
+> Latest20November: current-source custom tag/path native conformance PASS;
+> default native compatibility BLOCKED by missing guest sha256sum before verified integrity/ELF execution, not complete current-source native
 > acceptance. [Exact scope/evidence](acceptance/developer-handoff-20261119/coordinated-build4/RESULT.md).
+> [Single default-run failure/cleanup](acceptance/default-final-20261120/RESULT.md).
 > Historical native claims below retain their original source/ELF scope.
 
 # Inspect HostShare without QNX

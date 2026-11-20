@@ -1,0 +1,46 @@
+{
+  "schema": "hostshare.native-transfer-observation.v1",
+  "source_tip": "549a9bae92dfd3509ae2892e62751b0235a1c3f5",
+  "outcome": "BLOCKED_MISSING_GUEST_SHA256SUM_APPLET",
+  "full_native_accepted": false,
+  "previous_custom_native_acceptance": "UNCHANGED_PASS",
+  "validated_acknowledgments": 807,
+  "validated_data_chunks": 806,
+  "last_ack_seq": 806,
+  "last_ack_offset": 51528,
+  "host_transmitted_bytes": 51528,
+  "host_transmitted_sha256": "36478be069978986271cad824d2c2799fd94c6124bd67346b09b270e92534d75",
+  "host_payload_matches_bound_elf": true,
+  "guest_actual_size_verified": false,
+  "guest_sha256_verified": false,
+  "elf_executed": false,
+  "default_conformance_cases": 0,
+  "retries": 0,
+  "sdk_build": false,
+  "new_image_build": false,
+  "qemu_reaped": true,
+  "lease_free": true,
+  "pending_queue": 0,
+  "memory_peak_bytes": 553218048,
+  "raw_events_private_path": ".local/user-runs/handoff-default-final-20261120/serial-events-private.jsonl",
+  "raw_events_sha256": "13ab69853974d09a01eeeaf9de55af485f3964a6ce021beb77efa482cd975c30",
+  "raw_memory_private_path": ".local/user-runs/handoff-default-final-20261120/memory.jsonl",
+  "raw_memory_sha256": "177dbb6d499e454d9083efcf3f3fa82838d5b1757f016ead1de123332b291326",
+  "raw_memory_samples": 43282,
+  "terminal_events": [
+    {
+      "event": "terminal",
+      "status": "FAILED",
+      "seq": 807,
+      "error": "TimeoutError('RT_5d8f30e8305745ca8085ba4b8236216c_807_51528')",
+      "mono": 1342880.321849849
+    },
+    {
+      "event": "runner_terminal",
+      "status": "FAIL",
+      "qemu_exit_rc": 0,
+      "stopped_reaped": true,
+      "mono": 1342880.511030898
+    }
+  ]
+}

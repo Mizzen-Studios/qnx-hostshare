@@ -32,7 +32,7 @@ This prints an **unvalidated template**, not a launch command or native PASS. A 
 |---|---|
 | Recorded journey | Bounded source-bound observations; not current live health. |
 | HOST checks | 65 Python tests passed; portable C separate; not native acceptance. |
-| Native / reproduction scope | [Complete current status and limits](STATUS.md); separate licensed setup required. |
+| Native / reproduction scope | Custom native conformance PASS; latest default run BLOCKED by missing guest sha256sum before execution. [Exact status](STATUS.md). |
 | Repository | PUBLIC; earlier private-state wording is stale. |
 
 **Demo in QEMU; not a safety or latency claim.** Historical default-route receipts retain their original source/ELF pins, not current-source default acceptance. [Licensed reproduction](docs/RUN_NATIVE.md) is separate and not authorized by this HOST path. No SDK, secret, image or binary is distributed.

@@ -1,0 +1,7 @@
+{
+  "tools/run-native-suite.py": "91e5534847d450c592226b7319fd759d039dafcff2dd8b4667fafb3bf104fafc",
+  "tools/run-native-suite.sh": "1cdd0658fac92d3efb9dbd284e36a3c339db7e417c1922600daf0bd2f029a8c0",
+  "tools/recording_transport/__init__.py": "c16f5b058a570d5921b87e218b4ec4dceae4fbe87bc1c93c9a45692577114713",
+  "tools/recording_transport/PIN.json": "4cb1af1cd946cb24b601b8d689dc83d610306466a3802d4ea9246302c079cda2",
+  "tools/handoff_oracle.py": "95a647a5d2f8cef699042c3613fc15c8f2bbc7df7976592fd1a5f49d328831f3"
+}

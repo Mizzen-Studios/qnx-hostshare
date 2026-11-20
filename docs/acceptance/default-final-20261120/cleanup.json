@@ -1,0 +1,11 @@
+{
+  "checked_at_unix": 1795172613.9052343,
+  "remaining_qemu": "",
+  "lease": "LEASE_FREE",
+  "pending_queue": [],
+  "owned_runner_exit_code": 1,
+  "owned_qemu_exit_code": 0,
+  "reaped": true,
+  "host_tests": 65,
+  "native_default_conformance": "NOT_RUN"
+}
