@@ -1,0 +1,9 @@
+{
+  "schema": "qnx.serial-vendor.v1",
+  "canonical_repository": "https://github.com/Mizzen-Studios/canopy-qnx",
+  "canonical_commit": "a54445e2ee267622da8201aba7a1c40c5505f26a",
+  "canonical_path": "tools/recording_transport/__init__.py",
+  "sha256": "c16f5b058a570d5921b87e218b4ec4dceae4fbe87bc1c93c9a45692577114713",
+  "shared_tests_sha256": "8114a8640af9da5389d2d03ab88b0a589b9fc9b1f50a3261e3d7cddfe6fed8a3",
+  "native_status": "HOST_ONLY_NOT_QNX_VERIFIED"
+}

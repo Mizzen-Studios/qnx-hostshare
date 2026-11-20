@@ -1,8 +1,9 @@
 """Bounded native readonly suite; explicit image kind, no IRQ routing changes."""
-import argparse,fcntl,hashlib,json,os,re,selectors,subprocess,time
+import argparse,base64,fcntl,hashlib,json,os,re,select,selectors,subprocess,time
 from pathlib import Path
 from handoff_oracle import verify as verify_conformance
 from handoff_preflight import config
+from recording_transport import transfer,match_lines,redact_payload_commands
 from stock_pin import load_stock_pin,HISTORICAL_STOCK,verify_stock_files
 p=argparse.ArgumentParser(description=__doc__)
 p.add_argument('--conformance',action='store_true')
@@ -29,6 +30,8 @@ assert set(build['files'])=={str(q.relative_to(root)) for folder in ('core','nat
 for name,digest in build['files'].items():assert h(root/name)==digest,name
 assert not subprocess.check_output(['git','status','--porcelain'],cwd=root,text=True).strip(),'Launch requires clean checkout'
 assert all(q.is_file() and not q.is_symlink() for q in (elf,image,disk)),'regular artifact files required'
+vendor=json.loads((root/'tools/recording_transport/PIN.json').read_text())
+assert h(root/'tools/recording_transport/__init__.py')==vendor['sha256'],'shared transport vendor mismatch'
 if o.image_kind=='stock':
  expected=stock_expected
  verify_stock_files(image,disk,expected)
@@ -63,10 +66,15 @@ args=['qemu-system-x86_64','-machine','pc','-accel','tcg,tb-size=256','-cpu','ma
 # Explicit documented device topology, not a mid-run rerouting/fallback.
 args+=['-nic','none','-device','virtio-rng-pci'] if o.image_kind=='stock' else ['-nic','user,model=virtio-net-pci']
 args+=['-fsdev','local,id=f0,path='+str(corpus)+',security_model=none,readonly=on','-device','virtio-9p-pci,fsdev=f0,mount_tag='+o.tag+',disable-legacy=on']
-report={'status':'FAIL','source_sha':subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),'clean_checkout':True,'caps':caps,'nice':os.getpriority(os.PRIO_PROCESS,0),'command':args,'image_kind':o.image_kind,'image_sha256':h(image),'disk_sha256':h(disk),'elf_sha256':h(elf),'source_files':build['files'],'qtest':False,'irq_routing_mutated':False,'commands':[],'handoff':{'tag':o.tag,'mountpoint':o.mountpoint,'conformance_requested':o.conformance},'reserve_bytes':67108864}
+report={'transport_vendor':vendor,'transport_contract':'nonce-sequence-offset-v2','transfer_budget_seconds':900,'startup_budget_seconds':180,'readback_budget_seconds':60,'conformance_budget_seconds':240,'status':'FAIL','source_sha':subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),'clean_checkout':True,'caps':caps,'nice':os.getpriority(os.PRIO_PROCESS,0),'command':args,'image_kind':o.image_kind,'image_sha256':h(image),'disk_sha256':h(disk),'elf_sha256':h(elf),'source_files':build['files'],'qtest':False,'irq_routing_mutated':False,'commands':[],'handoff':{'tag':o.tag,'mountpoint':o.mountpoint,'conformance_requested':o.conformance},'reserve_bytes':67108864}
 (out/'started.json').write_text(json.dumps(report,indent=2)+'\n')
-r=subprocess.Popen(args,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.STDOUT);sel=selectors.DefaultSelector();sel.register(r.stdout,selectors.EVENT_READ);serial=bytearray();samples=[];binary_window=None
 rawpath=root/'.local'/('suite-'+o.run_id+'-raw.bin')
+# Private append-only RX/TX events may contain OWN ELF bytes. Never publish these.
+eventlog=open(out/'serial-events-private.jsonl','a',buffering=1)
+def event(value):
+ eventlog.write(json.dumps(value)+'\n');eventlog.flush();os.fsync(eventlog.fileno())
+
+r=subprocess.Popen(args,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.STDOUT);sel=selectors.DefaultSelector();sel.register(r.stdout,selectors.EVENT_READ);serial=bytearray();samples=[];binary_window=None
 def drain(timeout=.05):
  mem=int((cg/'memory.current').read_text());events=(cg/'memory.events').read_text()
  samples.append({'time':time.time(),'current':mem,'peak':int((cg/'memory.peak').read_text()),'events':events})
@@ -74,19 +82,20 @@ def drain(timeout=.05):
  if sel.select(timeout):
   b=os.read(r.stdout.fileno(),65536)
   if not b:raise RuntimeError('QEMU exited '+str(r.poll()))
+  event({'event':'rx','mono':time.monotonic(),'raw_b64':base64.b64encode(b).decode()})
   serial.extend(b)
 def until(marker,timeout=60,start=0):
  end=time.monotonic()+timeout
  while time.monotonic()<end:
-  drain()
-  if marker in bytes(serial[start:]).replace(b'\r',b'').split(b'\n'):return bytes(serial[start:]).decode(errors='replace')
+  drain(min(.05,max(0,end-time.monotonic())))
+  if marker in match_lines(bytes(serial[start:])):return bytes(serial[start:]).decode(errors='replace')
  raise TimeoutError(marker.decode())
 def command(cmd,marker,timeout=60,record=True):
  cmd=cmd.replace('/mnt/host',o.mountpoint)
  start=len(serial)
  if record:report['commands'].append(cmd)
  payload=(cmd+'\n').encode()
- for at in range(0,len(payload),96):r.stdin.write(payload[at:at+96]);r.stdin.flush();time.sleep(.01)
+ for at in range(0,len(payload),96):r.stdin.write(payload[at:at+96]);r.stdin.flush();event({'event':'tx','mono':time.monotonic(),'raw_b64':base64.b64encode(payload[at:at+96]).decode()});time.sleep(.01)
  return until(marker.encode(),timeout,start)
 def save(name,text):
  (out/(name+'.txt')).write_text(text)
@@ -101,21 +110,38 @@ try:
  while time.monotonic()<end:
   drain(.1)
   if time.monotonic()-last>5:
-   r.stdin.write(b'echo HS_SUITE_BOOT_READY\n');r.stdin.flush();last=time.monotonic()
+   r.stdin.write(b'echo HS_SUITE_BOOT_READY\n');r.stdin.flush();event({'event':'tx','mono':time.monotonic(),'raw_b64':base64.b64encode(b'echo HS_SUITE_BOOT_READY\n').decode()});last=time.monotonic()
   if b'HS_SUITE_BOOT_READY' in bytes(serial).replace(b'\r',b'').split(b'\n'):break
  else:raise TimeoutError('serial shell not ready180s')
  save('boot',command('uname -a; mkdir -p '+guest+'; stty -echo; echo HS_PREPARED','HS_PREPARED'))
- command(': > '+app+'; echo COPY_READY','COPY_READY')
  data=elf.read_bytes()
- for i in range(0,len(data),128):
-  escaped=''.join(chr(92)+'0'+format(v,'03o') for v in data[i:i+128]);marker='COPY_'+str(i)
-  command("printf '%b' '"+escaped+"' >> "+app+'; echo '+marker,marker,20,False)
+ def exchange(wire,marker,timeout):
+  start=len(serial);deadline=time.monotonic()+timeout;offset=0
+  os.set_blocking(r.stdin.fileno(),False)
+  try:
+   while offset<len(wire):
+    remaining=deadline-time.monotonic()
+    if remaining<=0:raise TimeoutError('transfer write deadline')
+    if not select.select([],[r.stdin],[],min(.05,remaining))[1]:
+     drain(0);continue
+    try:n=os.write(r.stdin.fileno(),wire[offset:offset+96])
+    except BlockingIOError:continue
+    if n<=0:raise RuntimeError('closed serial write')
+    event({'event':'transfer_tx','mono':time.monotonic(),'raw_b64':base64.b64encode(wire[offset:offset+n]).decode()})
+    offset+=n;drain(min(.01,max(0,deadline-time.monotonic())))
+   reply=until(marker,max(0,deadline-time.monotonic()),start)
+   # One bounded quiet drain catches duplicates already queued after the ack.
+   drain(min(.02,max(0,deadline-time.monotonic())))
+   return bytes(serial[start:])
+  finally:os.set_blocking(r.stdin.fileno(),True)
+ report['transfer']=transfer(data,app,exchange,event,chunk_bytes=64,timeout=20,budget=900)
+ # Transfer verifies actual guest size/SHA256 BEFORE chmod, readback or execution.
  # Hex readback avoids binary serial ambiguity; never store executable bytes in tracked receipts.
  start=len(serial);binary_window=start
  text=command('chmod 700 '+app+'; echo HS_BYTES_BEGIN; od -An -v -tx1 '+app+'; echo HS_BYTES_END','HS_BYTES_END')
  lines=text.replace('\r','').splitlines();begin=lines.index('HS_BYTES_BEGIN');end=lines.index('HS_BYTES_END')
  observed=bytes.fromhex(' '.join(lines[begin+1:end]));assert observed==data,'ELF byte mismatch'
- report['native_copy_byte_exact']=True;report['copy_bytes']=len(data);report['transfer_route']='serial builtin printf octal128; exact od hex readback'
+ report['native_copy_byte_exact']=True;report['copy_bytes']=len(data);report['transfer_route']='shared nonce/sequence/offset octal64; guest size/SHA256; exact od hex readback'
  del serial[start:];serial.extend(b'[OWN ELF READBACK REDACTED; exact comparison PASS]\n');binary_window=None
  text=save('probe',command(app+' --tag '+o.tag+' --pci-line; echo APP_RC=$?; echo PROBE_DONE','PROBE_DONE'))
  report['probe']={'passed':rc(text,'APP_RC')==0 and 'HOSTSHARE F2 READONLY BYTE_EXACT PASS' in text}
@@ -170,10 +196,12 @@ finally:
  try:r.wait(10)
  except subprocess.TimeoutExpired:r.kill();r.wait()
  report.update(qemu_exit_rc=r.returncode,stopped_reaped=True,memory_events=(cg/'memory.events').read_text(),memory_peak=int((cg/'memory.peak').read_text()),disk_sha256_after=h(disk),image_sha256_after=h(image))
- assert report['disk_sha256_after']==report['disk_sha256'] and report['image_sha256_after']==report['image_sha256']
+ if report['disk_sha256_after']!=report['disk_sha256'] or report['image_sha256_after']!=report['image_sha256']:report.update(status='FAIL',error='base artifact changed')
+ event({'event':'runner_terminal','status':report['status'],'qemu_exit_rc':r.returncode,'stopped_reaped':True,'mono':time.monotonic()})
+ eventlog.close()
  rawpath.write_bytes(serial)
  if binary_window is not None:del serial[binary_window:];serial.extend(b'[FAILED ELF READBACK REDACTED]\n')
- (out/'serial.txt').write_text(re.sub(r"printf '%b' '[^']*' >> [^;\n]*",'[OWN ELF COPY REDACTED]',serial.decode(errors='replace')))
+ (out/'serial.txt').write_text(redact_payload_commands(serial.decode(errors='replace')))
  (out/'memory.jsonl').write_text(''.join(json.dumps(v)+'\n' for v in samples))
  (out/'receipt.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report),flush=True)
