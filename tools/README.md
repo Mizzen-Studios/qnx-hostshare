@@ -4,6 +4,7 @@
 
 | Tool | Current contract |
 |---|---|
+| preview-handoff.py | HOST-only illustrative template; no SDK or external files required. Explicitly NOT VALIDATED and never launches; does not replace handoff-command.py. |
 | handoff-command.py | Validate external source/ELF/stock/export bindings and print a read-only QEMU add-on; never launches. Requires real external artifacts, not a no-SDK demo fixture. |
 | handoff_preflight.py / handoff_oracle.py | Validate bounded tag and mount path / HOST expected-byte oracle; HOST checks are not QNX conformance. |
 | run-native-suite.sh / .py | Authorized licensed stock or historical image route; new run-id, external pins and sole shared lease required. Ordinary route checks readonly data/host edit/cooperative stop. |

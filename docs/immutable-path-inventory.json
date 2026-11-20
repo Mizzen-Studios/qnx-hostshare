@@ -504,7 +504,7 @@
     },
     {
       "path": "tools/run-native-suite.py",
-      "sha256": "f8b564c2504d6d11eb3d6ad5c325b71e2223fc9220666d6f2053c4e6dd145063",
+      "sha256": "91e5534847d450c592226b7319fd759d039dafcff2dd8b4667fafb3bf104fafc",
       "classification": "preserved historical evidence / pinned diagnostic"
     },
     {

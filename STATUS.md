@@ -5,9 +5,9 @@
 | Area | Evidence-backed state |
 |---|---|
 | Repository | PUBLIC; older private/visibility-pending wording is stale. No visibility change performed here. |
-| HOST regression | 39 Python tests passed; portable C checks are separate, not native proof. |
+| HOST regression | 65 Python tests passed; portable C checks are separate, not native proof. |
 | Current-source native | Partial acceptance at 3a338a03: custom dev-inputs / /mnt/dev-inputs conformance PASS. |
-| Default native compatibility | BLOCKED at serial COPY_6912 before verified ELF/mount; not full item4 acceptance. |
+| Default native compatibility | BLOCKED at serial executable-transfer timeout (before mount) before verified ELF/mount; not complete current-source native acceptance. |
 | Historical HA contract | Pending-read server death returns ESRCH3, then fresh remount; never translate to EIO5. Not active-DMA crash safety. |
 | Limits | MSI-X unproven; no production-readiness, safety or latency guarantee. |
 

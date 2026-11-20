@@ -18,12 +18,20 @@ cc -std=c11 -Wall -Wextra -Werror -pedantic -Icore core/transport.c core/protoco
 
 These exercise HOST models, not QNX PCI interrupts, mounted I/O or native crash recovery.
 
+Preview the folder handoff without any SDK files or guest:
+
+~~~sh
+python3 tools/preview-handoff.py --tag dev-inputs --mountpoint /mnt/dev-inputs
+~~~
+
+This prints an **unvalidated template**, not a launch command or native PASS. A tag is simply the shared folder label that QEMU and QNX must match. Real operation still requires [strict external-file validation](tools/README.md) and separate native authority.
+
 ## Evidence at a glance
 
 | Evidence route | State |
 |---|---|
 | Recorded journey | Bounded source-bound observations; not current live health. |
-| HOST checks | 39 Python tests passed; portable C separate; not native acceptance. |
+| HOST checks | 65 Python tests passed; portable C separate; not native acceptance. |
 | Native / reproduction scope | [Complete current status and limits](STATUS.md); separate licensed setup required. |
 | Repository | PUBLIC; earlier private-state wording is stale. |
 

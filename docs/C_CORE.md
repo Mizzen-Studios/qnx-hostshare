@@ -39,5 +39,3 @@ Build/test (host only):
     mkdir -p .local
     cc -std=c11 -Wall -Wextra -Werror -pedantic -Icore core/transport.c core/protocol.c tests/test_core.c -o .local/test-core
     .local/test-core
-
-Native F1+F2 kill gate remains29 November2026 UK; no schedule created.

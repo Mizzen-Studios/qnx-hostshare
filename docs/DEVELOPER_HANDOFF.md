@@ -1,9 +1,9 @@
 # Read-only developer handoff (19 November)
 
 Current status: fresh custom dev-inputs,/mnt/dev-inputs native conformance PASS;
-current default f0test,/mnt/host native compatibility BLOCKED by serial ELF
-transfer timeout COPY_6912 before probe/mount. Full item4 remains incomplete.
-HOST38 tests pass; no speed or latency claim. See the dated result below.
+current default shared-folder label and /mnt/host native compatibility BLOCKED by serial ELF
+transfer timeout while copying the executable before probe/mount. Complete current-source native remains incomplete.
+The historical 38-test HOST checkpoint passed; no speed or latency claim. See the dated result below.
 
 Purpose: edit development inputs on Linux and read them from QNX without
 rebuilding an image. This is a bounded diagnostic resource manager, not a
@@ -49,7 +49,7 @@ rebuild is involved. Guest write/create opens are denied; host editing remains
 possible because QEMU's readonly export is not a host-directory permission
 change. Close/reopen for changed files; no broad cache-coherence guarantee.
 
-Default compatibility: omitting --tag and --mountpoint retains f0test and
+Default compatibility: omitting --tag and --mountpoint retains the historical export tag f0test (a shared folder label, not a test verdict) and
 /mnt/host, including --pci-line --mount. Tags: 1..31 ASCII alphanumeric/_.-,
 not dot/dotdot. Mountpoints: absolute /mnt/... only, <=255 bytes, components
 1..63 ASCII characters as above, no empty/dot/dotdot components. Duplicate,

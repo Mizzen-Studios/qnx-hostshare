@@ -8,12 +8,12 @@ Apache-2.0 read-only virtio-9p host-folder driver for QNX 8.0 (QNX Global Hackat
 
 ## Latest current-source acceptance — 19 November
 
-**Partial item4 acceptance:** fresh QNX conformance passes with export tag
+**Partial current-source acceptance:** fresh QNX conformance passes with export tag
 
 dev-inputs and mount /mnt/dev-inputs. This includes288 independent byte cases,
 four directory pagination/rewind scans, five denied mutation opens, seven
 checksums and host-edit visibility while QEMU exports readonly. **Current-source
-default f0test,/mnt/host native compatibility remains BLOCKED:** serial ELF
+default shared-folder label and /mnt/host native compatibility remains BLOCKED:** serial ELF
 transfer timed out at COPY_6912 before probe/mount. Host tests do not close that
 gate. See [exact current evidence](../docs/acceptance/developer-handoff-20261119/coordinated-build4/RESULT.md).
 Older default-route/HA receipts below apply only to their historical source/ELF
@@ -127,8 +127,7 @@ Run host tests: PYTHONPATH=src python3 -m unittest discover -s tests -v
 
 Native F1 requires actual completion/IRQ evidence; F2 requires byte-exact read.
 No production-readiness claim. Mounted gates require their separate follow-up
-receipts. Original kill gate: F1+F2 native PASS by
-29November2026 UK, otherwise stop. No schedule created.
+receipts. The superseded planning deadline is omitted from current instructions.
 
 **Nov13 bounded native F1/F2 PASS:** seven actual QNX IRQ-pulse replies and byte-exact
 readonly41-byte synthetic file read; app rc0. Requires explicitly recorded own-device

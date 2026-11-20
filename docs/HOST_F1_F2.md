@@ -39,6 +39,5 @@ compatibility with this QEMU target remains UNVERIFIED.
 Run: PYTHONPATH=src python3 -m unittest discover -s tests -v
 
 F1 native build/run and F2 native roundtrip NOT_RUN. Kill gate unchanged:
-F1+F2 native PASS by29 November2026 UK, else stop. No schedule created.
 
 Portable C completion: see [C_CORE.md](C_CORE.md); Python models are not the sole driver-core source.
