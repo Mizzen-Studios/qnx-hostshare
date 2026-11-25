@@ -31,11 +31,19 @@ This prints an **unvalidated template**, not a launch command or native PASS. A 
 | Evidence route | State |
 |---|---|
 | Recorded journey | Bounded source-bound observations; not current live health. |
-| HOST checks | 65 Python tests passed; portable C separate; not native acceptance. |
+| HOST checks | 81 Python tests passed; portable C separate; not native acceptance. |
 | Native / reproduction scope | Custom native conformance PASS; latest default run BLOCKED by missing guest sha256sum before execution. [Exact status](STATUS.md). |
 | Repository | PUBLIC; earlier private-state wording is stale. |
 
 **Demo in QEMU; not a safety or latency claim.** Historical default-route receipts retain their original source/ELF pins, not current-source default acceptance. [Licensed reproduction](docs/RUN_NATIVE.md) is separate and not authorized by this HOST path. No SDK, secret, image or binary is distributed.
+
+## New feature A — HOST-ready, native NOT_RUN
+
+One-shot boot mounting plus a source-bound build-host/run-QNX loop is implemented
+and HOST-tested. It uses a private stock-disk overlay and exact guest byte readback,
+not the missing sha256sum applet or transfer ACK inference. **No new native PASS**:
+parent review/SDK-client provisioning and at most two separately granted runtime
+boots remain required. No transparent restart. [Design and exact planned commands](docs/BOOT_DEVELOPER_LOOP.md).
 
 ## Why QNX
 

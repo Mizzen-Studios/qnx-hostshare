@@ -1,0 +1,33 @@
+{
+  "schema": "hostshare.boot-devloop-host.v1",
+  "milestone": "HOST_READY_NATIVE_NOT_RUN",
+  "host_tests": 81,
+  "native_attempts_started": 0,
+  "sdk_started": false,
+  "qemu_started": false,
+  "lease_acquired": false,
+  "driver_source8_unchanged": true,
+  "existing_driver_elf_sha256": "36478be069978986271cad824d2c2799fd94c6124bd67346b09b270e92534d75",
+  "canonical_vendor_unchanged": true,
+  "direct_host_sdk_available": false,
+  "prerequisite": "parent-coordinated existing licensed SDK client build OR reviewed external QNX client build",
+  "planned_runtime_attempts": 2,
+  "transparent_restart": false,
+  "readback_integrity": "actual guest od exact bytes + host SHA256; never ACK inference",
+  "tool_sha256": {
+    "tools/run-native-suite.py": "87f3e47c93a2b430da79200c4ce1a3b982755fd1e8086ec04e26f87318296764",
+    "tools/serial_readback.py": "fceceb5250b92bbf00cc8b6dd8216339271832a8f495cb8ee686a09ac447bdc9",
+    "tools/boot_handoff.py": "a699a802f129fbed12b93e1bb51cb986f5ad97fd1440badae9d9974552452eab",
+    "tools/dev-loop.py": "811d266400ddbc96fd8656e0f726c6f9319a62a4964e4cbb9bffc84fd7e68e99",
+    "examples/developer-loop.c": "4b9c927a25e3a882173b35d8c4fd48e9b1ad9d327048eddd76be99dcfd732cb9",
+    "tests/test_feature_a.py": "e3c18c803ee4ab9c734f21126a5d53999c26698736c08e8ad067da59dac3f3ca"
+  },
+  "host_overlay_metadata_smoke": {
+    "utility": "qemu-img create/info",
+    "input": "temporary 1MiB HOST synthetic raw file",
+    "format": "qcow2",
+    "backing_format": "raw",
+    "guest_vm_started": false,
+    "native_image_used": false
+  }
+}

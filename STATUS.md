@@ -1,3 +1,8 @@
+> 25Nov feature A: one-shot boot mount + build-host/run-QNX implementation is
+> HOST-tested only. Native NOT_RUN; no new full/default acceptance. [Readiness and
+> remaining SDK-client prerequisite](docs/BOOT_DEVELOPER_LOOP.md). Older failures
+> below retain their exact historical scope and bytes.
+
 # Current evidence and limits — 20 November 2026
 
 ## Status — 20 November 2026
@@ -5,7 +10,7 @@
 | Area | Evidence-backed state |
 |---|---|
 | Repository | PUBLIC; older private/visibility-pending wording is stale. No visibility change performed here. |
-| HOST regression | 65 Python tests passed; portable C checks are separate, not native proof. |
+| HOST regression | 81 Python tests passed; portable C checks are separate, not native proof. |
 | Current-source native | Partial acceptance at 3a338a03: custom dev-inputs / /mnt/dev-inputs conformance PASS. |
 | Default native compatibility | BLOCKED: final20Nov run acknowledged all806 data chunks, but guest toybox has no sha256sum; integrity/ELF execution/default conformance did not run. No complete native acceptance. |
 | Historical HA contract | Pending-read server death returns ESRCH3, then fresh remount; never translate to EIO5. Not active-DMA crash safety. |

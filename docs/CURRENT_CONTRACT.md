@@ -1,3 +1,8 @@
+> 25Nov feature A: HOST implementation/tests only; boot mount and developer-loop
+> native gates NOT_RUN pending parent grants. Exact guest readback replaces the
+> absent guest hash applet in the new route; the20Nov failure is NOT relabelled.
+> [Plan/limits](BOOT_DEVELOPER_LOOP.md). No transparent restart.
+
 # Current acceptance index — 19 November 2026
 
 Current-source custom-tag read-only handoff conformance **PASS**; complete current-source native

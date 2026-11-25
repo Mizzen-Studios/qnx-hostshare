@@ -191,7 +191,7 @@ try:
  else:
   if o.boot_stage=='verify':
    # No second adapter/probe: do not reset the queue of the boot-mounted server.
-   report['probe']={'passed':True,'scope':'boot mount/read replaces standalone PCI probe'}
+   report['probe']={'status':'NOT_RUN_BOOT_SERVER_ACTIVE','scope':'boot mount/read replaces standalone PCI probe'}
    text=save('mount',boot_text+command('HS_PID=$(cat /dev/shmem/hs-boot.pid); cat /mnt/host/hello.txt; echo CAT_RC=$?; ls -1 /mnt/host; echo LS_RC=$?; echo MOUNT_DONE','MOUNT_DONE'))
   else:
    text=save('probe',command(app+' --tag '+o.tag+' --pci-line; echo APP_RC=$?; echo PROBE_DONE','PROBE_DONE'))
@@ -248,7 +248,8 @@ try:
     save('midread-abort',command('kill -KILL $PAUSE_PID $CLIENT_PID; wait $PAUSE_PID; wait $CLIENT_PID; echo MIDREAD_ABORTED','MIDREAD_ABORTED'))
    text=save('remount',command(app+' --tag '+o.tag+' --mountpoint '+o.mountpoint+' --pci-line --mount > '+guest+'/remount.log 2>&1 & AGAIN_PID=$!; sleep 2; cat '+guest+'/remount.log; cat /mnt/host/hello.txt; echo REMOUNT_CAT_RC=$?; '+app+' --checksum /mnt/host/1MiB; echo REMOUNT_CHECK_RC=$?; kill -TERM $AGAIN_PID; wait $AGAIN_PID; echo REMOUNT_STOP_RC=$?; cat '+guest+'/remount.log; echo REMOUNT_DONE','REMOUNT_DONE',240))
    report['remount']={'passed':rc(text,'REMOUNT_CAT_RC')==0 and rc(text,'REMOUNT_CHECK_RC')==0 and rc(text,'REMOUNT_STOP_RC')==0 and 'HOSTSHARE CHECKSUM 2572415250 1048576 /mnt/host/1MiB' in text}
-  gates=[report['probe']['passed'],report['mount']['passed'],len(report['corpus'])==7,all(v['passed'] for v in report['corpus'].values()),report['host_edit']['passed'],report['readonly']['passed'],report['normal_stop']['passed']]
+  route_pass=report['boot_mount']['ready_before_any_host_command'] if o.boot_stage=='verify' else report['probe']['passed']
+  gates=[route_pass,report['mount']['passed'],len(report['corpus'])==7,all(v['passed'] for v in report['corpus'].values()),report['host_edit']['passed'],report['readonly']['passed'],report['normal_stop']['passed']]
   if o.midread:gates += [report['midread']['passed'],report['remount']['passed']]
   report['status']='PASS_READONLY_SUITE' if all(gates) else 'BLOCKED_GATE'
   if o.midread and not report['midread']['passed']:report['blocker']='Pending-read death did not produce observed n=-1 errno=EIO; actual result retained, no translation/inference.'
