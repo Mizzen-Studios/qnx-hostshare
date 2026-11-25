@@ -1,0 +1,40 @@
+{
+  "schema": "hostshare.sdk-inspection.v1",
+  "status": "INSPECTION_PASS",
+  "source_tip": "44bbc44907e720fa2b4c46518a0953844838e1be",
+  "qnx_runtime_attempts": 0,
+  "qnx_launched": false,
+  "builder_guest_memory_mib": 1024,
+  "caps": {
+    "cpu.max": "100000 100000",
+    "memory.max": "2147483648",
+    "memory.swap.max": "0"
+  },
+  "nice": 15,
+  "reserve_bytes": 67108864,
+  "inspection_rc": 0,
+  "inspection_recipe_sha256": "fce5e39501079bacbc8473f9d5f3071410abf644ed4b46798024b7db5241c1ec",
+  "inventory_sha256": "67021340da1d34195698508077ddf1c9e72133b040611408371a55abcb574956",
+  "shutdown_request": {
+    "return": {}
+  },
+  "stopped_reaped": true,
+  "owner_rc": 0,
+  "remaining_qemu": "",
+  "pending_queue": [],
+  "sanitized": true,
+  "network": "none",
+  "lease_after": "FREE",
+  "peak_bytes": 898359296,
+  "guard_samples": 446,
+  "protected_original_artifacts_unchanged": true,
+  "derived_image_created": false,
+  "global_qnx_attempts_used": 1,
+  "global_qnx_attempts_remaining_held": 1,
+  "private_evidence_sha256": {
+    "owner.py": "ce8b14b1971f2c70279dee7ec0c68bc42156f347d098e7f49859c9dbfba8317c",
+    "serial-private.txt": "863b7d5068d2dd2d58c8efa2f5b808d2d2ab7557aebc7ec0365ce9f5ba0d3e4f",
+    "memory.jsonl": "4546cd7c0ba1a0f3abaa62451c93372103904838f52712e425bcb8c7833b28da",
+    "receipt.json": "c30c6b86a6562a47e01114d614c3d7cb910f3a58e425b17824a4c6f800b5531c"
+  }
+}
