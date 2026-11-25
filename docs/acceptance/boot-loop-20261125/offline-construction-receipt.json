@@ -1,0 +1,99 @@
+{
+  "status": "OFFLINE_CONSTRUCTED_VERIFIED_NOT_NATIVE",
+  "source_sha": "93b65f38c58bc23a0a71e554e091c82f736da437",
+  "derived_disk_sha256": "9452f062a4f4ad13d58735b5fee0aafe400403e585773b275ac5b83e5ce3e6fe",
+  "original_disk_sha256": "0aee00c281f8eeb5b02c66555ed9517e317bb1503002a19dbf2b0155de336532",
+  "ifs_sha256": "68bbe1b49a9b723c09d152773ee323ec6ab576eb29de933bfe3f08fdae21c753",
+  "driver_sha256": "36478be069978986271cad824d2c2799fd94c6124bd67346b09b270e92534d75",
+  "hook_sha256": "bc85c70cf0fc6e3f55bec8498b12c05df2786681f352be8120361d9921045e73",
+  "tools": {
+    "mkqnx6fsimg": "bfd530ca2a944f42162491600c34cb6dea9f47e560fe4ff295b049e0284467ab",
+    "diskimage": "d73cd6cf64b9956948d2d7bc6fdfe0b041ad0e44d4bc0df4c940771940c75d2e"
+  },
+  "ipl_sha256": "19e4d52a36882545f1dfb5f4f23814733aa497d3036bf556b60ea45b5c054e40",
+  "inspection": {
+    "files": {
+      ".boot/qnx_sdp.ifs": {
+        "bytes": 10910404,
+        "sha256": "68bbe1b49a9b723c09d152773ee323ec6ab576eb29de933bfe3f08fdae21c753",
+        "mode": "0o100644"
+      },
+      "hsd": {
+        "bytes": 51528,
+        "sha256": "36478be069978986271cad824d2c2799fd94c6124bd67346b09b270e92534d75",
+        "mode": "0o100755"
+      },
+      "onboot": {
+        "bytes": 294,
+        "sha256": "bc85c70cf0fc6e3f55bec8498b12c05df2786681f352be8120361d9921045e73",
+        "mode": "0o100644"
+      }
+    },
+    "partitions": [
+      {
+        "type": 177,
+        "start": 1,
+        "count": 26320
+      },
+      {
+        "type": 178,
+        "start": 26321,
+        "count": 154088
+      },
+      {
+        "type": 179,
+        "start": 180409,
+        "count": 125216
+      }
+    ],
+    "preserved_partition_sha256": [
+      "2b7265d07ea8d92ae022d24545d8019989a09c7787f5fc8082b934a9769be1e3",
+      "c5a5a319efcfcb94f1e0259309985e5f35ae877e38835032692f0d800de12e38"
+    ],
+    "metadata_spare_bytes": 2433024,
+    "capacity_not_runtime_allocation_guarantee": true
+  },
+  "offline_pin_sha256": "7904955a5492d815c99c9b6a7729145b3093ba493b0429a4071f595b83a26640",
+  "offline_overlay_pin": {
+    "schema": "hostshare.offline-overlay.v1",
+    "offline_pin_sha256": "7904955a5492d815c99c9b6a7729145b3093ba493b0429a4071f595b83a26640",
+    "overlay_sha256": "a24e90ad1b1315a0670245bf1b68bec9d1224eeca35b4853dab3b46b8a91d024"
+  },
+  "sdk_client_sha256": "171b6fae32f6f62118fb2fa90eb0f2275ba3fbc6184abdc9273076fdfa04cb5e",
+  "helper_sha256": {
+    "offline_boot.py": "58c711e95bc90bcfe2a646951dd8cc49680c3c071d8d92c470566dc1a1ce57aa",
+    "qnx6_inspect.py": "98419d065dc4f6244aad833dad4e63fe059f24a6710edb6429771f98ef63ed77",
+    "boot_handoff.py": "a699a802f129fbed12b93e1bb51cb986f5ad97fd1440badae9d9974552452eab",
+    "run-native-suite.py": "16d05d66d1203f54acacad749b6ff6a5919f3acec2f588e7e242c6e8312c2d1e"
+  },
+  "caps": {
+    "cpu.max": "100000 100000",
+    "memory.max": "2147483648",
+    "memory.swap.max": "0"
+  },
+  "nice": 15,
+  "guest_mib": 1024,
+  "network": "none",
+  "peak_bytes": 1203650560,
+  "guard_samples": 603,
+  "max_oom_oomkill": 0,
+  "stopped_reaped": true,
+  "owner_rc": 0,
+  "forced_quit": false,
+  "remaining_qemu": "",
+  "pending_queue": [],
+  "lease_after": "FREE",
+  "original_artifacts_unchanged": true,
+  "qnx_attempts_used": 1,
+  "qnx_attempts_remaining": "1 HELD",
+  "native_pass": false,
+  "evidence_sha256": {
+    "file-manifest.txt": "61e9d98f8a770c87d5a125f9d693c79e847b71eda27c358ef18320b735a26e0e",
+    "tool-ipl.json": "338215590dcd508a4871c18ab15a59066bb69fded985c906badffd0e27b1d138",
+    "commands.json": "f334f1ddc9a0ee17a97606aa9647bc5b307b168fcc93d9e03615796fa559dbb5",
+    "disk.layout": "36633de9c49bdb987567b172dd10be838b068126f7c195246352cb76f25a0994",
+    "boot.build": "6f35116b5da380fe4af12a2af1658219fa43ae1283a56729ac80d3e65d229171",
+    "build-result.json": "b26e0c82abd997432c2af1951c720312e9ce6da8b48c185eb34bd389e9020f55"
+  },
+  "sanitized": true
+}
