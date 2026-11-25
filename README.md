@@ -42,7 +42,7 @@ This prints an **unvalidated template**, not a launch command or native PASS. A 
 One-shot boot mounting plus a source-bound build-host/run-QNX loop is implemented
 and HOST-tested. It uses a private stock-disk overlay and exact guest byte readback,
 not the missing sha256sum applet or transfer ACK inference. **No new native PASS**:
-parent review/SDK-client provisioning and at most two separately granted runtime
+SDK-client build PASS; parent review and at most two separately granted runtime
 boots remain required. No transparent restart. [Design and exact planned commands](docs/BOOT_DEVELOPER_LOOP.md).
 
 ## Why QNX

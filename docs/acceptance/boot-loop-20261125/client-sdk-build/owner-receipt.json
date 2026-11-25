@@ -1,0 +1,103 @@
+{
+  "schema": "hostshare.client-sdk-build.v1",
+  "status": "BUILD_PASS",
+  "qnx_runtime_attempts": 0,
+  "reserve_bytes": 67108864,
+  "qnx_launched": false,
+  "source_tip": "6e9ac97451a7a913326a92829a23f9abcf3ffa3c",
+  "preexisting_running_markers": [
+    "1794051073335110237.sh.running",
+    "1794152680867379744.sh.running",
+    "1794051322047121253.sh.running",
+    "1794156243898046099.sh.running",
+    "1794085837344024336.sh.running",
+    "1794054337137259048.sh.running",
+    "1795113265349792925.sh.running",
+    "1794019578373249903.sh.running",
+    "1794050862297040209.sh.running",
+    "1794064875425973340.sh.running",
+    "1794053841409211697.sh.running",
+    "1794043134201416946.sh.running"
+  ],
+  "qemu_command": [
+    "qemu-system-x86_64",
+    "-machine",
+    "q35",
+    "-accel",
+    "tcg,tb-size=256",
+    "-cpu",
+    "max",
+    "-smp",
+    "1",
+    "-m",
+    "1024",
+    "-display",
+    "none",
+    "-no-reboot",
+    "-serial",
+    "stdio",
+    "-monitor",
+    "none",
+    "-qmp",
+    "unix:/home/ubuntu/.openclaw/workspace/apps/qnx-hostshare/.local/sdkA25/qmp,server=on,wait=off",
+    "-drive",
+    "file=/home/ubuntu/qnx-host/guest/guest.qcow2,format=qcow2,if=virtio",
+    "-drive",
+    "file=/home/ubuntu/qnx-host/guest/seed.iso,format=raw,media=cdrom,readonly=on",
+    "-nic",
+    "none",
+    "-virtfs",
+    "local,path=/home/ubuntu/qnx-host/guest/shared,mount_tag=hostshare,security_model=mapped-xattr,id=shared"
+  ],
+  "recipe_changes": [
+    "private QMP socket",
+    "NIC disabled; no network"
+  ],
+  "builder_guest_memory_mib": 1024,
+  "staged_source_sha256": {
+    "tools/dev-loop.py": "811d266400ddbc96fd8656e0f726c6f9319a62a4964e4cbb9bffc84fd7e68e99",
+    "examples/developer-loop.c": "4b9c927a25e3a882173b35d8c4fd48e9b1ad9d327048eddd76be99dcfd732cb9"
+  },
+  "caps": {
+    "cpu.max": "100000 100000",
+    "memory.max": "2147483648",
+    "memory.swap.max": "0"
+  },
+  "nice": 15,
+  "compile_rc": 0,
+  "artifact": "/home/ubuntu/qnx-host/guest/shared/hs-dev-client-20261125/source/.local/qnx-client/loop-app",
+  "manifest": "/home/ubuntu/qnx-host/guest/shared/hs-dev-client-20261125/source/.local/qnx-client/build.json",
+  "elf_sha256": "171b6fae32f6f62118fb2fa90eb0f2275ba3fbc6184abdc9273076fdfa04cb5e",
+  "build": {
+    "compiler": "/home/qnx/qnx800/host/linux/x86_64/usr/bin/qcc",
+    "compiler_sha256": "97beb779f03034da4f829111569cfb5e1953942896690a5f9174798967d9fc33",
+    "sdk_env_sha256": "cf2a534405000e2a4552e027a75f5a43e1562667fd12210c88763bc354325555",
+    "schema": "hostshare.dev-build.v1",
+    "target": "QNX_x86_64",
+    "source_sha256": "4b9c927a25e3a882173b35d8c4fd48e9b1ad9d327048eddd76be99dcfd732cb9",
+    "command": [
+      "bash",
+      "-c",
+      "set -e; source \"$1\" >/dev/null; shift; exec qcc -Vgcc_ntox86_64 \"$@\"",
+      "hs-build",
+      "/home/qnx/qnx800/qnxsdp-env.sh",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-pedantic",
+      "/mnt/host/hs-dev-client-20261125/source/examples/developer-loop.c",
+      "-o",
+      "/mnt/host/hs-dev-client-20261125/source/.local/qnx-client/loop-app"
+    ],
+    "status": "BUILT",
+    "elf_sha256": "171b6fae32f6f62118fb2fa90eb0f2275ba3fbc6184abdc9273076fdfa04cb5e"
+  },
+  "shutdown_request": {
+    "return": {}
+  },
+  "stopped_reaped": true,
+  "owner_rc": 0,
+  "remaining_qemu": "",
+  "pending_queue": []
+}

@@ -1,3 +1,9 @@
+> Latest25Nov22:06UTC: the separately admitted existing Linux SDK builder
+> produced the real source-bound QNX client successfully and was stopped/reaped.
+> [Actual build/cleanup proof](acceptance/boot-loop-20261125/client-sdk-build/RESULT.md).
+> Client provisioning is READY; QNX runtime boots remain0 of2, awaiting parent
+> prepare1 grant. The direct ARM-host SDK remains absent; no install was performed.
+
 # Feature A — boot mount + build-host/run-QNX loop (25 November)
 
 **HOST implementation only. No new native acceptance or execution authority.**
@@ -68,9 +74,8 @@ On this ARM Gateway the direct /home/qnx SDK path is absent; the existing licens
 SDK is inside the capped Linux builder. A real QNX client build therefore needs
 **separate parent-coordinated SDK provisioning authority/lease**, before runtime
 verification, or a reviewed external client build from that installed SDK. No SDK
-builder was started during this HOST milestone. Parent must resolve how that
-builder admission fits the owner's maximum TWO runtime attempts; no assumption
-or hidden third guest is made here.
+builder was started during this HOST milestone. Parent explicitly admitted that Linux build guest outside the TWO QNX runtime
+attempts. It has now completed and been reaped; no hidden QNX boot occurred.
 
 For a no-SDK HOST-only demonstration, --host-test uses the real host C compiler.
 Its HOST_ONLY manifest is explicitly rejected by the native runner.

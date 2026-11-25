@@ -1,0 +1,9 @@
+{
+  "checked_at": 1795644439.7927194,
+  "remaining_qemu": "",
+  "lease": "LEASE_FREE",
+  "pending_queue": [],
+  "builder_stopped_reaped": true,
+  "owner_exit_rc": 0,
+  "qnx_runtime_boots_used": 0
+}

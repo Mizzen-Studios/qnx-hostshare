@@ -1,6 +1,10 @@
+> Latest25Nov: real licensed SDK client build PASS, all builder processes reaped,
+> lease FREE. QNX boot/default/developer-loop verification remains NOT_RUN (0 of2).
+> [Build artifact/provenance](docs/acceptance/boot-loop-20261125/client-sdk-build/RESULT.md).
+
 > 25Nov feature A: one-shot boot mount + build-host/run-QNX implementation is
 > HOST-tested only. Native NOT_RUN; no new full/default acceptance. [Readiness and
-> remaining SDK-client prerequisite](docs/BOOT_DEVELOPER_LOOP.md). Older failures
+> SDK-client build proof and runtime plan](docs/BOOT_DEVELOPER_LOOP.md). Older failures
 > below retain their exact historical scope and bytes.
 
 # Current evidence and limits — 20 November 2026

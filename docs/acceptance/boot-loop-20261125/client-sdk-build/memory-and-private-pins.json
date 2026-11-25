@@ -1,0 +1,12 @@
+{
+  "samples": 440,
+  "peak_bytes": 1226596352,
+  "reserve64_maintained": true,
+  "memory_events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\n",
+  "raw_memory_private_path": ".local/sdkA25/memory.jsonl",
+  "raw_memory_sha256": "5ea1dada1c1ef8ea0af52b60bce1b5407af67a6ec204a127e77d2466468a6320",
+  "raw_serial_private_path": ".local/sdkA25/serial-private.txt",
+  "raw_serial_sha256": "a4e45f0a85cdadadc76d747ea947dd4622e8716e61350522f6a0d6a674295417",
+  "owner_script_private_path": ".local/sdkA25/owner.py",
+  "owner_script_sha256": "fa47179be7e03e5c117e84c484a3bf41b2f27e7445555f096af89f80d28d0737"
+}
