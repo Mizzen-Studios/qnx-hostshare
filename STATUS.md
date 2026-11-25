@@ -1,3 +1,9 @@
+> Latest25Nov final2: passive boot mount/default conformance observed; raw suite FAIL.
+> Client byte-exact readback and exit0 observed, but IRQ logs broke contiguous-output
+> assertion; hook also failed early printf/PID write. Normal detach NOT_RUN.
+> **2/2 QNX attempts consumed;0 remaining. Native STOP.** [Exact result](docs/acceptance/boot-loop-20261125/final2/RESULT.md).
+> Earlier dated readiness statements below are historical, not current authority.
+
 > Latest25Nov: QNX prepare1 BLOCKED by guest /boot ENOSPC; no hook/seal/pin.
 > Attempts used1 of2, final attempt HELD; no boot/default/developer-loop PASS.
 > [Actual failure and clean lease/process proof](docs/acceptance/boot-loop-20261125/prepare1/RESULT.md).

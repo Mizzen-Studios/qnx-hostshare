@@ -1,3 +1,9 @@
+> Latest25Nov final2: passive boot mount/default conformance observed; raw suite FAIL.
+> Client byte-exact readback and exit0 observed, but IRQ logs broke contiguous-output
+> assertion; hook also failed early printf/PID write. Normal detach NOT_RUN.
+> **2/2 QNX attempts consumed;0 remaining. Native STOP.** [Exact result](acceptance/boot-loop-20261125/final2/RESULT.md).
+> Earlier dated readiness statements below are historical, not current authority.
+
 > Latest25Nov22:11UTC: granted prepare1 FAILED on actual guest /boot ENOSPC
 > after512 acknowledged data chunks. No hook/seal/prepared pin; failed overlay
 > must NOT be cold-boot verified. [Exact failure/cleanup](acceptance/boot-loop-20261125/prepare1/RESULT.md).

@@ -31,20 +31,22 @@ This prints an **unvalidated template**, not a launch command or native PASS. A 
 | Evidence route | State |
 |---|---|
 | Recorded journey | Bounded source-bound observations; not current live health. |
-| HOST checks | 81 Python tests passed; portable C separate; not native acceptance. |
-| Native / reproduction scope | Custom native conformance PASS; latest default run BLOCKED by missing guest sha256sum before execution. [Exact status](STATUS.md). |
+| HOST checks | 89 Python tests passed; portable C separate; not native acceptance. |
+| Native / reproduction scope | Final25Nov passive boot/default conformance observed; full suite FAIL (hook PID write/client output gate),2/2 attempts exhausted. [Exact status](STATUS.md). |
 | Repository | PUBLIC; earlier private-state wording is stale. |
 
 **Demo in QEMU; not a safety or latency claim.** Historical default-route receipts retain their original source/ELF pins, not current-source default acceptance. [Licensed reproduction](docs/RUN_NATIVE.md) is separate and not authorized by this HOST path. No SDK, secret, image or binary is distributed.
 
-## New feature A — HOST-ready, boot preparation BLOCKED
+## New feature A — partial native evidence, final attempt FAILED
 
-One-shot boot mounting plus a source-bound build-host/run-QNX loop is implemented
-and HOST-tested. It uses a private stock-disk overlay and exact guest byte readback,
-not the missing sha256sum applet or transfer ACK inference. **No new native PASS**:
-SDK-client build PASS; prepare1 hit actual guest /boot ENOSPC before hook
-installation. One of two QNX attempts is used; final attempt HELD for parent
-review, not an automatic retry. [Exact failure](docs/acceptance/boot-loop-20261125/prepare1/RESULT.md). No transparent restart. [Design and exact planned commands](docs/BOOT_DEVELOPER_LOOP.md).
+Passive boot mount and actual default conformance observed:288 byte cases,
+4 directory scans,5 denied opens,7 checksums; readonly host edit/read works.
+Actual SDK client was copied/read back exactly and exited0, but interleaved IRQ
+logs failed the runner's contiguous-output assertion. The hook also failed its
+early printf/PID write; normal detach was NOT_RUN. **No full feature-A PASS.**
+**2/2 QNX attempts used;0 remaining; native STOP.**
+[Exact final result](docs/acceptance/boot-loop-20261125/final2/RESULT.md).
+Original images/attempt1 evidence preserved; no automatic retry or restart.
 
 ## Why QNX
 

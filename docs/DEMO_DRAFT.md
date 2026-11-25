@@ -1,3 +1,9 @@
+> Owner-only25Nov update (not a new recording/publication): final native suite FAIL;
+> passive boot/default conformance and actual client exit0 observed, but hook PID
+> write/client output gate unresolved and normal detach NOT_RUN.2/2 attempts used,
+> native STOP. [Exact result](acceptance/boot-loop-20261125/final2/RESULT.md).
+> Do not present feature A as fully accepted or add an unapproved recording.
+
 # Demo evidence outline
 
 [Watch the public demo](https://youtu.be/O0SA7W6gFyE).
