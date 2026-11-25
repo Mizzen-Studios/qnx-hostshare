@@ -1,0 +1,4 @@
+# [ ! -e /boot/hsd ] && [ ! -L /boot/hsd ] && [ ! -e /boot/onboot ] && [ ! -L /boot/onboot ]; echo SLOT_RC=$?; echo SLOT_DONE
+SLOT_RC=0
+SLOT_DONE
+# 

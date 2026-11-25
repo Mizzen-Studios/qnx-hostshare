@@ -1,3 +1,7 @@
+> Latest25Nov: QNX prepare1 BLOCKED by guest /boot ENOSPC; no hook/seal/pin.
+> Attempts used1 of2, final attempt HELD; no boot/default/developer-loop PASS.
+> [Actual failure and clean lease/process proof](docs/acceptance/boot-loop-20261125/prepare1/RESULT.md).
+
 > Latest25Nov: real licensed SDK client build PASS, all builder processes reaped,
 > lease FREE. QNX boot/default/developer-loop verification remains NOT_RUN (0 of2).
 > [Build artifact/provenance](docs/acceptance/boot-loop-20261125/client-sdk-build/RESULT.md).

@@ -1,0 +1,5 @@
+{
+  "private_original_build_manifest_sha256": "05fecd4391c5c6fc944f5e967643d8588898c26bcbe75cff519a7dd6d2420fb0",
+  "unchanged": true,
+  "public_result_path_uses": "$HS_DEV_APP and $HS_DEV_MANIFEST"
+}

@@ -1,0 +1,64 @@
+{
+  "outcome": "BLOCKED_BOOT_FILESYSTEM_ENOSPC",
+  "qnx_attempts_used": 1,
+  "qnx_attempts_remaining": 1,
+  "automatic_retry": false,
+  "validated_ack_count": 513,
+  "validated_data_chunks": 512,
+  "last_ack_seq": 512,
+  "last_ack_end_offset": 32768,
+  "failed_seq": 513,
+  "failed_target_offset": 32832,
+  "actual_guest_file_size_verified": false,
+  "guest_byte_readback_completed": false,
+  "chmod_reached": false,
+  "onboot_installed": false,
+  "seal_completed": false,
+  "prepared_pin_created": false,
+  "failed_overlay_sha256": "720acd260fc0fa3d6027919a23357b31b146d3617cbf81e03fd4b29350bcd935",
+  "failed_overlay_eligible_for_verify": false,
+  "memory_peak_bytes": 544362496,
+  "memory_samples": 25698,
+  "source_mbr_partition_layout": [
+    {
+      "type": 177,
+      "start_sector": 1,
+      "sectors": 22152,
+      "bytes": 11341824
+    },
+    {
+      "type": 178,
+      "start_sector": 22153,
+      "sectors": 154088,
+      "bytes": 78893056
+    },
+    {
+      "type": 179,
+      "start_sector": 176241,
+      "sectors": 125216,
+      "bytes": 64110592
+    }
+  ],
+  "private_raw_pins": {
+    "receipt.json": "c710b80fc119a029a51a399614c5ecb7b18100c51e2ae67117f8cbb23655e364",
+    "started.json": "6ca724a2022274ff76daf07d7e7e845b837b9c6b2bb428e27ee3e8513d0b99a5",
+    "serial-events-private.jsonl": "0f64e858480861f7ab18fa663aca4132689498373fa9551c1156db3e5145499b",
+    "memory.jsonl": "7c12c02a7ada633c3cc58ee6e4a4e2ddbfa22b97a61c743167c2392703d58f7b"
+  },
+  "terminal_events": [
+    {
+      "event": "terminal",
+      "status": "FAILED",
+      "seq": 513,
+      "error": "TimeoutError('RT_06206aca1e0f474189453a73b64d4617_513_32832')",
+      "mono": 1815149.980110249
+    },
+    {
+      "event": "runner_terminal",
+      "status": "FAIL",
+      "qemu_exit_rc": 0,
+      "stopped_reaped": true,
+      "mono": 1815150.177698193
+    }
+  ]
+}

@@ -1,3 +1,8 @@
+> Latest25Nov22:11UTC: granted prepare1 FAILED on actual guest /boot ENOSPC
+> after512 acknowledged data chunks. No hook/seal/prepared pin; failed overlay
+> must NOT be cold-boot verified. [Exact failure/cleanup](acceptance/boot-loop-20261125/prepare1/RESULT.md).
+> QNX attempts used1 of2; remaining1 HELD. SDK client build remains valid.
+
 > Latest25Nov22:06UTC: the separately admitted existing Linux SDK builder
 > produced the real source-bound QNX client successfully and was stopped/reaped.
 > [Actual build/cleanup proof](acceptance/boot-loop-20261125/client-sdk-build/RESULT.md).

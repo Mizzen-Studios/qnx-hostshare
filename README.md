@@ -37,13 +37,14 @@ This prints an **unvalidated template**, not a launch command or native PASS. A 
 
 **Demo in QEMU; not a safety or latency claim.** Historical default-route receipts retain their original source/ELF pins, not current-source default acceptance. [Licensed reproduction](docs/RUN_NATIVE.md) is separate and not authorized by this HOST path. No SDK, secret, image or binary is distributed.
 
-## New feature A — HOST-ready, native NOT_RUN
+## New feature A — HOST-ready, boot preparation BLOCKED
 
 One-shot boot mounting plus a source-bound build-host/run-QNX loop is implemented
 and HOST-tested. It uses a private stock-disk overlay and exact guest byte readback,
 not the missing sha256sum applet or transfer ACK inference. **No new native PASS**:
-SDK-client build PASS; parent review and at most two separately granted runtime
-boots remain required. No transparent restart. [Design and exact planned commands](docs/BOOT_DEVELOPER_LOOP.md).
+SDK-client build PASS; prepare1 hit actual guest /boot ENOSPC before hook
+installation. One of two QNX attempts is used; final attempt HELD for parent
+review, not an automatic retry. [Exact failure](docs/acceptance/boot-loop-20261125/prepare1/RESULT.md). No transparent restart. [Design and exact planned commands](docs/BOOT_DEVELOPER_LOOP.md).
 
 ## Why QNX
 

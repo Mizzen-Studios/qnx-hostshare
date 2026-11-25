@@ -9,8 +9,9 @@ hash are in build.json and owner-receipt.json. No fabricated build manifest.
 Private9488-byte QNX x86_64 client ELF:
 171b6fae32f6f62118fb2fa90eb0f2275ba3fbc6184abdc9273076fdfa04cb5e
 
-/home/ubuntu/qnx-host/guest/shared/hs-dev-client-20261125/source/.local/qnx-client/loop-app
-Sibling build.json is the native admission manifest. Independent host review
+$HS_DEV_APP
+$HS_DEV_MANIFEST is its sibling build.json admission manifest; exact original
+artifact paths and raw manifest remain private and unchanged. Independent host review
 rechecked source/ELF/compiler binding and readelf header. The ELF was NOT executed
 on QNX and this is not a native conformance PASS. No SDK binaries/images/licenses
 or executable bytes are in Git. Existing driver/base artifacts remain unchanged.

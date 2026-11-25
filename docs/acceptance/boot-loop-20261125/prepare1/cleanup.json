@@ -1,0 +1,10 @@
+{
+  "checked_at": 1795644919.6734786,
+  "remaining_qemu": "",
+  "lease": "LEASE_FREE",
+  "pending_queue": [],
+  "owned_qemu_exit_rc": 0,
+  "runner_exit_rc": 1,
+  "stopped_reaped": true,
+  "verify2_not_launched": true
+}
