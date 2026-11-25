@@ -5,7 +5,7 @@ from handoff_oracle import verify as verify_conformance
 from handoff_preflight import config
 from recording_transport import match_lines,redact_payload_commands
 from serial_readback import transfer,parse_readback
-import boot_handoff
+import boot_handoff,offline_boot
 import importlib.util
 _dev_spec=importlib.util.spec_from_file_location("dev_loop",Path(__file__).with_name("dev-loop.py"));dev_loop=importlib.util.module_from_spec(_dev_spec);_dev_spec.loader.exec_module(dev_loop)
 from stock_pin import load_stock_pin,HISTORICAL_STOCK,verify_stock_files
@@ -13,6 +13,7 @@ p=argparse.ArgumentParser(description=__doc__)
 p.add_argument('--boot-stage',choices=['prepare','verify'])
 p.add_argument('--boot-overlay',type=Path)
 p.add_argument('--boot-pin',type=Path)
+p.add_argument('--offline-original',type=Path,help='Original pinned disk for distinct offline-derived verification')
 p.add_argument('--dev-app',type=Path)
 p.add_argument('--dev-manifest',type=Path)
 p.add_argument('--conformance',action='store_true')
@@ -29,6 +30,7 @@ if o.stock_pin and o.image_kind!='stock':p.error('--stock-pin requires --image-k
 if o.boot_stage and (o.image_kind!='stock' or o.midread or not o.boot_overlay):p.error('boot stages require stock, overlay and no death lane')
 if not o.boot_stage and any((o.boot_overlay,o.boot_pin,o.dev_app,o.dev_manifest)):p.error('boot-only options require boot stage')
 if o.boot_stage=='verify' and not all((o.boot_pin,o.dev_app,o.dev_manifest,o.conformance)):p.error('verify requires boot pin, built client and conformance')
+if o.offline_original and (o.boot_stage!='verify' or o.stock_pin):p.error('offline-original requires verify without stock-pin')
 stock_expected=load_stock_pin(o.stock_pin) if o.stock_pin else HISTORICAL_STOCK
 root=Path(__file__).resolve().parents[1]
 base=Path(os.environ.get('HS_RECEIPT_BASE',str(root/'.local/user-runs'))).resolve()
@@ -44,7 +46,7 @@ assert not subprocess.check_output(['git','status','--porcelain'],cwd=root,text=
 assert all(q.is_file() and not q.is_symlink() for q in (elf,image,disk)),'regular artifact files required'
 vendor=json.loads((root/'tools/recording_transport/PIN.json').read_text())
 assert h(root/'tools/recording_transport/__init__.py')==vendor['sha256'],'shared transport vendor mismatch'
-if o.image_kind=='stock':
+if o.image_kind=='stock' and not o.offline_original:
  expected=stock_expected
  verify_stock_files(image,disk,expected)
 lock=open(os.environ.get('HS_LOCK','/home/ubuntu/qnx-host/native-test.lock'),'a')
@@ -64,7 +66,8 @@ assert not list(queue.glob('*.sh')),'pending SDK jobs'
 if o.boot_stage and root not in o.boot_overlay.absolute().parents:raise ValueError('overlay must remain workspace-local')
 if o.boot_stage=='prepare':boot_handoff.create_overlay(o.boot_overlay,disk)
 if o.boot_stage=='verify':
- boot_handoff.validate_pin(o.boot_overlay,o.boot_pin,disk,elf,o.tag,o.mountpoint)
+ if o.offline_original:offline_boot.validate_overlay(o.boot_overlay,o.boot_pin,o.offline_original,disk,image,elf,o.tag,o.mountpoint)
+ else:boot_handoff.validate_pin(o.boot_overlay,o.boot_pin,disk,elf,o.tag,o.mountpoint)
  dev_build=dev_loop.validate(o.dev_app,o.dev_manifest,root)
 cg=Path('/sys/fs/cgroup')/next(x.split(':',2)[2].strip().lstrip('/') for x in Path('/proc/self/cgroup').read_text().splitlines() if x.startswith('0::'))
 caps={k:(cg/k).read_text().strip() for k in ['cpu.max','memory.max','memory.swap.max']}
