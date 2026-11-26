@@ -8,7 +8,7 @@ def hook(tag='f0test',mountpoint='/mnt/host'):
     return ("#!/bin/sh\n# One start only. No respawn/recovery/restart.\n"
             "[ ! -e /dev/shmem/hs-boot.pid ] || { echo HOSTSHARE_BOOT_PID_COLLISION; exit 1; }\n"
             "/boot/hsd --pci-line --mount --tag "+tag+" --mountpoint "+mountpoint+" &\n"
-            "p=$!\nprintf '%s\\n' \"$p\" > /dev/shmem/hs-boot.pid || exit 1\n"
+            "p=$!\necho \"$p\" > /dev/shmem/hs-boot.pid || exit 1\n"
             "echo HOSTSHARE_BOOT_LAUNCHED\n").encode()
 
 def safe_overlay(path):

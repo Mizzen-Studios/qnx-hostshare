@@ -5,7 +5,7 @@ from handoff_oracle import verify as verify_conformance
 from handoff_preflight import config
 from recording_transport import match_lines,redact_payload_commands
 from serial_readback import transfer,parse_readback
-import boot_handoff,offline_boot
+import boot_handoff,offline_boot,boot_runtime
 import importlib.util
 _dev_spec=importlib.util.spec_from_file_location("dev_loop",Path(__file__).with_name("dev-loop.py"));dev_loop=importlib.util.module_from_spec(_dev_spec);_dev_spec.loader.exec_module(dev_loop)
 from stock_pin import load_stock_pin,HISTORICAL_STOCK,verify_stock_files
@@ -195,7 +195,11 @@ try:
   if o.boot_stage=='verify':
    # No second adapter/probe: do not reset the queue of the boot-mounted server.
    report['probe']={'status':'NOT_RUN_BOOT_SERVER_ACTIVE','scope':'boot mount/read replaces standalone PCI probe'}
-   text=save('mount',boot_text+command('HS_PID=$(cat /dev/shmem/hs-boot.pid); cat /mnt/host/hello.txt; echo CAT_RC=$?; ls -1 /mnt/host; echo LS_RC=$?; echo MOUNT_DONE','MOUNT_DONE'))
+   pid_text=save('boot-pid',command(boot_runtime.pid_command(),'PID_GUARD_DONE'))
+   if boot_runtime.status(pid_text,'PID_GUARD_RC')!=0:raise RuntimeError('boot PID guard failed')
+   if b'HOSTSHARE_BOOT_LAUNCHED' not in bytes(serial).replace(b'\r',b'').split(b'\n'):raise RuntimeError('boot hook launch marker missing')
+   report['boot_mount']['pid_guard']=True
+   text=save('mount',boot_text+command('cat /mnt/host/hello.txt; echo CAT_RC=$?; ls -1 /mnt/host; echo LS_RC=$?; echo MOUNT_DONE','MOUNT_DONE'))
   else:
    text=save('probe',command(app+' --tag '+o.tag+' --pci-line; echo APP_RC=$?; echo PROBE_DONE','PROBE_DONE'))
    report['probe']={'passed':rc(text,'APP_RC')==0 and 'HOSTSHARE F2 READONLY BYTE_EXACT PASS' in text}
@@ -227,12 +231,13 @@ try:
    text=save('developer-copy',command('cat '+o.mountpoint+'/loop-app > '+copied+'; echo LOOP_COPY_RC=$?; echo LOOP_COPY_DONE','LOOP_COPY_DONE'))
    if rc(text,'LOOP_COPY_RC')!=0:raise RuntimeError('client copy failed')
    if readback(copied,60)!=o.dev_app.read_bytes():raise RuntimeError('built client guest readback mismatch')
-   text=save('developer-loop',command('chmod 700 '+copied+' && '+copied+' '+o.mountpoint+'/loop-input.txt; echo LOOP_RC=$?; echo LOOP_DONE','LOOP_DONE'))
-   expected='HOSTSHARE_DEVLOOP_BEGIN\n'+loop_input.decode()+'HOSTSHARE_DEVLOOP_END'
-   if expected not in text or rc(text,'LOOP_RC')!=0:raise RuntimeError('host-built client did not read boot-mounted input')
-   report['developer_loop']={'passed':True,'build':dev_build,'guest_byte_exact':True,'input_sha256':h(corpus/'loop-input.txt'),'source':'examples/developer-loop.c'}
-   text=save('normal-stop',command('kill -TERM $HS_PID; echo STOP_SIGNAL_RC=$?; sleep 2; kill -0 $HS_PID; echo STILL_ALIVE_RC=$?; echo NORMAL_STOP_DONE','NORMAL_STOP_DONE'))
-   report['normal_stop']={'passed':rc(text,'STOP_SIGNAL_RC')==0 and rc(text,'STILL_ALIVE_RC') not in (None,0) and 'HOSTSHARE MOUNT TERM_DETACHED' in text,'exit_status':'not a child of serial shell; signal/detach/process absence observed'}
+   nonce=os.urandom(16).hex();output=guest+'/loop-output-'+nonce
+   text=save('developer-loop',command(boot_runtime.client_command(copied,o.mountpoint+'/loop-input.txt',output,nonce),'CLIENT_DONE_'+nonce))
+   output_bytes=readback(output,60)
+   boot_runtime.verify_client(text,nonce,output_bytes,loop_input)
+   report['developer_loop']={'passed':True,'build':dev_build,'guest_byte_exact':True,'input_sha256':h(corpus/'loop-input.txt'),'source':'examples/developer-loop.c','output_sha256':hashlib.sha256(output_bytes).hexdigest(),'output_bytes':len(output_bytes),'output_isolation':'private file exact od readback; driver serial logs never filtered'}
+   text=save('normal-stop',command(boot_runtime.stop_command(o.mountpoint),'NORMAL_STOP_DONE'))
+   report['normal_stop']={'passed':boot_runtime.verify_stop(text),'exit_status':'not a child of serial shell; signal/detach/process and exported path absence observed'}
   else:
    text=save('normal-stop',command('kill -TERM $HS_PID; wait $HS_PID; echo STOP_RC=$?; cat '+guest+'/mount.log; echo NORMAL_STOP_DONE','NORMAL_STOP_DONE'))
    report['normal_stop']={'passed':rc(text,'STOP_RC')==0 and 'HOSTSHARE MOUNT TERM_DETACHED' in text}
