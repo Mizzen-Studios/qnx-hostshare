@@ -1,3 +1,9 @@
+> 26Nov HOST/offline milestone: isolated exact client output, builtin-echo PID hook,
+> strict PID/normal-TERM process/path gates;93 HOST tests pass. New private disk
+> rebuilt with existing licensed SDK; original IFS/driver/client unchanged.
+> Additional owner-authorized QNX attempt3 **HELD, NOT_RUN** pending parent review.
+> Prior two native failures remain preserved; no full PASS. [Exact proof](docs/acceptance/boot-loop-20261126/HOST_RESULT.md).
+
 # QNX HostShare — edit on the host, read in QNX
 
 A bounded read-only virtio-9p host-folder driver for QNX 8. Edit development inputs without rebuilding the guest image. Apache-2.0; not a production or writable filesystem. [Watch the demo](https://youtu.be/O0SA7W6gFyE).

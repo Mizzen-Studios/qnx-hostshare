@@ -1,3 +1,9 @@
+> 26Nov HOST/offline milestone: isolated exact client output, builtin-echo PID hook,
+> strict PID/normal-TERM process/path gates;93 HOST tests pass. New private disk
+> rebuilt with existing licensed SDK; original IFS/driver/client unchanged.
+> Additional owner-authorized QNX attempt3 **HELD, NOT_RUN** pending parent review.
+> Prior two native failures remain preserved; no full PASS. [Exact proof](acceptance/boot-loop-20261126/HOST_RESULT.md).
+
 > Latest25Nov final2: passive boot mount/default conformance observed; raw suite FAIL.
 > Client byte-exact readback and exit0 observed, but IRQ logs broke contiguous-output
 > assertion; hook also failed early printf/PID write. Normal detach NOT_RUN.

@@ -1,0 +1,15 @@
+{
+  "kind": "OFFLINE_STATIC_NOT_QNX_RUNTIME",
+  "ifs_sha256": "68bbe1b49a9b723c09d152773ee323ec6ab576eb29de933bfe3f08fdae21c753",
+  "ksh_bytes": 274432,
+  "ksh_sha256": "8f1ac35bf71cb58587052b7e07ed89935f736b0d565aa8f170b40e57cc1ba334",
+  "ifs_file_offset": "0x195000",
+  "bin_sh_target": "/proc/boot/ksh",
+  "mount_script_sha256": "436fd7e41b17903f99949e9d4ac2eaad9ce6c96893d24641224d6f3d7be4c86d",
+  "onboot_via_ksh_before_system_mount": true,
+  "echo_builtin_entry_offset": "0x40650",
+  "print_builtin_entry_offset": "0x406c0",
+  "shared_handler_virtual_address": "0x75a0",
+  "official_dumpifs_listing_sha256": "6229e68558d5552eb7069fff647d38018b119624d785d2d082a903d4ff0814cc",
+  "official_dumpifs_extract_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

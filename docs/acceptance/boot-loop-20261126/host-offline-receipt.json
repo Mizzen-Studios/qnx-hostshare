@@ -1,0 +1,109 @@
+{
+  "status": "HOST_OFFLINE_MILESTONE_ONLY",
+  "qnx_attempt3": "HELD_NOT_RUN",
+  "build_source_sha": "446cae752f2b3c9a363727a2d8c782d5cca41732",
+  "host_tests": 93,
+  "host_ci": 45784447057,
+  "provenance": {
+    "schema": "hostshare.offline-derived.v1",
+    "original_sha256": "0aee00c281f8eeb5b02c66555ed9517e317bb1503002a19dbf2b0155de336532",
+    "derived_sha256": "1f1fc2beb7638bb6a587cd01075210a6e7cc0cf86a69f21fa09854f5ab6a4993",
+    "ifs_sha256": "68bbe1b49a9b723c09d152773ee323ec6ab576eb29de933bfe3f08fdae21c753",
+    "driver_sha256": "36478be069978986271cad824d2c2799fd94c6124bd67346b09b270e92534d75",
+    "hook_sha256": "281ad0f979be7101260f8dff65db48fb0d2cb50c9efb57d2fca581fbbb947c41",
+    "tag": "f0test",
+    "mountpoint": "/mnt/host",
+    "tools": {
+      "mkqnx6fsimg": "bfd530ca2a944f42162491600c34cb6dea9f47e560fe4ff295b049e0284467ab",
+      "diskimage": "d73cd6cf64b9956948d2d7bc6fdfe0b041ad0e44d4bc0df4c940771940c75d2e"
+    },
+    "ipl_sha256": "19e4d52a36882545f1dfb5f4f23814733aa497d3036bf556b60ea45b5c054e40",
+    "build_source_sha": "446cae752f2b3c9a363727a2d8c782d5cca41732",
+    "evidence": {
+      "file-manifest.txt": "33248e62a008cb7a74ad6bd79d48150aef3d2a18ec33132e9cbbdd489154d5c2",
+      "tool-ipl.json": "08e8de78d916df54e58abb3adfd05a9e590eab1fc302a18abe26315b8bebd68a",
+      "commands.json": "f334f1ddc9a0ee17a97606aa9647bc5b307b168fcc93d9e03615796fa559dbb5",
+      "disk.layout": "36633de9c49bdb987567b172dd10be838b068126f7c195246352cb76f25a0994",
+      "boot.build": "ab666a93ff396d1fc0caa4287b2a4a2e9a654ba001da50496b4c785eb201e3cc",
+      "build-result.json": "5d355b43c551035fad937cab29efb48fe9dded4421d368932ff0d346a0ebd27f"
+    },
+    "inspection": {
+      "files": {
+        ".boot/qnx_sdp.ifs": {
+          "bytes": 10910404,
+          "sha256": "68bbe1b49a9b723c09d152773ee323ec6ab576eb29de933bfe3f08fdae21c753",
+          "mode": "0o100644"
+        },
+        "hsd": {
+          "bytes": 51528,
+          "sha256": "36478be069978986271cad824d2c2799fd94c6124bd67346b09b270e92534d75",
+          "mode": "0o100755"
+        },
+        "onboot": {
+          "bytes": 285,
+          "sha256": "281ad0f979be7101260f8dff65db48fb0d2cb50c9efb57d2fca581fbbb947c41",
+          "mode": "0o100644"
+        }
+      },
+      "partitions": [
+        {
+          "type": 177,
+          "start": 1,
+          "count": 26320
+        },
+        {
+          "type": 178,
+          "start": 26321,
+          "count": 154088
+        },
+        {
+          "type": 179,
+          "start": 180409,
+          "count": 125216
+        }
+      ],
+      "preserved_partition_sha256": [
+        "2b7265d07ea8d92ae022d24545d8019989a09c7787f5fc8082b934a9769be1e3",
+        "c5a5a319efcfcb94f1e0259309985e5f35ae877e38835032692f0d800de12e38"
+      ],
+      "metadata_spare_bytes": 2433024,
+      "capacity_not_runtime_allocation_guarantee": true
+    }
+  },
+  "overlay": {
+    "schema": "hostshare.offline-overlay.v1",
+    "offline_pin_sha256": "9204dc8686cfe3eed60e00c599683d031b784c695766902e94facc90d56f4e4e",
+    "overlay_sha256": "2af4aa0643820cccb3cb8fa84baf796292689c5c82747e555483942c45830cb8"
+  },
+  "builder": {
+    "status": "OFFLINE_BUILD_PASS",
+    "caps": {
+      "cpu.max": "100000 100000",
+      "memory.max": "2147483648",
+      "memory.swap.max": "0"
+    },
+    "nice": 15,
+    "reserve_bytes": 67108864,
+    "builder_guest_memory_mib": 1024,
+    "qnx_launched": false,
+    "inspection_rc": 0,
+    "shutdown_request": {
+      "return": {}
+    },
+    "stopped_reaped": true,
+    "owner_rc": 0,
+    "remaining_qemu": "",
+    "pending_queue": []
+  },
+  "memory_peak": 1194885120,
+  "memory_samples": 586,
+  "memory_events_last": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\n",
+  "prior_images_unchanged": true,
+  "shell_proof_sha256": "229bcd0726a1b340ac020492f651d9fb6723835c2e289f715f3d02a4ef4ed613",
+  "runner_sha256": "fe8707d43f14bd96151f2c715fa99f3a8124add4bbc2f7cdac919b4c6c82430b",
+  "runtime_helpers_sha256": "2d0b2a5d9ac7916f705702b7c0bcdf10b215b4358c3a91dca6964ddb95a408b3",
+  "hook_generator_sha256": "658876c476583943b28f6d2990d0acfa2cd2e22a2b4a9e2aac81b4a2f8c88c62",
+  "offline_helper_sha256": "58c711e95bc90bcfe2a646951dd8cc49680c3c071d8d92c470566dc1a1ce57aa",
+  "inspector_sha256": "98419d065dc4f6244aad833dad4e63fe059f24a6710edb6429771f98ef63ed77",
+  "client_sha256": "171b6fae32f6f62118fb2fa90eb0f2275ba3fbc6184abdc9273076fdfa04cb5e"
+}
