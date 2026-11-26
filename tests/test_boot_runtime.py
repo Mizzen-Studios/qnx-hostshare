@@ -4,6 +4,8 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'tools'))
 import boot_runtime as b,boot_handoff
 class BootRuntime(unittest.TestCase):
+ def setUp(self):
+  (ROOT/'.local').mkdir(exist_ok=True)
  def test_isolated_actual_client_with_unrelated_driver_logs(self):
   with tempfile.TemporaryDirectory(dir=ROOT/'.local') as tmp:
    p=Path(tmp);app=p/'app';inputfile=p/'input';output=p/'output';nonce='1'*32
