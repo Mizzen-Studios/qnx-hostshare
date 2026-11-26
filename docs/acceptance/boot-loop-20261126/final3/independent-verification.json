@@ -1,0 +1,28 @@
+{
+  "status": "PASS_SCOPED_NATIVE_BOOT_DEVLOOP",
+  "raw_status": "PASS_READONLY_SUITE",
+  "first_tx_after_passive_mount": true,
+  "strict_readback_lengths": [
+    9488,
+    94
+  ],
+  "client_sha256": "171b6fae32f6f62118fb2fa90eb0f2275ba3fbc6184abdc9273076fdfa04cb5e",
+  "client_output_sha256": "7f737bc3e6293f39963c146286bd9284731f40878575530b7843915c74a5d8d5",
+  "client_output_bytes": 94,
+  "normal_term_signal_rc": 0,
+  "process_absent_rc": 1,
+  "exported_path_absent_rc": 0,
+  "lease_free": true,
+  "qnx_attempts_used": 3,
+  "remaining_authorized_attempts": 0,
+  "overlay_sha256_after": "54088dbd63a9528125ffa54728717bba8e21755f8cec3a7ea5cafdd02cb4f197",
+  "raw_files": {
+    "receipt.json": "21ed341583d203cf7d74fc7a7a5f3710a9c1aefee7f2f17391d1904f01c3fd1a",
+    "started.json": "e2a3aba24603b4b6dae91734c995b709e0975bc2f32d08e5acedf933c8313de0",
+    "serial-events-private.jsonl": "f220920be7adb7a93be62699867659707770b64e6cbaa1fb1ca5f6e36e8e36bb",
+    "normal-stop.txt": "830f73652ecd11b33b9049c4b9a21ce746e155ae1dfd20f019ae4553283f785a",
+    "developer-loop.txt": "5b5bf85a0ce8d0796d722d16c915493dfc347c60bebffcbbab6b746536c8fb2f",
+    "boot-pid.txt": "8ddf4a0de2384339c1d957e9e517d613beba33ccdd8d3cbb11ff0f418391522f"
+  },
+  "raw_serial_sha256": "4c32a96021f97a5be9a96e61b5e2dfba4f2bf0d2adfa29646536937137c39902"
+}

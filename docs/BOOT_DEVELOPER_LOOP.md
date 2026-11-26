@@ -1,3 +1,10 @@
+> Latest26Nov final3: **scoped native boot/developer-loop PASS**, raw suite exit0.
+> Passive mount before first TX, PIDguard, default conformance, exact SDK client
+> readback/output/exit and normal TERM detach/process/path gates all passed.
+> Three attempts used,0 authorized remaining; prior failures preserved.
+> [Exact bindings/evidence](acceptance/boot-loop-20261126/final3/RESULT.md). Not broader production/hardware acceptance.
+> Earlier dated HOLD/STOP statements below are historical.
+
 > 26Nov HOST/offline milestone: isolated exact client output, builtin-echo PID hook,
 > strict PID/normal-TERM process/path gates;93 HOST tests pass. New private disk
 > rebuilt with existing licensed SDK; original IFS/driver/client unchanged.

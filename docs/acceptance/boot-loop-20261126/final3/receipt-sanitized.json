@@ -1,0 +1,128 @@
+{
+  "status": "PASS_READONLY_SUITE",
+  "source_sha": "ca97f605070411b33a4b84887f8e5ff6d345ec8d",
+  "clean_checkout": true,
+  "caps": {
+    "cpu.max": "100000 100000",
+    "memory.max": "2147483648",
+    "memory.swap.max": "0"
+  },
+  "nice": 15,
+  "image_kind": "stock",
+  "image_sha256": "68bbe1b49a9b723c09d152773ee323ec6ab576eb29de933bfe3f08fdae21c753",
+  "disk_sha256": "1f1fc2beb7638bb6a587cd01075210a6e7cc0cf86a69f21fa09854f5ab6a4993",
+  "elf_sha256": "36478be069978986271cad824d2c2799fd94c6124bd67346b09b270e92534d75",
+  "qtest": false,
+  "irq_routing_mutated": false,
+  "boot_stage": "verify",
+  "boot_overlay_sha256_before": "2af4aa0643820cccb3cb8fa84baf796292689c5c82747e555483942c45830cb8",
+  "handoff": {
+    "tag": "f0test",
+    "mountpoint": "/mnt/host",
+    "conformance_requested": true
+  },
+  "reserve_bytes": 67108864,
+  "boot_mount": {
+    "ready_before_any_host_command": true,
+    "hook_sha256": "658876c476583943b28f6d2990d0acfa2cd2e22a2b4a9e2aac81b4a2f8c88c62",
+    "transparent_restart": false,
+    "pid_guard": true
+  },
+  "mount": {
+    "passed": true
+  },
+  "corpus": {
+    "hello.txt": {
+      "passed": true,
+      "observed_cksum": 948244384,
+      "observed_size": 41
+    },
+    "empty": {
+      "passed": true,
+      "observed_cksum": 4294967295,
+      "observed_size": 0
+    },
+    "one": {
+      "passed": true,
+      "observed_cksum": 12738659,
+      "observed_size": 1
+    },
+    "4KiB": {
+      "passed": true,
+      "observed_cksum": 300014538,
+      "observed_size": 4096
+    },
+    "1MiB": {
+      "passed": true,
+      "observed_cksum": 2572415250,
+      "observed_size": 1048576
+    },
+    "nested/leaf.txt": {
+      "passed": true,
+      "observed_cksum": 3989433292,
+      "observed_size": 19
+    },
+    "unicode-\u03bb.txt": {
+      "passed": true,
+      "observed_cksum": 2157407375,
+      "observed_size": 13
+    }
+  },
+  "conformance": {
+    "byte_cases": 288,
+    "directory_passes": 4,
+    "denied_opens": 5,
+    "passed": true,
+    "host_corpus_unchanged": true,
+    "pagination_corpus_entries": 189
+  },
+  "host_edit": {
+    "passed": true,
+    "elapsed_seconds": 0.1008122090715915,
+    "sha256": "6507e3dc36ef5bff95f64ffefe3b50083789815e1415a60c558e3d8c35efd12c",
+    "rebuild": false
+  },
+  "readonly": {
+    "passed": true
+  },
+  "normal_stop": {
+    "attempted": true,
+    "passed": true
+  },
+  "requested_gates": {
+    "requested_conformance": true,
+    "developer_loop": true,
+    "pid_guard": true,
+    "normal_detach": true
+  },
+  "qemu_exit_rc": 0,
+  "stopped_reaped": true,
+  "memory_events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\n",
+  "memory_peak": 346775552,
+  "disk_sha256_after": "1f1fc2beb7638bb6a587cd01075210a6e7cc0cf86a69f21fa09854f5ab6a4993",
+  "image_sha256_after": "68bbe1b49a9b723c09d152773ee323ec6ab576eb29de933bfe3f08fdae21c753",
+  "developer_loop": {
+    "passed": true,
+    "guest_byte_exact": true,
+    "input_sha256": "dfd68280b6b1a9801c7ebaf486f52a48be89696702c5341c6b89ba0cc089c3ea",
+    "source": "examples/developer-loop.c",
+    "output_sha256": "7f737bc3e6293f39963c146286bd9284731f40878575530b7843915c74a5d8d5",
+    "output_bytes": 94,
+    "output_isolation": "private file exact od readback; driver serial logs never filtered",
+    "build": {
+      "schema": "hostshare.dev-build.v1",
+      "target": "QNX_x86_64",
+      "source_sha256": "4b9c927a25e3a882173b35d8c4fd48e9b1ad9d327048eddd76be99dcfd732cb9",
+      "compiler_sha256": "97beb779f03034da4f829111569cfb5e1953942896690a5f9174798967d9fc33",
+      "sdk_env_sha256": "cf2a534405000e2a4552e027a75f5a43e1562667fd12210c88763bc354325555",
+      "elf_sha256": "171b6fae32f6f62118fb2fa90eb0f2275ba3fbc6184abdc9273076fdfa04cb5e",
+      "status": "BUILT"
+    }
+  },
+  "guest_caps": {
+    "memory_mib": 512,
+    "smp": 1,
+    "tcg_tb_mib": 256,
+    "nic": "none"
+  }
+}
