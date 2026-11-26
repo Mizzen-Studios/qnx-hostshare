@@ -192,55 +192,55 @@ try:
   if rc(text,'BOOT_SEAL_RC')!=0:raise RuntimeError('boot filesystem not sealed')
   report['status']='PASS_BOOT_PREPARED'
  else:
-  if o.boot_stage=='verify':
-   # No second adapter/probe: do not reset the queue of the boot-mounted server.
-   report['probe']={'status':'NOT_RUN_BOOT_SERVER_ACTIVE','scope':'boot mount/read replaces standalone PCI probe'}
-   pid_text=save('boot-pid',command(boot_runtime.pid_command(),'PID_GUARD_DONE'))
-   if boot_runtime.status(pid_text,'PID_GUARD_RC')!=0:raise RuntimeError('boot PID guard failed')
-   if b'HOSTSHARE_BOOT_LAUNCHED' not in bytes(serial).replace(b'\r',b'').split(b'\n'):raise RuntimeError('boot hook launch marker missing')
-   report['boot_mount']['pid_guard']=True
-   text=save('mount',boot_text+command('cat /mnt/host/hello.txt; echo CAT_RC=$?; ls -1 /mnt/host; echo LS_RC=$?; echo MOUNT_DONE','MOUNT_DONE'))
-  else:
-   text=save('probe',command(app+' --tag '+o.tag+' --pci-line; echo APP_RC=$?; echo PROBE_DONE','PROBE_DONE'))
-   report['probe']={'passed':rc(text,'APP_RC')==0 and 'HOSTSHARE F2 READONLY BYTE_EXACT PASS' in text}
-   if not report['probe']['passed']:raise RuntimeError('default-route probe failed; no routing fallback')
-   text=save('mount',command(app+' --tag '+o.tag+' --mountpoint '+o.mountpoint+' --pci-line --mount > '+guest+'/mount.log 2>&1 & HS_PID=$!; sleep 10; pidin ar; cat '+guest+'/mount.log; cat /mnt/host/hello.txt; echo CAT_RC=$?; ls -1 /mnt/host; echo LS_RC=$?; echo MOUNT_DONE','MOUNT_DONE'))
-  listing=re.sub(rb'\\([0-7]{3})',lambda m:bytes([int(m[1],8)]),text.encode()).decode('utf-8')
-  report['mount']={'passed':rc(text,'CAT_RC')==0 and rc(text,'LS_RC')==0 and 'HOSTSHARE MOUNT READY' in text and all(name in listing.splitlines() for name in ['hello.txt','empty','one','4KiB','1MiB','nested','unicode-λ.txt'])}
-  if not report['mount']['passed']:raise RuntimeError('mount/list gate failed')
-  report['corpus']={}
-  for name,expected in manifest.items():
-   text=save('checksum-'+name.replace('/','_'),command(app+" --checksum '/mnt/host/"+name+"'; echo CHECK_RC=$?; echo CHECK_DONE",'CHECK_DONE',240))
-   m=re.search(r'^HOSTSHARE CHECKSUM (\d+) (\d+) ',text,re.M)
-   report['corpus'][name]={'passed':bool(m and int(m[1])==expected['posix_cksum'] and int(m[2])==expected['size'] and rc(text,'CHECK_RC')==0),'observed_cksum':int(m[1]) if m else None,'observed_size':int(m[2]) if m else None}
-  if o.conformance:
-   before={str(q.relative_to(corpus)):h(q) for q in corpus.rglob('*') if q.is_file()}
-   text=save('conformance',command(app+' --conformance '+o.mountpoint+'; echo CONFORMANCE_RC=$?; echo CONFORMANCE_DONE','CONFORMANCE_DONE',240))
-   report['conformance']=verify_conformance(text,corpus)
-   assert rc(text,'CONFORMANCE_RC')==0
-   assert before=={str(q.relative_to(corpus)):h(q) for q in corpus.rglob('*') if q.is_file()},'mutation changed host corpus'
-   report['conformance']['host_corpus_unchanged']=True
-   report['conformance']['pagination_corpus_entries']=len(list(corpus.iterdir()))
-  changed=b'HostShare host edit observed without rebuild.\n';(corpus/'hello.txt').write_bytes(changed);start_edit=time.monotonic()
-  text=save('host-edit',command('cat /mnt/host/hello.txt; echo EDIT_RC=$?; echo EDIT_DONE','EDIT_DONE'))
-  report['host_edit']={'passed':changed.decode().strip() in text.splitlines() and rc(text,'EDIT_RC')==0,'elapsed_seconds':time.monotonic()-start_edit,'sha256':h(corpus/'hello.txt'),'rebuild':False}
-  text=save('readonly',command('echo forbidden > /mnt/host/hello.txt; echo WRITE_RC=$?; echo WRITE_DONE','WRITE_DONE'))
-  report['readonly']={'passed':rc(text,'WRITE_RC') not in (None,0) and (corpus/'hello.txt').read_bytes()==changed}
-  if o.boot_stage=='verify':
-   copied=guest+'/loop-app'
-   text=save('developer-copy',command('cat '+o.mountpoint+'/loop-app > '+copied+'; echo LOOP_COPY_RC=$?; echo LOOP_COPY_DONE','LOOP_COPY_DONE'))
-   if rc(text,'LOOP_COPY_RC')!=0:raise RuntimeError('client copy failed')
-   if readback(copied,60)!=o.dev_app.read_bytes():raise RuntimeError('built client guest readback mismatch')
-   nonce=os.urandom(16).hex();output=guest+'/loop-output-'+nonce
-   text=save('developer-loop',command(boot_runtime.client_command(copied,o.mountpoint+'/loop-input.txt',output,nonce),'CLIENT_DONE_'+nonce))
-   output_bytes=readback(output,60)
-   boot_runtime.verify_client(text,nonce,output_bytes,loop_input)
-   report['developer_loop']={'passed':True,'build':dev_build,'guest_byte_exact':True,'input_sha256':h(corpus/'loop-input.txt'),'source':'examples/developer-loop.c','output_sha256':hashlib.sha256(output_bytes).hexdigest(),'output_bytes':len(output_bytes),'output_isolation':'private file exact od readback; driver serial logs never filtered'}
-   text=save('normal-stop',command(boot_runtime.stop_command(o.mountpoint),'NORMAL_STOP_DONE'))
-   report['normal_stop']={'passed':boot_runtime.verify_stop(text),'exit_status':'not a child of serial shell; signal/detach/process and exported path absence observed'}
-  else:
-   text=save('normal-stop',command('kill -TERM $HS_PID; wait $HS_PID; echo STOP_RC=$?; cat '+guest+'/mount.log; echo NORMAL_STOP_DONE','NORMAL_STOP_DONE'))
-   report['normal_stop']={'passed':rc(text,'STOP_RC')==0 and 'HOSTSHARE MOUNT TERM_DETACHED' in text}
+  with boot_runtime.detach_after_pid(report,lambda:save('normal-stop',command(boot_runtime.stop_command(o.mountpoint),'NORMAL_STOP_DONE',30))):
+   if o.boot_stage=='verify':
+    # No second adapter/probe: do not reset the queue of the boot-mounted server.
+    report['probe']={'status':'NOT_RUN_BOOT_SERVER_ACTIVE','scope':'boot mount/read replaces standalone PCI probe'}
+    pid_text=save('boot-pid',command(boot_runtime.pid_command(),'PID_GUARD_DONE'))
+    if boot_runtime.status(pid_text,'PID_GUARD_RC')!=0:raise RuntimeError('boot PID guard failed')
+    report['boot_mount']['pid_guard']=True
+    if b'HOSTSHARE_BOOT_LAUNCHED' not in bytes(serial).replace(b'\r',b'').split(b'\n'):raise RuntimeError('boot hook launch marker missing')
+    text=save('mount',boot_text+command('cat /mnt/host/hello.txt; echo CAT_RC=$?; ls -1 /mnt/host; echo LS_RC=$?; echo MOUNT_DONE','MOUNT_DONE'))
+   else:
+    text=save('probe',command(app+' --tag '+o.tag+' --pci-line; echo APP_RC=$?; echo PROBE_DONE','PROBE_DONE'))
+    report['probe']={'passed':rc(text,'APP_RC')==0 and 'HOSTSHARE F2 READONLY BYTE_EXACT PASS' in text}
+    if not report['probe']['passed']:raise RuntimeError('default-route probe failed; no routing fallback')
+    text=save('mount',command(app+' --tag '+o.tag+' --mountpoint '+o.mountpoint+' --pci-line --mount > '+guest+'/mount.log 2>&1 & HS_PID=$!; sleep 10; pidin ar; cat '+guest+'/mount.log; cat /mnt/host/hello.txt; echo CAT_RC=$?; ls -1 /mnt/host; echo LS_RC=$?; echo MOUNT_DONE','MOUNT_DONE'))
+   listing=re.sub(rb'\\([0-7]{3})',lambda m:bytes([int(m[1],8)]),text.encode()).decode('utf-8')
+   report['mount']={'passed':rc(text,'CAT_RC')==0 and rc(text,'LS_RC')==0 and 'HOSTSHARE MOUNT READY' in text and all(name in listing.splitlines() for name in ['hello.txt','empty','one','4KiB','1MiB','nested','unicode-λ.txt'])}
+   if not report['mount']['passed']:raise RuntimeError('mount/list gate failed')
+   report['corpus']={}
+   for name,expected in manifest.items():
+    text=save('checksum-'+name.replace('/','_'),command(app+" --checksum '/mnt/host/"+name+"'; echo CHECK_RC=$?; echo CHECK_DONE",'CHECK_DONE',240))
+    m=re.search(r'^HOSTSHARE CHECKSUM (\d+) (\d+) ',text,re.M)
+    report['corpus'][name]={'passed':bool(m and int(m[1])==expected['posix_cksum'] and int(m[2])==expected['size'] and rc(text,'CHECK_RC')==0),'observed_cksum':int(m[1]) if m else None,'observed_size':int(m[2]) if m else None}
+   if o.conformance:
+    before={str(q.relative_to(corpus)):h(q) for q in corpus.rglob('*') if q.is_file()}
+    text=save('conformance',command(app+' --conformance '+o.mountpoint+'; echo CONFORMANCE_RC=$?; echo CONFORMANCE_DONE','CONFORMANCE_DONE',240))
+    report['conformance']=verify_conformance(text,corpus)
+    assert rc(text,'CONFORMANCE_RC')==0
+    assert before=={str(q.relative_to(corpus)):h(q) for q in corpus.rglob('*') if q.is_file()},'mutation changed host corpus'
+    report['conformance']['passed']=True
+    report['conformance']['host_corpus_unchanged']=True
+    report['conformance']['pagination_corpus_entries']=len(list(corpus.iterdir()))
+   changed=b'HostShare host edit observed without rebuild.\n';(corpus/'hello.txt').write_bytes(changed);start_edit=time.monotonic()
+   text=save('host-edit',command('cat /mnt/host/hello.txt; echo EDIT_RC=$?; echo EDIT_DONE','EDIT_DONE'))
+   report['host_edit']={'passed':changed.decode().strip() in text.splitlines() and rc(text,'EDIT_RC')==0,'elapsed_seconds':time.monotonic()-start_edit,'sha256':h(corpus/'hello.txt'),'rebuild':False}
+   text=save('readonly',command('echo forbidden > /mnt/host/hello.txt; echo WRITE_RC=$?; echo WRITE_DONE','WRITE_DONE'))
+   report['readonly']={'passed':rc(text,'WRITE_RC') not in (None,0) and (corpus/'hello.txt').read_bytes()==changed}
+   if o.boot_stage=='verify':
+    copied=guest+'/loop-app'
+    text=save('developer-copy',command('cat '+o.mountpoint+'/loop-app > '+copied+'; echo LOOP_COPY_RC=$?; echo LOOP_COPY_DONE','LOOP_COPY_DONE'))
+    if rc(text,'LOOP_COPY_RC')!=0:raise RuntimeError('client copy failed')
+    if readback(copied,60)!=o.dev_app.read_bytes():raise RuntimeError('built client guest readback mismatch')
+    nonce=os.urandom(16).hex();output=guest+'/loop-output-'+nonce
+    text=save('developer-loop',command(boot_runtime.client_command(copied,o.mountpoint+'/loop-input.txt',output,nonce),'CLIENT_DONE_'+nonce))
+    output_bytes=readback(output,60)
+    boot_runtime.verify_client(text,nonce,output_bytes,loop_input)
+    report['developer_loop']={'passed':True,'build':dev_build,'guest_byte_exact':True,'input_sha256':h(corpus/'loop-input.txt'),'source':'examples/developer-loop.c','output_sha256':hashlib.sha256(output_bytes).hexdigest(),'output_bytes':len(output_bytes),'output_isolation':'private file exact od readback; driver serial logs never filtered'}
+   else:
+    text=save('normal-stop',command('kill -TERM $HS_PID; wait $HS_PID; echo STOP_RC=$?; cat '+guest+'/mount.log; echo NORMAL_STOP_DONE','NORMAL_STOP_DONE'))
+    report['normal_stop']={'passed':rc(text,'STOP_RC')==0 and 'HOSTSHARE MOUNT TERM_DETACHED' in text}
   # Restore only the explicitly disposable exported fixture; never source/image state.
   (corpus/'hello.txt').write_bytes(contents['hello.txt'])
   if o.midread:
@@ -258,11 +258,14 @@ try:
    report['remount']={'passed':rc(text,'REMOUNT_CAT_RC')==0 and rc(text,'REMOUNT_CHECK_RC')==0 and rc(text,'REMOUNT_STOP_RC')==0 and 'HOSTSHARE CHECKSUM 2572415250 1048576 /mnt/host/1MiB' in text}
   route_pass=report['boot_mount']['ready_before_any_host_command'] if o.boot_stage=='verify' else report['probe']['passed']
   gates=[route_pass,report['mount']['passed'],len(report['corpus'])==7,all(v['passed'] for v in report['corpus'].values()),report['host_edit']['passed'],report['readonly']['passed'],report['normal_stop']['passed']]
+  report['requested_gates']=boot_runtime.requested_gates(report,o.conformance,o.boot_stage=='verify')
+  gates += list(report['requested_gates'].values())
   if o.midread:gates += [report['midread']['passed'],report['remount']['passed']]
   report['status']='PASS_READONLY_SUITE' if all(gates) else 'BLOCKED_GATE'
   if o.midread and not report['midread']['passed']:report['blocker']='Pending-read death did not produce observed n=-1 errno=EIO; actual result retained, no translation/inference.'
 except Exception as e:
  report['error']=repr(e)
+ report['requested_gates']=boot_runtime.requested_gates(report,o.conformance,o.boot_stage=='verify')
 finally:
  r.terminate()
  try:r.wait(10)

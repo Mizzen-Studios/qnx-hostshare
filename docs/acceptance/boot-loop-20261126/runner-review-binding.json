@@ -1,0 +1,11 @@
+{
+  "kind": "HOST_RUNNER_REVIEW_ONLY_NOT_NATIVE",
+  "previous_milestone_commit": "dab15967830c8d74394e303067c83ce23f76b5c0",
+  "runner_sha256": "d73bcba777b252efb2b32bb83f72ec1597f6827eabcbf000799a2c38fea798d0",
+  "runtime_helpers_sha256": "6fe841fae8708c874578a9d1e5ac32f3d3a245cf7223d925a2d34a06cd0ed8bd",
+  "host_tests": 97,
+  "construction_receipt_preserved": true,
+  "offline_disk_pin_unchanged": true,
+  "overlay_sha256": "2af4aa0643820cccb3cb8fa84baf796292689c5c82747e555483942c45830cb8",
+  "qnx_attempt3": "HELD_NOT_RUN"
+}

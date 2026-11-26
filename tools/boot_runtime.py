@@ -30,3 +30,29 @@ def verify_stop(text):
  lines=text.replace('\r','').splitlines()
  return (status(text,'STOP_SIGNAL_RC')==0 and status(text,'STILL_ALIVE_RC')!=0
          and status(text,'STOP_PATH_ABSENT_RC')==0 and lines.count('HOSTSHARE MOUNT TERM_DETACHED')==1)
+
+
+from contextlib import contextmanager
+
+@contextmanager
+def detach_after_pid(report,stop):
+ """Always try bounded normal detach once PID is validated; never mask primary."""
+ try:
+  yield
+ finally:
+  if report.get('boot_mount',{}).get('pid_guard') is True:
+   report['normal_stop']={'attempted':True,'passed':False}
+   try:
+    text=stop()
+    report['normal_stop']['passed']=verify_stop(text)
+   except Exception as error:
+    report['normal_stop']['error']=repr(error)
+
+def requested_gates(report,conformance=False,boot_verify=False):
+ gates={}
+ if conformance:gates['requested_conformance']=report.get('conformance',{}).get('passed') is True
+ if boot_verify:
+  gates['developer_loop']=report.get('developer_loop',{}).get('passed') is True
+  gates['pid_guard']=report.get('boot_mount',{}).get('pid_guard') is True
+  gates['normal_detach']=report.get('normal_stop',{}).get('passed') is True
+ return gates

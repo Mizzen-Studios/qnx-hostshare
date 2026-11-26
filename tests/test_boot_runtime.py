@@ -57,3 +57,39 @@ class BootRuntime(unittest.TestCase):
    script=boot_handoff.hook().decode().replace('/boot/hsd',str(driver)).replace('/dev/shmem/hs-boot.pid',str(pid))
    r=subprocess.run(['/bin/sh','-c',script],env={'PATH':'/nonexistent'},capture_output=True,text=True)
    self.assertEqual(r.returncode,0);self.assertTrue(pid.read_text().strip().isdigit());self.assertIn('HOSTSHARE_BOOT_LAUNCHED',r.stdout)
+
+ def test_primary_client_failure_always_detaches_and_survives_cleanup_error(self):
+  for cleanup_fails in (False,True):
+   report={'status':'FAIL','boot_mount':{'pid_guard':True}};calls=[];primary=AssertionError('client exact output assertion')
+   def stop():
+    calls.append('normal TERM')
+    if cleanup_fails:raise TimeoutError('bounded detach timeout')
+    return 'HOSTSHARE MOUNT TERM_DETACHED\nSTOP_SIGNAL_RC=0\nSTILL_ALIVE_RC=1\nSTOP_PATH_ABSENT_RC=0\n'.replace('\\n','\n')
+   with self.assertRaises(AssertionError) as caught:
+    with b.detach_after_pid(report,stop):raise primary
+   self.assertIs(caught.exception,primary);self.assertEqual(calls,['normal TERM']);self.assertTrue(report['normal_stop']['attempted'])
+   self.assertEqual(report['normal_stop']['passed'],not cleanup_fails)
+   if cleanup_fails:self.assertIn('bounded detach timeout',report['normal_stop']['error'])
+   self.assertEqual(report['status'],'FAIL')
+ def test_no_detach_without_validated_pid(self):
+  for guard in (None,False,1):
+   report={'boot_mount':{'pid_guard':guard}};calls=[]
+   with b.detach_after_pid(report,lambda:calls.append('unsafe')):pass
+   self.assertEqual(calls,[])
+ def test_every_requested_boolean_gate_is_fail_closed(self):
+  import copy
+  report={'conformance':{'passed':True},'developer_loop':{'passed':True},'boot_mount':{'pid_guard':True},'normal_stop':{'passed':True}}
+  self.assertTrue(all(b.requested_gates(report,True,True).values()))
+  for section,field in [('conformance','passed'),('developer_loop','passed'),('boot_mount','pid_guard'),('normal_stop','passed')]:
+   for bad in (False,None,1,'PASS'):
+    broken=copy.deepcopy(report);broken[section][field]=bad
+    self.assertFalse(all(b.requested_gates(broken,True,True).values()))
+   broken=copy.deepcopy(report);del broken[section]
+   self.assertFalse(all(b.requested_gates(broken,True,True).values()))
+ def test_runner_wires_finally_and_requested_gates_before_acceptance(self):
+  import ast
+  source=(ROOT/'tools/run-native-suite.py').read_text();tree=ast.parse(source)
+  contexts=[n for n in ast.walk(tree) if isinstance(n,ast.With) and 'detach_after_pid' in ast.unparse(n.items[0].context_expr)]
+  self.assertEqual(len(contexts),1)
+  block=ast.unparse(contexts[0]);self.assertIn('verify_client',block);self.assertIn('readback(copied',block);self.assertIn("'NORMAL_STOP_DONE', 30",ast.unparse(contexts[0].items[0].context_expr))
+  self.assertIn("gates += list(report['requested_gates'].values())",source)

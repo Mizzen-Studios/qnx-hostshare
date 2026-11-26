@@ -92,3 +92,21 @@ QNX runtime remains512MiB/smp1/TCG256/network none under same host caps/lease.
 Must observe passive MOUNT READY before first TX, then PID guard, full default
 conformance, client exact pre-exec readback/output/exit and normal TERM detach.
 Any failure consumes the sole additional attempt; no hidden retry/reboot.
+
+## Parent-review HOST correction (attempt3 still HELD)
+
+The first milestone omitted explicit requested final gates and could skip normal
+detach on a client/readback exception. Corrected HOST-only: a try/finally context
+attempts normal detach once a boot PID is validated, even on conformance/client/
+readback/assertion failures. Stop command has a30-second bound; cleanup errors
+are retained separately under normal_stop, while the original exception remains
+the primary failure. A successful cleanup cannot convert failure to PASS.
+Requested conformance, developer-loop, PIDguard and normal-detach now each require
+explicit boolean True in final gates.97 HOST tests pass, including primary
+assertion identity preserved through successful/failed cleanup, no unsafe detach
+without validated PID and missing/false/nonboolean gate rejection.
+
+No hook, image, private disk/overlay or offline admission pin changed. The original
+construction receipt is immutable historical evidence of its runner source. New
+runner/helper binding is recorded separately in runner-review-binding.json;
+planned single native command and artifact pins above remain unchanged.
