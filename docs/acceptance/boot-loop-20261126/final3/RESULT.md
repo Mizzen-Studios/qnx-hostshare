@@ -68,3 +68,14 @@ Not production readiness, writable/general filesystem support, hardware coverage
 performance, active-DMA/death safety, MSI-X, or acceptance of unrelated C/D work.
 C6 remains STOPPED; CAN capture HOLD. No other guest/repository, installation,
 login, network/spend, Devpost/YouTube/visibility/outreach action.
+
+## Telemetry field clarification
+
+The raw and sanitized receipt field boot_mount.hook_sha256 is named misleadingly:
+it hashes the HOST hook-generator helper tools/boot_handoff.py, namely
+658876c476583943b28f6d2990d0acfa2cd2e22a2b4a9e2aac81b4a2f8c88c62,
+NOT the deployed onboot payload. The actual deployed285-byte hook SHA256 is
+281ad0f979be7101260f8dff65db48fb0d2cb50c9efb57d2fca581fbbb947c41,
+bound by offline-derived construction provenance and independent filesystem
+inspection. Neither receipt has been rewritten; this note labels the telemetry
+accurately without changing historical evidence.

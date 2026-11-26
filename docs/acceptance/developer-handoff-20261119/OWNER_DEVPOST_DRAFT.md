@@ -1,47 +1,50 @@
-> Latest26Nov final3: **scoped native boot/developer-loop PASS**, raw suite exit0.
-> Passive mount before first TX, PIDguard, default conformance, exact SDK client
-> readback/output/exit and normal TERM detach/process/path gates all passed.
-> Three attempts used,0 authorized remaining; prior failures preserved.
-> [Exact bindings/evidence](../boot-loop-20261126/final3/RESULT.md). Not broader production/hardware acceptance.
-> Earlier dated HOLD/STOP statements below are historical.
+# HostShare — owner-ready draft, 26 November 2026 (not submitted)
 
-> 26Nov HOST/offline milestone: isolated exact client output, builtin-echo PID hook,
-> strict PID/normal-TERM process/path gates;93 HOST tests pass. New private disk
-> rebuilt with existing licensed SDK; original IFS/driver/client unchanged.
-> Additional owner-authorized QNX attempt3 **HELD, NOT_RUN** pending parent review.
-> Prior two native failures remain preserved; no full PASS. [Exact proof](../boot-loop-20261126/HOST_RESULT.md).
+HostShare lets developers edit inputs on a host and read updated bytes in QNX 8
+without rebuilding the guest image for each edit. It is a bounded read-only
+virtio-9p resource manager, not a writable or production filesystem.
 
-# Local owner draft — not submitted
+The latest native verification passed on the original f0test export and /mnt/host
+mountpoint in QNX 8 x86_64 under QEMU. A cold boot mounted the readonly share
+passively before the first host serial command. The one-shot boot hook produced
+a live, validated server PID; no serial mount fallback or transparent restart
+was used.
 
-HostShare lets developers edit inputs on the host and read updated bytes in
-QNX 8 without rebuilding the guest image. It is a bounded read-only virtio-9p
-resource manager, not a writable or production filesystem.
+Default conformance passed 288 independent byte-read cases, four directory
+pagination/rewind scans across 189 entries, five denied mutation opens and all
+seven historical file checksums. Expected bytes were independently computed on
+the host. A host edit became visible through the same readonly export without
+rebuilding, while a denied guest write left host bytes unchanged.
 
-Fresh current-source QNX evidence proves a configurable export named dev-inputs
-mounted at /mnt/dev-inputs:288 independent offset/partial-read/EOF byte cases,
-four directory pagination/rewind scans across187 entries, five denied mutation
-opens and seven file checksums. Expected bytes were independently computed on
-the host, not certified by a guest-generated hash. Host edits became visible
-through the same QEMU readonly export without an image rebuild; denied guest
-mutations preserved the host corpus. Normal detach also passed.
+A real client previously built with the existing licensed QNX SDK was copied
+from the mounted share. Its complete 9,488 bytes were read back from QNX and
+matched the host artifact before execution. The client read the boot-mounted
+input, returned exit status 0 and produced exactly 94 independently read-back
+output bytes. Client output was isolated from driver serial logs rather than
+accepted by loosely filtering them. Normal TERM detach then passed: the driver
+reported detach and return code 0, the process was absent, and the exported
+file path was no longer present.
 
-The historical HOST38-test checkpoint separately validate configuration bounds, source/artifact bindings,
-namespace safety guards and negative controls. Existing symlink/non-directory
-ancestors, collisions and permission errors remain denied; absent QNX synthetic
-namespace prefixes are supported. Current65 HOST tests pass. Host CI is not native acceptance.
+The offline preparation created a new private derived boot disk using the
+already installed licensed SDK tools, with sufficient boot capacity for the
+driver and one-shot hook. The original IFS, system/data partition bytes, driver
+and SDK client stayed unchanged. Earlier failed attempts and their raw evidence
+remain preserved. The final run consumed the sole additional authorized attempt;
+no further guest execution is authorized.
 
-Acceptance is partial: original f0test,/mnt/host defaults remain in the code and
-host compatibility tests, but CURRENT-SOURCE DEFAULT NATIVE COMPATIBILITY IS
-BLOCKED: the single20Nov default run acknowledged all806 data chunks but guest
-toybox lacks sha256sum. Final guest size/hash remained unverified, so the ELF
-was not executed and no default conformance ran. The earlier COPY_6912 failure
-remains preserved; it is not the latest blocker. We do
-not claim full item4 acceptance. Historical default-route and ESRCH3 server-death
-receipts apply only to their exact old source/ELF pins; all failures remain
-preserved. No speed/latency, active-DMA safety, MSI-X or production-readiness claim.
+Separately, 97 HOST tests and portable C/syntax checks pass. These exercise
+source/artifact bindings, namespace guards, strict output verification, explicit
+acceptance gates and detach cleanup on failure; HOST CI is not native acceptance.
 
-Fresh build used the existing licensed SDK and reused reviewed stock artifacts;
-no new guest image was built. Exact current proof and remaining blocker:
-coordinated-build4/RESULT.md and ../default-final-20261120/RESULT.md.
+This is scoped acceptance for the exact tested QNX 8 x86_64 QEMU topology and
+artifact/source bindings. It does not establish physical-hardware coverage,
+performance, writable/general filesystem support, active-DMA/death safety, MSI-X
+or production readiness, and does not accept unrelated feature work.
 
-No Devpost, YouTube, visibility, upload or outreach action taken. £0.
+Exact native results and artifact/evidence bindings:
+[26 November final3 result](../boot-loop-20261126/final3/RESULT.md).
+The superseded draft is retained separately as
+[historical text](OWNER_DEVPOST_DRAFT_HISTORICAL_THROUGH_20261126_PRE_FINAL3.md).
+
+This is a local owner draft only. No Devpost submission, YouTube change, upload,
+visibility change or outreach was performed. No new installation, login or spend.
